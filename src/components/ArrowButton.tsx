@@ -7,10 +7,7 @@ type CustomButtonProps = ButtonProps & {
 
 const ArrowButton = ({ text, ...rest }: CustomButtonProps) => {
   return (
-    <button
-      {...rest}
-      className="self-end font-normal text-2xl max-w-[10rem] py-4 px-2 rounded-md active:bg-cus-dark-gray"
-    >
+    <button {...rest} className="custom-btn ">
       {text}
       <Image
         src={"/arrow.svg"}

@@ -15,11 +15,7 @@ const NavButton = ({ href, text, ...rest }: CustomButtonProps) => {
   };
 
   return (
-    <button
-      {...rest}
-      onClick={handleClick}
-      className="self-end font-normal text-2xl max-w-[10rem] py-4 px-2 rounded-md active:bg-cus-dark-gray"
-    >
+    <button {...rest} onClick={handleClick} className="custom-btn">
       {text}
       <Image
         src={"/arrow.svg"}

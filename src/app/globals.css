@@ -39,7 +39,6 @@ main {
   border-radius: 1.5rem;
   background-color: var(--cus-dark-gray);
   font-size: 2.5rem;
-  /* font-size: clamp(1.5rem, calc(2.5rem + (1vw * 2)), 3rem); */
   font-family: normal;
 }
 
@@ -54,6 +53,7 @@ main {
   border-radius: 1.5rem;
   padding: 2em;
   font-size: 1.25rem;
+  margin-top: 2rem;
   /* font-size: clamp(0.75rem, calc(1rem + (1vw * 2)), 1.25rem); */
 }
 
@@ -61,6 +61,21 @@ p::-webkit-scrollbar {
   /* background-color: #919191;
   width: 0.5rem; */
   display: none;
+}
+
+/* self-end font-normal text-2xl max-w-[12rem] py-2 px-4 rounded-md active:bg-cus-dark-gray hover:bg-cus-dark-gray */
+.custom-btn {
+  align-self: flex-end;
+  font-weight: normal;
+  font-size: 1.5rem;
+  max-width: 12rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.custom-btn:active,
+.custom-btn:hover {
+  background-color: var(--cus-dark-gray);
 }
 
 /* :root {
