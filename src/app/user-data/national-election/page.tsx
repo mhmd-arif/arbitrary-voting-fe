@@ -33,12 +33,14 @@ export default function NationalElection() {
       return;
     }
 
-    console.log("user", user);
+    const reqBody = JSON.stringify(user);
+
+    console.log("user", user, reqBody);
 
     try {
       const response = await fetch(url, {
         method: "POST",
-        body: JSON.stringify(user),
+        body: reqBody,
         headers: {
           "Content-Type": "application/json",
         },
