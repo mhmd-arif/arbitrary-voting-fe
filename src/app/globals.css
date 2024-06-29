@@ -2,6 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --cus-black: #231f20;
+  --cus-dark-gray: #919191;
+  --cus-light-gray: #cbc8c8;
+}
+
+html,
+body {
+  @apply bg-cus-light-gray; /* Change this to your desired color */
+}
+
+/* w-screen h-screen flex flex-col justify-between items-center py-[2rem] px-[4rem] text-cus-black */
+main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
+  color: var(--cus-black); /* Assuming 'cus' stands for 'custom' */
+}
+
+/* w-[40%] h-[10%] flex items-center justify-center border rounded-3xl bg-cus-dark-gray font-normal text-[2.5rem] */
+.title {
+  width: 40%;
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 1.5rem;
+  background-color: var(--cus-dark-gray);
+  font-size: 2.5rem;
+  font-family: normal;
+}
+
+/* description max-w-[60ch] border-2 border-cus-black rounded-3xl p-[2em] text-2xl */
+.description {
+  width: 60ch;
+  max-width: 60%;
+  border: 2px solid black;
+  border-radius: 1.5rem;
+  padding: 2em;
+  font-size: 2xl;
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
