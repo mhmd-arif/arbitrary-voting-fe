@@ -9,7 +9,7 @@ const ArrowButton = ({ text, ...rest }: CustomButtonProps) => {
   return (
     <button
       {...rest}
-      className="self-end font-normal text-2xl w-[10rem] rounded-md py-2 px-1 active:bg-cus-dark-gray"
+      className="self-end font-normal text-2xl max-w-[10rem] py-4 px-2 rounded-md active:bg-cus-dark-gray"
     >
       {text}
       <Image
