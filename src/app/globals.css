@@ -14,12 +14,12 @@ body {
 }
 
 /* w-screen h-screen flex flex-col justify-between items-center py-[2rem] px-[4rem] text-cus-black */
+/* w-[100vw] h-[100svh] flex flex-col justify-center items-center py-20 px-16 */
 main {
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -28,7 +28,17 @@ main {
   color: var(--cus-black);
 }
 
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* w-[40%] h-[10%] flex items-center justify-center border rounded-3xl bg-cus-dark-gray font-normal text-[2.5rem] */
+/* w-[40svw] h-[10svh] border rounded-3xl flex justify-center items-center bg-cus-dark-gray font-normal text-5xl  */
 .title {
   width: 40%;
   height: 10%;
@@ -63,6 +73,44 @@ p::-webkit-scrollbar {
   display: none;
 }
 
+/* w-full h-full flex flex-col justify-between items-center  */
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* w-[80%] h-[50%] flex flex-col  text-5xl font-semibold */
+.content {
+  width: 80%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  font-size: 3rem;
+  font-weight: 600; /* equivalent to font-weight: bold; */
+}
+
+/* border rounded w-[60%] mt-2 py-2 px-3 text-cus-black leading-tight focus:outline-none focus:shadow-outline text-4xl  */
+.input-style {
+  border: 1px solid;
+  border-radius: 1rem;
+  width: 60%;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.75rem;
+  font-size: 2rem;
+  color: var(--cus-black);
+  outline: none;
+}
+
+.input-style:focus {
+  box-shadow: 0 0 0 3px var(--cus-dark-gray);
+}
+
+/* ########################################################## */
+/* Component */
 /* self-end font-normal text-2xl max-w-[12rem] py-2 px-4 rounded-md active:bg-cus-dark-gray hover:bg-cus-dark-gray */
 .custom-btn {
   align-self: flex-end;
