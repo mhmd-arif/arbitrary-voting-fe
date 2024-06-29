@@ -4,7 +4,7 @@ import NavButton from "@/components/NavButton";
 export default function Home() {
   return (
     <main>
-      <div className="title ">Nama Penelitian</div>
+      <h1 className="title">Nama Penelitian</h1>
 
       <p className="description">
         DESKRIPSI PENELITIAN <br /> Lorem ipsum dolor sit amet, consectetur

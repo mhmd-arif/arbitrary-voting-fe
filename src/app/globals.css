@@ -21,11 +21,11 @@ main {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
   padding-left: 4rem;
   padding-right: 4rem;
-  color: var(--cus-black); /* Assuming 'cus' stands for 'custom' */
+  color: var(--cus-black);
 }
 
 /* w-[40%] h-[10%] flex items-center justify-center border rounded-3xl bg-cus-dark-gray font-normal text-[2.5rem] */
@@ -39,17 +39,28 @@ main {
   border-radius: 1.5rem;
   background-color: var(--cus-dark-gray);
   font-size: 2.5rem;
+  /* font-size: clamp(1.5rem, calc(2.5rem + (1vw * 2)), 3rem); */
   font-family: normal;
 }
 
 /* description max-w-[60ch] border-2 border-cus-black rounded-3xl p-[2em] text-2xl */
 .description {
-  width: 60ch;
+  width: 65ch;
   max-width: 60%;
+  min-height: 50svh;
+  max-height: 60svh;
+  overflow-y: scroll;
   border: 2px solid black;
   border-radius: 1.5rem;
   padding: 2em;
-  font-size: 2xl;
+  font-size: 1.25rem;
+  /* font-size: clamp(0.75rem, calc(1rem + (1vw * 2)), 1.25rem); */
+}
+
+p::-webkit-scrollbar {
+  /* background-color: #919191;
+  width: 0.5rem; */
+  display: none;
 }
 
 /* :root {
