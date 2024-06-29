@@ -1,6 +1,5 @@
 import { useRouter } from "next/navigation";
 import { ButtonProps } from "react-bootstrap";
-// import { arrow } from "../public/arrow.svg";
 import Image from "next/image";
 
 type CustomButtonProps = ButtonProps & {

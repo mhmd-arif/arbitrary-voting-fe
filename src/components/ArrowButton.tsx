@@ -5,7 +5,7 @@ type CustomButtonProps = ButtonProps & {
   text: string;
 };
 
-const CusButton = ({ text, ...rest }: CustomButtonProps) => {
+const ArrowButton = ({ text, ...rest }: CustomButtonProps) => {
   return (
     <button
       {...rest}
@@ -23,4 +23,4 @@ const CusButton = ({ text, ...rest }: CustomButtonProps) => {
   );
 };
 
-export default CusButton;
+export default ArrowButton;
