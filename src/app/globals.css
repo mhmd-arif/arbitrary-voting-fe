@@ -49,7 +49,7 @@ main {
   border-radius: 1rem;
   background-color: var(--cus-dark-gray);
   font-size: 2.5rem;
-  font-family: normal;
+  overflow-y: hidden;
 }
 
 /* description max-w-[60ch] border-2 border-cus-black rounded-3xl p-[2em] text-2xl */

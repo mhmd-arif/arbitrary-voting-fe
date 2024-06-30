@@ -168,11 +168,11 @@ export default function InformationPage() {
 
   return (
     <section className="wrapper">
-      <div className="title">Papan Informasi</div>
-      <div className="text-center text-md mt-2 mb-6">
+      <h1 className="title">Papan Informasi</h1>
+      <h2 className="text-center text-md mt-2 mb-6">
         SILAKAN MEMPELAJARI INFORMASI YANG DISEDIAKAN <br />
         UNTUK MENENTUKAN PILIHAN ANDA
-      </div>
+      </h2>
       <div className="w-full h-full flex flex-col items-center mb-4">
         <nav className="w-[80%]  grid grid-flow-col  mb-6 text-center">
           {kategori.map((item, index) => (

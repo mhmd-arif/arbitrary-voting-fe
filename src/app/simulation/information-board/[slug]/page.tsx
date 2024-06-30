@@ -3,6 +3,7 @@ import NavButton from "@/components/NavButton";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import type { Kandidat } from "../page";
+import ArrowButton from "@/components/ArrowButton";
 
 export default function DetailHeading() {
   const searchParams = useSearchParams();
@@ -141,12 +142,10 @@ export default function DetailHeading() {
   }
 
   return (
-    <section className="w-[100vw] h-[100svh] flex flex-col justify-between items-center py-20 px-36 text-cus-black">
-      <div className="w-[40svw] h-[10svh] border rounded-3xl flex justify-center items-center bg-cus-dark-gray font-normal text-5xl ">
-        Papan Informasi
-      </div>
-      <h2 className=" text-2xl my-4">{item.headline}</h2>
-      <div className="w-8/12 h-[60svh] flex flex-col justify-center border-2 border-cus-black rounded-3xl p-10 text-2xl">
+    <section className="wrapper">
+      <h1 className="title">Papan Informasi</h1>
+      <h2 className="text-center text-md mt-2 mb-6 ">{item.headline}</h2>
+      <div className="w-8/12 h-[70%] overflow-y-hidden flex flex-col justify-center border-2 border-cus-black rounded-3xl p-10 text-lg ">
         <p>Kategori : {item.kategori}</p>
         <p>Nama: {item.nama}</p>
         <p>Detail: {item.detail}</p>
@@ -164,12 +163,7 @@ export default function DetailHeading() {
           urna, pellentesque id velit ut, aliquam ultrices lorem.}`}
         </p>
       </div>
-      <button
-        onClick={handleToInformationBoard}
-        className="self-end font-normal text-2xl w-[10rem]"
-      >
-        Lanjutkan
-      </button>
+      <ArrowButton text={"Selanjutnya"} onClick={handleToInformationBoard} />
     </section>
   );
 }
