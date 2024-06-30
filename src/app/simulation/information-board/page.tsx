@@ -146,21 +146,21 @@ export default function InformationPage() {
     alert("Mohon isikan pilihan anda");
   };
 
-  const numberOfAdditionalCandidates = 20;
+  // const numberOfAdditionalCandidates = 20;
 
-  const additionalCandidates = Array.from(
-    { length: numberOfAdditionalCandidates },
-    (v, i) => ({
-      id: i + 101,
-      kategori: `Cat ${(i + 1) % 6}`,
-      nama: `Kandidat p ${i + 101}`,
-      headline: `Headline ${i + 101}`,
-      detail: `Detail ${i + 101}`,
-      kandidat: i + 101,
-    })
-  );
+  // const additionalCandidates = Array.from(
+  //   { length: numberOfAdditionalCandidates },
+  //   (v, i) => ({
+  //     id: i + 101,
+  //     kategori: `Cat ${(i + 1) % 6}`,
+  //     nama: `Kandidat p ${i + 101}`,
+  //     headline: `Headline ${i + 101}`,
+  //     detail: `Detail ${i + 101}`,
+  //     kandidat: i + 101,
+  //   })
+  // );
 
-  const extendedKandidat = [...kandidat, ...additionalCandidates];
+  // const extendedKandidat = [...kandidat, ...additionalCandidates];
 
   const handleActiveCategory = (category: string) => {
     updateActiveCategory("nama", category);
@@ -173,7 +173,7 @@ export default function InformationPage() {
         SILAKAN MEMPELAJARI INFORMASI YANG DISEDIAKAN <br />
         UNTUK MENENTUKAN PILIHAN ANDA
       </h2>
-      <div className="w-full h-full flex flex-col items-center mb-4">
+      <div className="w-full h-[70%] flex flex-col items-center mb-4">
         <nav className="w-[80%]  grid grid-flow-col  mb-6 text-center">
           {kategori.map((item, index) => (
             <div
@@ -188,8 +188,8 @@ export default function InformationPage() {
           ))}
         </nav>
         <div className="w-full h-full border border-cus-black">
-          <div className="grid-container w-[100%] max-h-[100%] grid grid-cols-5 text-center  overflow-y-auto ">
-            {extendedKandidat
+          <div className="grid-container w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
+            {kandidat
               .filter((item) => item.kategori === activeCategory.nama)
               .map((item) => (
                 <div
