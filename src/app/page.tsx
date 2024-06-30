@@ -21,7 +21,7 @@ export default function Home() {
           lorem.
         </p>
 
-        <NavButton href={"/user-data/initial"} text={"Selanjutnya"} />
+        <NavButton href={"/simulation"} text={"Selanjutnya"} />
       </div>
     </main>
   );

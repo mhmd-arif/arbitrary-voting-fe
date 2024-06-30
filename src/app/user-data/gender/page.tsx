@@ -46,12 +46,8 @@ export default function Gender() {
           <option value="" className="text-cus-dark-gray">
             Pilih jenis kelamin
           </option>
-          <option value="L" className="text-cus-dark-gray">
-            Laki-Laki
-          </option>
-          <option value="P" className="text-cus-dark-gray">
-            Perempuan
-          </option>
+          <option value="L">Laki-Laki</option>
+          <option value="P">Perempuan</option>
         </select>
       </div>
 

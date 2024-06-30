@@ -94,15 +94,9 @@ export default function NationalElection() {
           <option value="" className="text-cus-dark-gray">
             Kotak Jawaban
           </option>
-          <option value="PDIP" className="text-cus-dark-gray">
-            PDIP
-          </option>
-          <option value="PAN" className="text-cus-dark-gray">
-            PAN
-          </option>
-          <option value="Gerindra" className="text-cus-dark-gray">
-            Gerindra
-          </option>
+          <option value="PDIP">PDIP</option>
+          <option value="PAN">PAN</option>
+          <option value="Gerindra">Gerindra</option>
         </select>
       </div>
 
