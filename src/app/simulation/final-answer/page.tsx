@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-// import { Data, generateData } from "./generateData";
+import ArrowButton from "@/components/ArrowButton";
 
 interface ElectionData {
   partai: string;
@@ -148,20 +148,20 @@ export default function FinalAnswer() {
   }
 
   return (
-    <section className="w-[100vw] h-[100svh] flex flex-col justify-between items-center pt-20 pb-5 px-16 text-cus-black gap-y-4">
-      <div className="w-[40svw] h-[10svh] border rounded-3xl flex justify-center items-center bg-cus-dark-gray font-normal text-5xl ">
-        Pilihan Akhir
-      </div>
-      <div className="text-center text-2xl">
+    <section className="wrapper">
+      <h1 className="title">Pilihan Akhir</h1>
+      <h2 className="text-center text-md mt-2 mb-4">
         SILAKAN MEMPELAJARI INFORMASI YANG DISEDIAKAN <br />
         UNTUK MENENTUKAN PILIHAN ANDA
-      </div>
+      </h2>
 
-      <main className="my-elements border w-[90svw] h-[35rem] overflow-x-auto overflow-y-auto border-cus-black ">
+      <div className="my-elements border w-[100%] h-[28rem] mb-2 overflow-x-auto overflow-y-auto border-cus-black ">
         <div className="grid-container">
           {data.map((item) => (
             <div key={item.partai} className="border border-black text-center">
-              <h2 className="font-bold text-xl my-[0.3rem]">{item.partai}</h2>
+              <h2 className="font-bold text-[0.875rem] my-[0.3rem]">
+                {item.partai}
+              </h2>
               {item.kandidat.map((cdt) => (
                 <div
                   key={cdt.nama}
@@ -172,7 +172,7 @@ export default function FinalAnswer() {
                 >
                   <label
                     htmlFor={cdt.nama}
-                    className="font-semibold text-md  cursor-pointer"
+                    className="font-semibold text-[0.75rem] cursor-pointer"
                   >
                     {cdt.nama}
                   </label>
@@ -190,13 +190,8 @@ export default function FinalAnswer() {
             </div>
           ))}
         </div>
-      </main>
-      <button
-        className="self-end font-normal text-2xl px-4 py-1 bg-cus-dark-gray rounded-md"
-        onClick={handleClick}
-      >
-        Simpan
-      </button>
+      </div>
+      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
     </section>
   );
 }

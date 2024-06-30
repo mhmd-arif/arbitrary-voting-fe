@@ -1,17 +1,28 @@
 import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function TableCell({ data, rootPath }: any) {
-  const { slug, name } = data as { slug: string; name: string };
+  const { nama, headline } = data as { nama: string; headline: string };
+
+  const router = useRouter();
+  const slug = nama.toLowerCase();
+
+  const handleToSlug = () => {
+    router.push(
+      `/${rootPath}/${slug}$?data=${encodeURIComponent(JSON.stringify(data))}`
+    );
+  };
 
   return (
     <>
-      <Link
-        href={`/${rootPath}/${slug}`}
-        className="group w-full relative z-0 border border-cus-black flex items-center justify-center"
+      <button
+        onClick={handleToSlug}
+        className="group w-full h-[10rem] relative z-0 border border-cus-black flex items-center justify-center"
       >
-        {name}
-      </Link>
+        {headline} <br />
+        {nama}
+      </button>
     </>
   );
 }

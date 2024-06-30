@@ -126,6 +126,31 @@ p::-webkit-scrollbar {
   background-color: var(--cus-dark-gray);
 }
 
+/* ########################################################## */
+/* Custom scrollbar for WebKit browsers */
+.my-element::-webkit-scrollbar {
+  width: 12px; /* width of the entire scrollbar */
+  height: 12px; /* height of the entire scrollbar */
+}
+
+.my-element::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the scrollbar track */
+}
+
+.my-element::-webkit-scrollbar-thumb {
+  background: #888; /* color of the scrollbar thumb */
+}
+
+.my-element::-webkit-scrollbar-thumb:hover {
+  background: #555; /* color of the scrollbar thumb on hover */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-auto-rows: minmax(15.5rem, auto);
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
