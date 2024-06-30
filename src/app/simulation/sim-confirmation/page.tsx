@@ -17,63 +17,6 @@ export default function SimConfirmation() {
       alert("Mohon setuju terlebih dahulu");
       return;
     }
-    setLoading(true);
-
-    const body = {
-      start_date_simulation: new Date()
-        .toISOString()
-        .replace("T", " ")
-        .split(".")[0],
-    };
-
-    console.log("body", body);
-
-    try {
-      const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
-      const token = localStorage.getItem("access_token");
-
-      const response = await fetch(url, {
-        method: "PUT",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        console.log("not ok");
-        const errorMessage = await response.text();
-        console.error("Server error:", errorMessage);
-        setLoading(false);
-        return;
-      }
-
-      const data = await response.json();
-      console.log("Fetched data:", data);
-      const resData = data.data;
-      setLoading(false);
-      router.push(urlNextPage);
-
-      if (!data || !data.data) {
-        throw new Error("Invalid data format");
-      }
-    } catch (error) {
-      console.error("Error :", error);
-    }
-
-    const expiryTime = localStorage.getItem("expiryTime");
-
-    if (expiryTime == null || expiryTime == "0") {
-      const expiryDate = new Date();
-
-      expiryDate.setMinutes(expiryDate.getMinutes() + 300);
-      expiryDate.setSeconds(expiryDate.getSeconds() + 2);
-
-      localStorage.setItem("expiryTime", expiryDate.toISOString());
-      router.push(urlNextPage);
-    }
-
     router.push(urlNextPage);
   };
 
