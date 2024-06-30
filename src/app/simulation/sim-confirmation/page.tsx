@@ -9,30 +9,14 @@ export default function SimConfirmation() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [agreement, setAgreement] = useState<string>("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [timerExpired, setTimerExpired] = useState(false);
 
   const urlNextPage = "/simulation/information-board";
 
-  useEffect(() => {
-    if (agreement === "iya") {
-      setIsButtonDisabled(false);
-    } else {
-      setIsButtonDisabled(true);
-    }
-
-    const expiryTime = localStorage.getItem("expiryTime");
-    if (expiryTime) {
-      const currentTime = new Date().getTime();
-      const expiryDate = new Date(expiryTime).getTime();
-
-      if (currentTime >= expiryDate) {
-        setTimerExpired(true);
-      }
-    }
-  }, [agreement]);
-
   const handleClick = async () => {
+    if (agreement !== "iya") {
+      alert("Mohon setuju terlebih dahulu");
+      return;
+    }
     setLoading(true);
 
     const body = {
@@ -68,9 +52,8 @@ export default function SimConfirmation() {
       const data = await response.json();
       console.log("Fetched data:", data);
       const resData = data.data;
-      router.push(urlNextPage);
-
       setLoading(false);
+      router.push(urlNextPage);
 
       if (!data || !data.data) {
         throw new Error("Invalid data format");
@@ -88,7 +71,6 @@ export default function SimConfirmation() {
       expiryDate.setSeconds(expiryDate.getSeconds() + 2);
 
       localStorage.setItem("expiryTime", expiryDate.toISOString());
-      setTimerExpired(false);
       router.push(urlNextPage);
     }
 
@@ -114,19 +96,7 @@ export default function SimConfirmation() {
         </select>
       </div>
 
-      {!timerExpired ? (
-        <ArrowButton
-          text={"Selanjutnya"}
-          onClick={handleClick}
-          disabled={isButtonDisabled}
-        />
-      ) : (
-        <NavButton
-          href={"/simulation/information-check"}
-          text={"Waktu habis, Lanjutkan"}
-          disabled={isButtonDisabled}
-        />
-      )}
+      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
     </section>
   );
 }
