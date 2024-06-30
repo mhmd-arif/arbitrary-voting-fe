@@ -1,9 +1,10 @@
 "use client";
 import TableCell from "@/components/TableCell";
 import Link from "next/link";
-import { Item, generateData, Data, Header } from "./generateData";
+// import { Item, generateData, Data, Header } from "./generateData";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import ArrowButton from "@/components/ArrowButton";
 
 export interface Kategori {
   id: number;
@@ -38,8 +39,8 @@ const fetchData = async (
     }
 
     const data = await response.json();
-    // console.log("Fetched data:", data);
-    // console.log(data.data);
+    console.log("Fetched data:", data);
+    console.log(data.data);
 
     if (!data || !data.data) {
       throw new Error("Invalid data format");
@@ -63,6 +64,8 @@ export default function InformationPage() {
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
   const router = useRouter();
   const urlPageNext = "/simulation/information-check";
 
@@ -75,7 +78,9 @@ export default function InformationPage() {
         const { kategori, kandidat } = fetchedData;
 
         setKategori(kategori);
+        console.log(kategori);
         setKandidat(kandidat);
+        console.log(kandidat.length, kandidat);
 
         setLoading(false);
       })
@@ -84,15 +89,6 @@ export default function InformationPage() {
         setLoading(false);
       });
   }, [url]);
-
-  useEffect(() => {
-    setIsloading(true);
-    setHeaderLength(kategori.length);
-    if (headerLength) {
-      setMinWidth(18 * headerLength + 1 * (headerLength - 1));
-    }
-    setIsloading(false);
-  }, [headerLength, minWidth, isloading, kategori.length]);
 
   useEffect(() => {
     const expiryTime = localStorage.getItem("expiryTime");
@@ -138,10 +134,6 @@ export default function InformationPage() {
     }
   }, [timeLeft, router]);
 
-  if (isloading || minWidth === null || headerLength === null) {
-    return <div>loading</div>;
-  }
-
   const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
@@ -149,95 +141,97 @@ export default function InformationPage() {
     return `${minutes}m ${seconds}s`;
   };
 
-  // const handleNavigateToPageC = () => {
-  //   const pageInfoEnterTime = localStorage.getItem("pageInfoEnterTime") || "0";
-  //   const enterTime = new Date(pageInfoEnterTime).getTime();
-  //   const currentTime = new Date().getTime();
-  //   const timeSpentOnPageB = Math.round((currentTime - enterTime) / 1000);
-  //   localStorage.setItem("pageInfoExitTime", new Date().toISOString());
-  //   localStorage.setItem("timeSpentOnPageB", timeSpentOnPageB.toString());
-  //   localStorage.setItem("expiryTime", "0");
-  //   router.push(urlPageNext);
-  // };
+  const handleClick = async () => {
+    alert("Mohon isikan pilihan anda");
+  };
+
+  const numberOfAdditionalCandidates = 20;
+
+  const additionalCandidates = Array.from(
+    { length: numberOfAdditionalCandidates },
+    (v, i) => ({
+      id: i + 101,
+      kategori: `Cat ${(i + 1) % 6}`,
+      nama: `Kandidat p ${i + 101}`,
+      headline: `Headline ${i + 101}`,
+      detail: `Detail ${i + 101}`,
+      kandidat: i + 101,
+    })
+  );
+
+  const extendedKandidat = [...kandidat, ...additionalCandidates];
+
+  // const extendedKandidat = [
+  //   ...kandidat,
+  //   ...new Array(1).fill({
+  //     id: 1,
+  //     kategori: "Cat 1",
+  //     nama: "Kandidatp 1",
+  //     headline: "Headline 1",
+  //     detail: "Detail 1",
+  //     kandidat: 1,
+  //   }),
+  // ];
+
+  const handleActiveCategory = (category: string) => {
+    setActiveCategory(category);
+  };
 
   return (
-    <section className="w-[100vw] h-[100svh] flex flex-col justify-between items-center pt-20 pb-10 px-16  text-cus-black gap-y-4">
-      <div className="w-[40svw] h-[10svh]  border rounded-3xl flex justify-center items-center bg-cus-dark-gray font-normal text-5xl ">
-        Papan Informasi
-      </div>
-      <div className="text-center text-2xl">
+    <section className="wrapper">
+      <div className="title">Papan Informasi</div>
+      <div className="text-center text-md mt-2 mb-6">
         SILAKAN MEMPELAJARI INFORMASI YANG DISEDIAKAN <br />
         UNTUK MENENTUKAN PILIHAN ANDA
       </div>
-
-      <main className="my-element border max-w-[80svw] max-h-[35rem] overflow-x-auto overflow-y-auto border-cus-black ">
-        <div
-          style={{
-            minWidth: `${minWidth}rem`,
-            gridTemplateColumns: `repeat(${headerLength}, minmax(0, 1fr))`,
-          }}
-          className={`header-table sticky top-0 z-10 grid grid-cols-${headerLength} gap-[1rem] mx-auto w-auto pr-[1.75rem] `}
-        >
-          {kategori.map((cat) => (
+      <div className="w-full h-full flex flex-col items-center ">
+        <nav className="w-[80%]  grid grid-flow-col  mb-6 text-center">
+          {kategori.map((item, index) => (
             <div
-              key={cat.id}
-              className="flex w-full justify-center self-center bg-cus-dark-gray"
+              key={index}
+              className={` py-4 border border-cus-black cursor-pointer ${
+                activeCategory === item.nama ? "bg-cus-dark-gray" : ""
+              }`}
+              onClick={() => handleActiveCategory(item.nama)}
             >
-              <div className="min-w-[18rem] h-[8rem] relative z-0 border border-cus-black flex items-center justify-center ">
-                {cat.nama}
-              </div>
+              {item.nama}
             </div>
           ))}
+        </nav>
+        <div className="w-full h-full border border-cus-black">
+          <div className="grid-container w-[100%] max-h-[100%] grid grid-cols-5 text-center border border-cus-black overflow-y-auto ">
+            {extendedKandidat
+              .filter((item) => item.kategori === activeCategory)
+              .map((item) => (
+                <div
+                  key={item.id}
+                  className="w-full border border-cus-black cursor-pointer hover:bg-cus-dark-gray"
+                >
+                  <TableCell
+                    data={{
+                      id: item.id,
+                      kategori: item.kategori,
+                      nama: item.nama,
+                      // partai: item.partai,
+                      headline: item.headline,
+                      detail: item.detail,
+                      kandidat: item.kandidat,
+                    }}
+                    rootPath={"simulation/information-board"}
+                  />
+                </div>
+              ))}
+          </div>
         </div>
-        <div
-          style={{
-            minWidth: `${minWidth}rem`,
-            gridTemplateColumns: `repeat(${headerLength}, minmax(0, 1fr))`,
-          }}
-          className={`my-element grid gap-4 pr-[1.75rem] pt-2 mx-auto overflow-y-auto `}
-        >
-          {kategori.map((cat) => (
-            <div key={cat.id} className="flex flex-col">
-              {kandidat
-                .filter((item) => item.kategori === cat.nama)
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    className="flex min-w-[18rem] h-[10rem] justify-center self-center mb-2"
-                  >
-                    <TableCell
-                      data={{
-                        id: item.id,
-                        kategori: item.kategori,
-                        nama: item.nama,
-                        partai: item.partai,
-                        headline: item.headline,
-                        detail: item.detail,
-                        kandidat: item.kandidat,
-                      }}
-                      rootPath={"simulation/information-board"}
-                    />
-                  </div>
-                ))}
-            </div>
-          ))}
-        </div>
-      </main>
-      <p className="self-end font-normal text-xl w-[10rem] text-center">
-        tunggu hingga waktu habis
-      </p>
-      {/* <button
-        onClick={handleNavigateToPageC}
-        className="self-end font-normal text-2xl w-[10rem]"
-      >
-        Lanjutkan
-      </button> */}
+      </div>
 
-      {timeLeft !== null ? (
+      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+
+      {/* {timeLeft !== null ? (
         <p>Sisa waktu: {formatTime(timeLeft)}</p>
       ) : (
         <p>Loading...</p>
-      )}
+      )} */}
     </section>
   );
 }

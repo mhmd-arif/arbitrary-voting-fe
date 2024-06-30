@@ -67,7 +67,7 @@ export default function SimConfirmation() {
     if (expiryTime == null || expiryTime == "0") {
       const expiryDate = new Date();
 
-      expiryDate.setMinutes(expiryDate.getMinutes() + 3);
+      expiryDate.setMinutes(expiryDate.getMinutes() + 300);
       expiryDate.setSeconds(expiryDate.getSeconds() + 2);
 
       localStorage.setItem("expiryTime", expiryDate.toISOString());

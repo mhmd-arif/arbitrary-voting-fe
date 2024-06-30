@@ -18,9 +18,9 @@ export default function TableCell({ data, rootPath }: any) {
     <>
       <button
         onClick={handleToSlug}
-        className="group w-full h-[10rem] relative z-0 border border-cus-black flex items-center justify-center"
+        className="group  w-full py-5  relative flex items-center justify-center"
       >
-        {headline} <br />
+        {/* {headline} <br /> */}
         {nama}
       </button>
     </>
