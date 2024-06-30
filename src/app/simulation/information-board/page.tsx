@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 export interface Kategori {
   id: number;
@@ -54,9 +55,6 @@ const fetchData = async (
 };
 
 export default function InformationPage() {
-  const [headerLength, setHeaderLength] = useState<number | null>(null);
-  const [minWidth, setMinWidth] = useState<number | null>(null);
-  const [isloading, setIsloading] = useState<boolean>(true);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -64,7 +62,12 @@ export default function InformationPage() {
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  // const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const { activeCategory, updateActiveCategory } = useGlobalContext();
+
+  useEffect(() => {
+    console.log(activeCategory);
+  }, [activeCategory]);
 
   const router = useRouter();
   const urlPageNext = "/simulation/information-check";
@@ -78,9 +81,7 @@ export default function InformationPage() {
         const { kategori, kandidat } = fetchedData;
 
         setKategori(kategori);
-        console.log(kategori);
         setKandidat(kandidat);
-        console.log(kandidat.length, kandidat);
 
         setLoading(false);
       })
@@ -161,20 +162,8 @@ export default function InformationPage() {
 
   const extendedKandidat = [...kandidat, ...additionalCandidates];
 
-  // const extendedKandidat = [
-  //   ...kandidat,
-  //   ...new Array(1).fill({
-  //     id: 1,
-  //     kategori: "Cat 1",
-  //     nama: "Kandidatp 1",
-  //     headline: "Headline 1",
-  //     detail: "Detail 1",
-  //     kandidat: 1,
-  //   }),
-  // ];
-
   const handleActiveCategory = (category: string) => {
-    setActiveCategory(category);
+    updateActiveCategory("nama", category);
   };
 
   return (
@@ -190,7 +179,7 @@ export default function InformationPage() {
             <div
               key={index}
               className={` py-4 border border-cus-black cursor-pointer ${
-                activeCategory === item.nama ? "bg-cus-dark-gray" : ""
+                activeCategory.nama === item.nama ? "bg-cus-dark-gray" : ""
               }`}
               onClick={() => handleActiveCategory(item.nama)}
             >
@@ -199,9 +188,9 @@ export default function InformationPage() {
           ))}
         </nav>
         <div className="w-full h-full border border-cus-black">
-          <div className="grid-container w-[100%] max-h-[100%] grid grid-cols-5 text-center border border-cus-black overflow-y-auto ">
+          <div className="grid-container w-[100%] max-h-[100%] grid grid-cols-5 text-center  overflow-y-auto ">
             {extendedKandidat
-              .filter((item) => item.kategori === activeCategory)
+              .filter((item) => item.kategori === activeCategory.nama)
               .map((item) => (
                 <div
                   key={item.id}
