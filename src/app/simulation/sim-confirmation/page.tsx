@@ -10,7 +10,7 @@ export default function SimConfirmation() {
   const [loading, setLoading] = useState<boolean>(false);
   const [agreement, setAgreement] = useState<string>("");
 
-  const urlNextPage = "/simulation/information-board";
+  const urlNextPage = "/simulation/category";
 
   const handleClick = async () => {
     if (agreement !== "iya") {

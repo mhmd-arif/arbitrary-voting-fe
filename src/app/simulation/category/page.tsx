@@ -159,7 +159,7 @@ export default function Category() {
   return (
     <section className="wrapper">
       <h1 className="title">Papan Informasi</h1>
-      <div className="w-full h-full flex flex-col items-center">
+      <div className="w-full h-[80%] flex flex-col items-center">
         <h2 className="text-center text-md mt-4 mb-6">
           Silakan Pilih Kategori yang Anda Minati
         </h2>
