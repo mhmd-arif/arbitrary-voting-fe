@@ -173,7 +173,7 @@ export default function InformationPage() {
         SILAKAN MEMPELAJARI INFORMASI YANG DISEDIAKAN <br />
         UNTUK MENENTUKAN PILIHAN ANDA
       </div>
-      <div className="w-full h-full flex flex-col items-center ">
+      <div className="w-full h-full flex flex-col items-center mb-4">
         <nav className="w-[80%]  grid grid-flow-col  mb-6 text-center">
           {kategori.map((item, index) => (
             <div
@@ -201,7 +201,8 @@ export default function InformationPage() {
                       id: item.id,
                       kategori: item.kategori,
                       nama: item.nama,
-                      // partai: item.partai,
+                      // partai: item.partai || "defaultValue",
+                      partai: "defaultValue",
                       headline: item.headline,
                       detail: item.detail,
                       kandidat: item.kandidat,
