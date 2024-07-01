@@ -68,12 +68,13 @@ export default function DetailHeading() {
     const pageSlugEnterTime = localStorage.getItem("pageSlugEnterTime") || "";
     const enterTime = new Date(pageSlugEnterTime).getTime();
     const currentTime = new Date().getTime();
-    const timeSpent = Math.round((currentTime - enterTime) / 1000);
+    const timeSpent = Math.round((currentTime - enterTime) / 100);
     let body;
     if (item) {
       body = {
         kandidat: item.nama,
         kategori: item.kategori,
+        partai: item.partai,
         durasi: timeSpent,
       };
     }
@@ -148,6 +149,7 @@ export default function DetailHeading() {
       <div className="w-8/12 h-[70%] overflow-y-hidden flex flex-col justify-center border-2 border-cus-black rounded-3xl p-10 text-lg ">
         <p>Kategori : {item.kategori}</p>
         <p>Nama: {item.nama}</p>
+        <p>Partai: {item.partai}</p>
         <p>Detail: {item.detail}</p>
 
         <p>

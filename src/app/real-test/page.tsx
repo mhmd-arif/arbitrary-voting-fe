@@ -1,8 +1,14 @@
 "use client";
 import BackButton from "@/components/BackButton";
 import NavButton from "@/components/NavButton";
+import { useEffect } from "react";
 
 export default function RealTest() {
+  useEffect(() => {
+    localStorage.setItem("pageInfoEnterTime", "");
+    localStorage.setItem("pageSlugEnterTime", "");
+    localStorage.setItem("expiryTime", "");
+  });
   return (
     <section className="wrapper">
       <h1 className="title">Pemilihan Riil</h1>

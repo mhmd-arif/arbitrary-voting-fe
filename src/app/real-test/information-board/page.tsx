@@ -94,16 +94,11 @@ export default function InformationPage() {
       const timeRemaining = expiryDate - currentTime;
       if (timeRemaining > 0) {
         setTimeLeft(timeRemaining);
-        const pageInfoEnterTimeReal = localStorage.getItem(
-          "pageInfoEnterTimeReal"
-        );
-        if (pageInfoEnterTimeReal == null || pageInfoEnterTimeReal == "") {
+        const pageInfoEnterTime = localStorage.getItem("pageInfoEnterTime");
+        if (pageInfoEnterTime == null || pageInfoEnterTime == "") {
           setTimeLeft(timeRemaining);
           const enterTime = new Date();
-          localStorage.setItem(
-            "pageInfoEnterTimeReal",
-            enterTime.toISOString()
-          );
+          localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
         }
       } else {
         setTimeLeft(null);
@@ -184,6 +179,9 @@ export default function InformationPage() {
 
       // console.log(resData);
       setLoading(false);
+      localStorage.setItem("pageInfoEnterTime", "");
+      localStorage.setItem("pageSlugEnterTime", "");
+      localStorage.setItem("expiryTime", "");
       router.push(urlNextPage);
 
       if (!data || !data.data) {
@@ -269,8 +267,7 @@ export default function InformationPage() {
                       id: item.id,
                       kategori: item.kategori,
                       nama: item.nama,
-                      // partai: item.partai || "defaultValue",
-                      partai: "defaultValue",
+                      partai: item.partai,
                       headline: item.headline,
                       detail: item.detail,
                       kandidat: item.kandidat,

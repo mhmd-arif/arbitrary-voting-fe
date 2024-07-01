@@ -183,6 +183,10 @@ export default function InformationPage() {
       const resData = data.data;
 
       // console.log(resData);
+      localStorage.setItem("pageInfoEnterTime", "");
+      localStorage.setItem("pageSlugEnterTime", "");
+      localStorage.setItem("expiryTime", "");
+
       setLoading(false);
       router.push(urlNextPage);
 
