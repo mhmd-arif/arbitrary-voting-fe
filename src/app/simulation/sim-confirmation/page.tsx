@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import ArrowButton from "@/components/ArrowButton";
+import BackButton from "@/components/BackButton";
 
 export default function SimConfirmation() {
   const router = useRouter();
@@ -39,7 +40,10 @@ export default function SimConfirmation() {
         </select>
       </div>
 
-      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      <div className="w-full flex justify-between">
+        <BackButton />
+        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      </div>
     </section>
   );
 }

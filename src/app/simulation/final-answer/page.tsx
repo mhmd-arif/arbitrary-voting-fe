@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
+import BackButton from "@/components/BackButton";
 
 interface ElectionData {
   partai: string;
@@ -155,7 +156,7 @@ export default function FinalAnswer() {
         UNTUK MENENTUKAN PILIHAN ANDA
       </h2>
 
-      <div className="my-elements border w-[100%] h-[100%] mb-2 overflow-x-auto overflow-y-auto border-cus-black ">
+      <div className=" border w-[100%] h-[100%] mb-2 overflow-x-auto overflow-y-auto border-cus-black ">
         <div className="grid-container">
           {data.map((item) => (
             <div key={item.partai} className="border border-black text-center">
@@ -191,7 +192,10 @@ export default function FinalAnswer() {
           ))}
         </div>
       </div>
-      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      <div className="w-full flex justify-between">
+        <BackButton />
+        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      </div>
     </section>
   );
 }

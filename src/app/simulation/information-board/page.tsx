@@ -144,7 +144,53 @@ export default function InformationPage() {
   };
 
   const handleClick = async () => {
-    router.push(urlNextPage);
+    setLoading(true);
+
+    const body = {
+      end_date_simulation: new Date()
+        .toISOString()
+        .replace("T", " ")
+        .split(".")[0],
+    };
+
+    console.log("body", body);
+
+    try {
+      const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
+      const token = localStorage.getItem("access_token");
+
+      const response = await fetch(url, {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        console.log("not ok");
+        const errorMessage = await response.text();
+        console.error("Server error:", errorMessage);
+        setLoading(false);
+        return;
+      }
+
+      const data = await response.json();
+      console.log("Fetched data:", data);
+      const resData = data.data;
+
+      // console.log(resData);
+      setLoading(false);
+      router.push(urlNextPage);
+
+      if (!data || !data.data) {
+        throw new Error("Invalid data format");
+      }
+    } catch (error) {
+      console.error("Error :", error);
+    }
+    // router.push(urlNextPage);
   };
 
   // const numberOfAdditionalCandidates = 20;
