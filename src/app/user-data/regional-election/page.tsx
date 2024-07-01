@@ -4,6 +4,7 @@ import { useGlobalContext } from "@/context/GlobalContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
+import BackButton from "@/components/BackButton";
 
 interface PolParties {
   id: number;
@@ -53,7 +54,10 @@ export default function RegionalElection() {
         </select>
       </div>
 
-      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      <div className="w-full flex justify-between">
+        <BackButton />
+        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      </div>
     </section>
   );
 }

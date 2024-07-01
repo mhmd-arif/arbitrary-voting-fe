@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ArrowButton from "@/components/ArrowButton";
 
 import { useRouter } from "next/navigation";
+import BackButton from "@/components/BackButton";
 
 export default function Age() {
   const [userAge, setUserAge] = useState("");
@@ -46,7 +47,10 @@ export default function Age() {
           onChange={handleAgeInput}
         />
       </div>
-      <ArrowButton text={"Selanjutnya"} onClick={handleNextPageClick} />
+      <div className="w-full flex justify-between">
+        <BackButton />
+        <ArrowButton text={"Selanjutnya"} onClick={handleNextPageClick} />
+      </div>
     </section>
   );
 }

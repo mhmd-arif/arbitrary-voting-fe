@@ -2,21 +2,14 @@ import { useRouter } from "next/navigation";
 import { ButtonProps } from "react-bootstrap";
 import Image from "next/image";
 
-type CustomButtonProps = ButtonProps & {
-  href: string;
-  text: string;
-};
-
-const NavButton = ({ href, text, ...rest }: CustomButtonProps) => {
-  const router = useRouter();
-
+const BackButton = ({ ...rest }) => {
   const handleClick = () => {
-    router.push(href);
+    window.history.back();
   };
 
   return (
-    <button {...rest} onClick={handleClick} className="custom-btn self-end">
-      {text}
+    <button className="custom-btn self-start" onClick={handleClick}>
+      Kembali
       <Image
         src={"/arrow.svg"}
         alt="arrow"
@@ -28,4 +21,4 @@ const NavButton = ({ href, text, ...rest }: CustomButtonProps) => {
   );
 };
 
-export default NavButton;
+export default BackButton;

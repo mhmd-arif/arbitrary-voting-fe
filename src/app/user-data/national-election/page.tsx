@@ -3,6 +3,7 @@ import ArrowButton from "@/components/ArrowButton";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import BackButton from "@/components/BackButton";
 
 export default function NationalElection() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -100,11 +101,16 @@ export default function NationalElection() {
         </select>
       </div>
 
-      {loading ? (
-        <p className="self-end">Loading...</p>
-      ) : (
-        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
-      )}
+      <div className="w-full flex justify-between">
+        {loading ? (
+          <p className="self-end">Loading...</p>
+        ) : (
+          <>
+            <BackButton />
+            <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+          </>
+        )}
+      </div>
     </section>
   );
 }

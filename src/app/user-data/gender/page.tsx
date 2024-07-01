@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import NavButton from "@/components/NavButton";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
+import BackButton from "@/components/BackButton";
 
 export default function Gender() {
   const { user, updateUser } = useGlobalContext();
@@ -51,7 +52,10 @@ export default function Gender() {
         </select>
       </div>
 
-      <ArrowButton text="Selanjutnya" onClick={navigateToNextPage} />
+      <div className="w-full flex justify-between">
+        <BackButton />
+        <ArrowButton text="Selanjutnya" onClick={navigateToNextPage} />
+      </div>
     </section>
   );
 }

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import ArrowButton from "@/components/ArrowButton";
+import BackButton from "@/components/BackButton";
 
 export default function InformationCheck() {
   const router = useRouter();
@@ -80,7 +81,10 @@ export default function InformationCheck() {
           onChange={handleInputChange}
         />
       </div>
-      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      <div className="w-full flex justify-between">
+        <BackButton />
+        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      </div>
     </section>
   );
 }

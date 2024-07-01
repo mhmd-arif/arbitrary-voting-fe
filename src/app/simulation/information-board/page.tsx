@@ -65,7 +65,7 @@ export default function InformationPage() {
   const { activeCategory, updateActiveCategory } = useGlobalContext();
 
   const router = useRouter();
-  const urlPageNext = "/simulation/information-check";
+  const urlNextPage = "/simulation/information-check";
 
   const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
 
@@ -144,7 +144,7 @@ export default function InformationPage() {
   };
 
   const handleClick = async () => {
-    alert("Mohon isikan pilihan anda");
+    router.push(urlNextPage);
   };
 
   // const numberOfAdditionalCandidates = 20;

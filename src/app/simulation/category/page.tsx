@@ -142,8 +142,8 @@ export default function Category() {
     if (expiryTime == null || expiryTime == "") {
       const expiryDate = new Date();
 
-      expiryDate.setMinutes(expiryDate.getMinutes() + 0);
-      expiryDate.setSeconds(expiryDate.getSeconds() + 30);
+      expiryDate.setMinutes(expiryDate.getMinutes() + 2);
+      expiryDate.setSeconds(expiryDate.getSeconds() + 2);
 
       localStorage.setItem("expiryTime", expiryDate.toISOString());
       router.push(urlNextPage);

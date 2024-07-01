@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "@/context/GlobalContext";
 import ArrowButton from "@/components/ArrowButton";
 import { useRouter } from "next/navigation";
+import BackButton from "@/components/BackButton";
 
 export default function Initial() {
   const { user, updateUser } = useGlobalContext();
@@ -32,7 +33,10 @@ export default function Initial() {
           onChange={(e) => setInitial(e.target.value)}
         />
       </div>
-      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      <div className="w-full flex justify-between">
+        <BackButton />
+        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      </div>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 "use client";
+import BackButton from "@/components/BackButton";
 import NavButton from "@/components/NavButton";
 
 export default function Simulation() {
@@ -19,7 +20,10 @@ export default function Simulation() {
         lorem sollicitudin, feugiat tortor. Mauris mauris urna, pellentesque id
         velit ut, aliquam ultrices lorem.
       </p>
-      <NavButton href={"/user-data/initial"} text={"Selanjutnya"} />
+      <div className="w-full flex justify-between">
+        <BackButton />
+        <NavButton href={"/user-data/initial"} text={"Selanjutnya"} />
+      </div>
     </section>
   );
 }
