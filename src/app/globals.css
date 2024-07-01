@@ -58,7 +58,7 @@ main {
   max-width: 60%;
   min-height: 50svh;
   max-height: 60svh;
-  overflow-y: scroll;
+  overflow-y: hidden;
   border: 2px solid black;
   border-radius: 1.5rem;
   padding: 2em;

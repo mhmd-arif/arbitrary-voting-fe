@@ -13,15 +13,11 @@ export default function Question() {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState("");
 
-  const urlNextPage = "/end ";
+  const urlNextPage = "/real-test/end ";
 
   const handleOptionChange = (option: any) => {
     setSelectedOption(option);
     console.log(option);
-  };
-
-  const handleInput = (value: string) => {
-    setText(value);
   };
 
   const handleClick = async () => {
