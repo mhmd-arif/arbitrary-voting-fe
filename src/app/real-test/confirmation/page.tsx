@@ -18,7 +18,10 @@ export default function Confirmation() {
       alert("Mohon setuju terlebih dahulu");
       return;
     }
-    router.push(urlNextPage);
+    const confirmation = window.confirm("Apakah Anda setuju?");
+    if (confirmation) {
+      router.push(urlNextPage);
+    }
   };
 
   return (

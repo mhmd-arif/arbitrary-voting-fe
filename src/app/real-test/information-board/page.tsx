@@ -280,16 +280,19 @@ export default function InformationPage() {
         </div>
       </div>
 
-      <div className="self-end">
+      <div className="w-full flex justify-between">
         {timeLeft !== null ? (
-          <div className="flex flex-col">
+          <div className="flex flex-col w-fit">
             <p>
               lanjutkan membaca <br /> setidaknya selama
             </p>
             {formatTime(timeLeft)}
           </div>
         ) : (
-          <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+          <>
+            <div></div>
+            <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+          </>
         )}
       </div>
     </section>

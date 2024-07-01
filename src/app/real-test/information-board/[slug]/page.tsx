@@ -122,9 +122,9 @@ export default function DetailHeading() {
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
     const colorClass =
-      totalSeconds <= 10
+      totalSeconds <= 30
         ? "text-red-500 animate-pulse font-[500]"
-        : totalSeconds <= 15
+        : totalSeconds <= 60
         ? "text-yellow-500 font-[500]"
         : "";
     return (

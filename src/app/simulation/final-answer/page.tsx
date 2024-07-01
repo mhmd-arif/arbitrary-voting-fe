@@ -79,6 +79,11 @@ export default function FinalAnswer() {
       return;
     }
 
+    const confirmation = window.confirm("Yakin dengan pilihan anda?");
+    if (!confirmation) {
+      return;
+    }
+
     const body = JSON.stringify({
       final_answer_simulation: selectedOption + " (" + polParty + ")",
     });
