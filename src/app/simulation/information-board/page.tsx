@@ -62,12 +62,7 @@ export default function InformationPage() {
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
-  // const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { activeCategory, updateActiveCategory } = useGlobalContext();
-
-  useEffect(() => {
-    console.log(activeCategory);
-  }, [activeCategory]);
 
   const router = useRouter();
   const urlPageNext = "/simulation/information-check";
@@ -97,10 +92,7 @@ export default function InformationPage() {
       const currentTime = new Date().getTime();
       const expiryDate = new Date(expiryTime).getTime();
       const timeRemaining = expiryDate - currentTime;
-      if (timeRemaining <= 0) {
-        localStorage.setItem("expiryTime", "0"); // Mark as expired
-        router.push(urlPageNext);
-      } else {
+      if (timeRemaining > 0) {
         setTimeLeft(timeRemaining);
         const pageInfoEnterTime = localStorage.getItem("pageInfoEnterTime");
         if (pageInfoEnterTime == null || pageInfoEnterTime == "") {
@@ -108,9 +100,9 @@ export default function InformationPage() {
           const enterTime = new Date();
           localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
         }
+      } else {
+        setTimeLeft(null);
       }
-    } else {
-      router.push(urlPageNext);
     }
   }, [router]);
 
@@ -121,9 +113,8 @@ export default function InformationPage() {
           if (prev !== null) {
             const newTimeLeft = prev - 1000;
             if (newTimeLeft <= 0) {
-              localStorage.setItem("expiryTime", "0");
+              setTimeLeft(null);
               clearInterval(timer);
-              router.push(urlPageNext);
             }
             return newTimeLeft;
           }
@@ -139,7 +130,17 @@ export default function InformationPage() {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    return `${minutes}m ${seconds}s`;
+    const colorClass =
+      totalSeconds <= 10
+        ? "text-red-500 animate-pulse font-[500]"
+        : totalSeconds <= 15
+        ? "text-yellow-500 font-[500]"
+        : "";
+    return (
+      <p className={`${colorClass} text-center rounded-md  bg-cus-dark-gray`}>
+        {minutes}m {seconds}s
+      </p>
+    );
   };
 
   const handleClick = async () => {
@@ -173,6 +174,21 @@ export default function InformationPage() {
         SILAKAN MEMPELAJARI INFORMASI YANG DISEDIAKAN <br />
         UNTUK MENENTUKAN PILIHAN ANDA
       </h2>
+      {loading ? (
+        <nav className="w-[80%] grid grid-cols-5 my-auto text-center ">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div
+              key={index}
+              className="py-4 border border-cus-black bg-cus-dark-gray animate-pulse "
+            >
+              loading.. kategori
+            </div>
+          ))}
+        </nav>
+      ) : (
+        <></>
+      )}
+
       <div className="w-full h-[70%] flex flex-col items-center mb-4">
         <nav className="w-[80%]  grid grid-flow-col  mb-6 text-center">
           {kategori.map((item, index) => (
@@ -187,7 +203,11 @@ export default function InformationPage() {
             </div>
           ))}
         </nav>
-        <div className="w-full h-full border border-cus-black">
+        <div
+          className={`${
+            loading ? "animate-pulse bg-cus-dark-gray" : ""
+          } w-full h-full border border-cus-black `}
+        >
           <div className="grid-container w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
             {kandidat
               .filter((item) => item.kategori === activeCategory.nama)
@@ -215,13 +235,18 @@ export default function InformationPage() {
         </div>
       </div>
 
-      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
-
-      {/* {timeLeft !== null ? (
-        <p>Sisa waktu: {formatTime(timeLeft)}</p>
-      ) : (
-        <p>Loading...</p>
-      )} */}
+      <div className="self-end">
+        {timeLeft !== null ? (
+          <div className="flex flex-col">
+            <p>
+              lanjutkan membaca <br /> setidaknya selama
+            </p>
+            {formatTime(timeLeft)}
+          </div>
+        ) : (
+          <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+        )}
+      </div>
     </section>
   );
 }

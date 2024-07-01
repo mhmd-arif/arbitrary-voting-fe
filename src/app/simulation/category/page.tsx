@@ -62,12 +62,7 @@ export default function Category() {
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
-  // const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { activeCategory, updateActiveCategory } = useGlobalContext();
-
-  useEffect(() => {
-    console.log(activeCategory);
-  }, [activeCategory]);
 
   const router = useRouter();
   const urlNextPage = "/simulation/information-board";
@@ -89,9 +84,14 @@ export default function Category() {
         setError(err.message);
         setLoading(false);
       });
+    // setLoading(false);
   }, [url]);
 
   const handleClick = async () => {
+    if (activeCategory.nama === "") {
+      alert("Mohon pilih kategori");
+      return;
+    }
     setLoading(true);
 
     const body = {
@@ -139,11 +139,11 @@ export default function Category() {
 
     const expiryTime = localStorage.getItem("expiryTime");
 
-    if (expiryTime == null || expiryTime == "0") {
+    if (expiryTime == null || expiryTime == "") {
       const expiryDate = new Date();
 
-      expiryDate.setMinutes(expiryDate.getMinutes() + 300);
-      expiryDate.setSeconds(expiryDate.getSeconds() + 2);
+      expiryDate.setMinutes(expiryDate.getMinutes() + 0);
+      expiryDate.setSeconds(expiryDate.getSeconds() + 30);
 
       localStorage.setItem("expiryTime", expiryDate.toISOString());
       router.push(urlNextPage);
@@ -164,19 +164,32 @@ export default function Category() {
           Silakan Pilih Kategori yang Anda Minati
         </h2>
 
-        <nav className="w-[80%]  grid grid-flow-col my-auto text-center">
-          {kategori.map((item, index) => (
-            <div
-              key={index}
-              className={` py-4 border border-cus-black cursor-pointer ${
-                activeCategory.nama === item.nama ? "bg-cus-dark-gray" : ""
-              }`}
-              onClick={() => handleActiveCategory(item.nama)}
-            >
-              {item.nama}
-            </div>
-          ))}
-        </nav>
+        {loading ? (
+          <nav className="w-[80%] grid grid-cols-5 my-auto text-center ">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div
+                key={index}
+                className="py-4 border border-cus-black bg-cus-dark-gray animate-pulse "
+              >
+                loading.. kategori
+              </div>
+            ))}
+          </nav>
+        ) : (
+          <nav className="w-[80%]  grid grid-cols-5 my-auto text-center">
+            {kategori.map((item, index) => (
+              <div
+                key={index}
+                className={` py-4 border border-cus-black cursor-pointer ${
+                  activeCategory.nama === item.nama ? "bg-cus-dark-gray" : ""
+                }`}
+                onClick={() => handleActiveCategory(item.nama)}
+              >
+                {item.nama}
+              </div>
+            ))}
+          </nav>
+        )}
       </div>
 
       <ArrowButton text={"Selanjutnya"} onClick={handleClick} />

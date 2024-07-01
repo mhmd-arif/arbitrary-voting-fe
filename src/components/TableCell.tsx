@@ -20,8 +20,8 @@ export default function TableCell({ data, rootPath }: any) {
         onClick={handleToSlug}
         className="group  w-full py-5  relative flex items-center justify-center"
       >
-        {/* {headline} <br /> */}
-        {nama}
+        {headline}
+        {/* {nama} */}
       </button>
     </>
   );
