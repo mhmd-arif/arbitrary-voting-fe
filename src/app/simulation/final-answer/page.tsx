@@ -50,7 +50,7 @@ export default function FinalAnswer() {
   const [selectedOption, setSelectedOption] = useState("");
   const [polParty, setPolParty] = useState("");
 
-  const urlNextPage = "/simulation/questionnaire";
+  const urlNextPage = "/real-test";
 
   useEffect(() => {
     const type = localStorage.getItem("type");
@@ -73,25 +73,6 @@ export default function FinalAnswer() {
       });
   }, []);
 
-  // const handleOptionChange = (e: any) => {
-  //   const { value, name } = e.target;
-  //   console.log(value, name);
-  //   setSelectedOption(value);
-  //   const tempAnswer = `{"partai": "${name}", "kandidat": "${value}"}`;
-  //   setAnswer(tempAnswer);
-  // };
-
-  const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedOption(e.target.value);
-  };
-
-  // const handleOptionChange = (event: any, partai: any) => {
-  //   const { value } = event.target;
-  //   console.log(`Selected Candidate: ${value}, Partai: ${partai}`);
-  //   setPolParty(partai);
-  //   setSelectedOption(value);
-  // };
-
   const handleClick = async () => {
     if (selectedOption === "") {
       alert("Mohon isikan pilihan anda");
@@ -99,11 +80,7 @@ export default function FinalAnswer() {
     }
 
     const body = JSON.stringify({
-      final_answer_simulation: `{kandidat: ${selectedOption}}`,
-      end_date_simulation: new Date()
-        .toISOString()
-        .replace("T", " ")
-        .split(".")[0],
+      final_answer_simulation: selectedOption + " (" + polParty + ")",
     });
 
     console.log("body", body);
@@ -111,7 +88,7 @@ export default function FinalAnswer() {
     try {
       const type = localStorage.getItem("type");
       const token = localStorage.getItem("access_token");
-      const url = process.env.NEXT_PUBLIC_API_URL + `/candidate?type=${type}`;
+      const url = process.env.NEXT_PUBLIC_API_URL + `/participant/`;
 
       const response = await fetch(url, {
         method: "PUT",
@@ -122,7 +99,7 @@ export default function FinalAnswer() {
         },
       });
 
-      console.log(response);
+      // console.log(response);
       const data = await response.json();
       console.log("Fetched data:", data);
 
@@ -157,19 +134,36 @@ export default function FinalAnswer() {
       </h2>
 
       <div className=" border w-[100%] h-[100%] mb-2 overflow-x-auto overflow-y-auto border-cus-black ">
+        {loading ? (
+          <nav className="w-[100%] grid grid-cols-5 my-auto text-center ">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <div
+                key={index}
+                className="py-4 border border-cus-black bg-cus-dark-gray animate-pulse "
+              >
+                loading..
+              </div>
+            ))}
+          </nav>
+        ) : (
+          <></>
+        )}
         <div className="grid-container">
           {data.map((item) => (
             <div key={item.partai} className="border border-black text-center">
-              <h2 className="font-bold text-[0.875rem] my-[0.3rem]">
+              <h2 className="font-bold text-[0.875rem] py-1 bg-cus-dark-gray/40 ">
                 {item.partai}
               </h2>
               {item.kandidat.map((cdt) => (
                 <div
                   key={cdt.nama}
-                  className={`{can-be-clicked p-1 cursor-pointer hover:bg-cus-dark-gray ${
+                  className={`{can-be-clicked p-1 cursor-pointer hover:bg-cus-dark-gray border-b border-t border-cus-black ${
                     selectedOption === cdt.nama ? "bg-cus-dark-gray" : ""
                   }`}
-                  onClick={() => setSelectedOption(cdt.nama)}
+                  onClick={() => {
+                    setSelectedOption(cdt.nama);
+                    setPolParty(item.partai);
+                  }}
                 >
                   <label
                     htmlFor={cdt.nama}
@@ -177,15 +171,6 @@ export default function FinalAnswer() {
                   >
                     {cdt.nama}
                   </label>
-                  <input
-                    type="radio"
-                    id={cdt.nama}
-                    name={item.partai}
-                    value={cdt.nama}
-                    checked={selectedOption === cdt.nama}
-                    onChange={(e) => handleOptionChange(e)}
-                    className="ml-2"
-                  />
                 </div>
               ))}
             </div>
