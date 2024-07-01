@@ -12,7 +12,6 @@ export default function Question() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState("");
-  const [text, setText] = useState("");
 
   const urlNextPage = "/end ";
 
@@ -26,8 +25,8 @@ export default function Question() {
   };
 
   const handleClick = async () => {
-    if (text === "") {
-      alert("Mohon isikan text anda");
+    if (selectedOption === "") {
+      alert("Mohon pilih jawaban");
       return;
     }
 
