@@ -80,7 +80,7 @@ export default function FinalAnswer() {
     }
 
     const body = JSON.stringify({
-      final_answer_simulation: selectedOption + " (" + polParty + ")",
+      final_answer: selectedOption + " (" + polParty + ")",
     });
 
     console.log("body", body);

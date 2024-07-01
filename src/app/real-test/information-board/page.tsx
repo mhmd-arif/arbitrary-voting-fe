@@ -67,10 +67,10 @@ export default function InformationPage() {
   const router = useRouter();
   const urlNextPage = "/real-test/information-check";
 
-  const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
-
   useEffect(() => {
+    const type = localStorage.getItem("type");
     const token = localStorage.getItem("access_token");
+    const url = process.env.NEXT_PUBLIC_API_URL + `/information?type=${type}`;
     fetchData(token, url)
       .then((fetchedData) => {
         const { kategori, kandidat } = fetchedData;
@@ -84,7 +84,7 @@ export default function InformationPage() {
         setError(err.message);
         setLoading(false);
       });
-  }, [url]);
+  }, []);
 
   useEffect(() => {
     const expiryTime = localStorage.getItem("expiryTime");
@@ -94,11 +94,16 @@ export default function InformationPage() {
       const timeRemaining = expiryDate - currentTime;
       if (timeRemaining > 0) {
         setTimeLeft(timeRemaining);
-        const pageInfoEnterTime = localStorage.getItem("pageInfoEnterTime");
-        if (pageInfoEnterTime == null || pageInfoEnterTime == "") {
+        const pageInfoEnterTimeReal = localStorage.getItem(
+          "pageInfoEnterTimeReal"
+        );
+        if (pageInfoEnterTimeReal == null || pageInfoEnterTimeReal == "") {
           setTimeLeft(timeRemaining);
           const enterTime = new Date();
-          localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
+          localStorage.setItem(
+            "pageInfoEnterTimeReal",
+            enterTime.toISOString()
+          );
         }
       } else {
         setTimeLeft(null);
@@ -147,10 +152,7 @@ export default function InformationPage() {
     setLoading(true);
 
     const body = {
-      end_date_simulation: new Date()
-        .toISOString()
-        .replace("T", " ")
-        .split(".")[0],
+      end_date: new Date().toISOString().replace("T", " ").split(".")[0],
     };
 
     console.log("body", body);
@@ -254,7 +256,7 @@ export default function InformationPage() {
             loading ? "animate-pulse bg-cus-dark-gray" : ""
           } w-full h-full border border-cus-black `}
         >
-          <div className="grid-container w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
+          <div className="w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
             {kandidat
               .filter((item) => item.kategori === activeCategory.nama)
               .map((item) => (
@@ -273,7 +275,7 @@ export default function InformationPage() {
                       detail: item.detail,
                       kandidat: item.kandidat,
                     }}
-                    rootPath={"simulation/information-board"}
+                    rootPath={"real-test/information-board"}
                   />
                 </div>
               ))}

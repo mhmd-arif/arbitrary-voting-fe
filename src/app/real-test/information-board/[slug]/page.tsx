@@ -56,6 +56,10 @@ export default function DetailHeading() {
       const timeRemaining = expiryDate - currentTime;
       const enterTime = new Date();
       localStorage.setItem("pageSlugEnterTime", enterTime.toISOString());
+      if (timeRemaining <= 0) {
+        setTimeLeft(null);
+        return;
+      }
       setTimeLeft(timeRemaining);
     }
   }, [router]);
@@ -77,8 +81,9 @@ export default function DetailHeading() {
     console.log("body", body);
 
     try {
-      const url = process.env.NEXT_PUBLIC_API_URL + "/record/?type=simulation";
+      const type = localStorage.getItem("type");
       const token = localStorage.getItem("access_token");
+      const url = process.env.NEXT_PUBLIC_API_URL + `/record/?type=${type}`;
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify(body),
@@ -88,6 +93,12 @@ export default function DetailHeading() {
         },
       });
 
+      const data = await response.json();
+      console.log("Fetched data:", data);
+      const resData = data.data;
+
+      // console.log(resData);
+
       if (!response.ok) {
         console.log("not ok");
         const errorMessage = await response.text();
@@ -95,7 +106,6 @@ export default function DetailHeading() {
         return;
       }
 
-      const data = await response.json();
       router.push(urlBackPage);
 
       if (!data || !data.data) {

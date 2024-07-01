@@ -11,7 +11,7 @@ export default function RealInformationCheck() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const [text, setText] = useState("");
-  const urlNextPage = "/simulation/final-answer";
+  const urlNextPage = "/real-test/final-answer";
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
@@ -25,7 +25,7 @@ export default function RealInformationCheck() {
     }
 
     const body = {
-      information_check_simulation: text,
+      information_check: text,
     };
 
     console.log("body", body);

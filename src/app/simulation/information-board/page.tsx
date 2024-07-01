@@ -256,7 +256,7 @@ export default function InformationPage() {
             loading ? "animate-pulse bg-cus-dark-gray" : ""
           } w-full h-full border border-cus-black `}
         >
-          <div className="grid-container w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
+          <div className=" w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
             {kandidat
               .filter((item) => item.kategori === activeCategory.nama)
               .map((item) => (
