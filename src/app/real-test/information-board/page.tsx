@@ -65,7 +65,7 @@ export default function InformationPage() {
   const { activeCategory, updateActiveCategory } = useGlobalContext();
 
   const router = useRouter();
-  const urlNextPage = "/simulation/information-check";
+  const urlNextPage = "/real-test/information-check";
 
   const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
 
@@ -175,8 +175,6 @@ export default function InformationPage() {
         setLoading(false);
         return;
       }
-
-      updateActiveCategory("nama", "");
 
       const data = await response.json();
       console.log("Fetched data:", data);
