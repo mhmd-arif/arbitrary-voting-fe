@@ -40,8 +40,8 @@ const fetchData = async (
     }
 
     const data = await response.json();
-    console.log("Fetched data:", data);
-    console.log(data.data);
+    // console.log("Fetched data:", data);
+    // console.log(data.data);
 
     if (!data || !data.data) {
       throw new Error("Invalid data format");
@@ -150,7 +150,7 @@ export default function InformationPage() {
       end_date: new Date().toISOString().replace("T", " ").split(".")[0],
     };
 
-    console.log("body", body);
+    // console.log("body", body);
 
     try {
       const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
@@ -166,7 +166,7 @@ export default function InformationPage() {
       });
 
       if (!response.ok) {
-        console.log("not ok");
+        // console.log("not ok");
         const errorMessage = await response.text();
         console.error("Server error:", errorMessage);
         setLoading(false);
@@ -174,10 +174,10 @@ export default function InformationPage() {
       }
 
       const data = await response.json();
-      console.log("Fetched data:", data);
+      // console.log("Fetched data:", data);
       const resData = data.data;
 
-      // console.log(resData);
+      // // console.log(resData);
       setLoading(false);
       localStorage.setItem("pageInfoEnterTime", "");
       localStorage.setItem("pageSlugEnterTime", "");

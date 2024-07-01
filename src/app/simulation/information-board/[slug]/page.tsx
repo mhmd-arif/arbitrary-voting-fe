@@ -74,7 +74,7 @@ export default function DetailHeading() {
       };
     }
 
-    console.log("body", body);
+    // console.log("body", body);
 
     try {
       const url = process.env.NEXT_PUBLIC_API_URL + "/record/?type=simulation";
@@ -89,7 +89,7 @@ export default function DetailHeading() {
       });
 
       if (!response.ok) {
-        console.log("not ok");
+        // console.log("not ok");
         const errorMessage = await response.text();
         console.error("Server error:", errorMessage);
         return;

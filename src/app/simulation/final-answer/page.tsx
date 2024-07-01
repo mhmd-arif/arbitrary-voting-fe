@@ -26,8 +26,8 @@ const fetchData = async (token: any, url: any) => {
     }
 
     const data = await response.json();
-    // console.log("Fetched data:", data);
-    // console.log(data.data);
+    // // console.log("Fetched data:", data);
+    // // console.log(data.data);
 
     if (!data || !data.data) {
       throw new Error("Invalid data format");
@@ -57,12 +57,12 @@ export default function FinalAnswer() {
     const token = localStorage.getItem("access_token");
     const url = process.env.NEXT_PUBLIC_API_URL + `/candidate?type=simulation`;
 
-    console.log(url, token);
+    // console.log(url, token);
 
     fetchData(token, url)
       .then((fetchedData) => {
         const resData = fetchedData;
-        console.log(resData);
+        // console.log(resData);
         setData(resData);
 
         setLoading(false);
@@ -88,7 +88,7 @@ export default function FinalAnswer() {
       final_answer_simulation: selectedOption + " (" + polParty + ")",
     });
 
-    console.log("body", body);
+    // console.log("body", body);
 
     try {
       const type = localStorage.getItem("type");
@@ -104,12 +104,12 @@ export default function FinalAnswer() {
         },
       });
 
-      // console.log(response);
+      // // console.log(response);
       const data = await response.json();
-      console.log("Fetched data:", data);
+      // console.log("Fetched data:", data);
 
       if (!response.ok) {
-        console.log("not ok");
+        // console.log("not ok");
         const errorMessage = await response.text();
         console.error("Server error:", errorMessage);
         setLoading(false);

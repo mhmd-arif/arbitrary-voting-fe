@@ -17,7 +17,7 @@ export default function Question() {
 
   const handleOptionChange = (option: any) => {
     setSelectedOption(option);
-    console.log(option);
+    // console.log(option);
   };
 
   const handleClick = async () => {

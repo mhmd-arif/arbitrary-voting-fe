@@ -79,7 +79,7 @@ export default function DetailHeading() {
       };
     }
 
-    console.log("body", body);
+    // console.log("body", body);
 
     try {
       const type = localStorage.getItem("type");
@@ -95,13 +95,13 @@ export default function DetailHeading() {
       });
 
       const data = await response.json();
-      console.log("Fetched data:", data);
+      // console.log("Fetched data:", data);
       const resData = data.data;
 
-      // console.log(resData);
+      // // console.log(resData);
 
       if (!response.ok) {
-        console.log("not ok");
+        // console.log("not ok");
         const errorMessage = await response.text();
         console.error("Server error:", errorMessage);
         return;

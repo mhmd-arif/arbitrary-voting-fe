@@ -28,7 +28,7 @@ export default function Gender() {
 
   useEffect(() => {
     if (user) {
-      console.log(user);
+      // console.log(user);
     }
   }, [user]);
 

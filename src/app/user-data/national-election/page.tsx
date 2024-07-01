@@ -17,7 +17,7 @@ export default function NationalElection() {
 
   useEffect(() => {
     if (user) {
-      console.log("user", user);
+      // console.log("user", user);
     }
   }, [user]);
 
@@ -29,17 +29,17 @@ export default function NationalElection() {
 
     setLoading(true);
     if (!user) {
-      console.log("user undefined");
+      // console.log("user undefined");
       setLoading(false);
       return;
     }
 
     const reqBody = JSON.stringify(user);
 
-    console.log("user", user, reqBody);
+    // console.log("user", user, reqBody);
 
     try {
-      console.log("url", url);
+      // console.log("url", url);
       const response = await fetch(url, {
         method: "POST",
         body: reqBody,
@@ -49,13 +49,13 @@ export default function NationalElection() {
       });
 
       // const test = await response.json();
-      // console.log("Fetched data:", test);
+      // // console.log("Fetched data:", test);
 
       const data = await response.json();
-      // console.log("Fetched data:", data);
+      // // console.log("Fetched data:", data);
 
       if (!response.ok) {
-        console.log("not ok");
+        // console.log("not ok");
         const errorMessage = await response.text();
         console.error("Server error:", errorMessage);
         setLoading(false);

@@ -15,7 +15,7 @@ export default function RealInformationCheck() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   };
 
   const handleClick = async () => {
@@ -28,7 +28,7 @@ export default function RealInformationCheck() {
       information_check: text,
     };
 
-    console.log("body", body);
+    // console.log("body", body);
 
     try {
       if (typeof window !== "undefined") {
@@ -47,7 +47,7 @@ export default function RealInformationCheck() {
         });
 
         if (!response.ok) {
-          console.log("not ok");
+          // console.log("not ok");
           const errorMessage = await response.text();
           console.error("Server error:", errorMessage);
           setLoading(false);
