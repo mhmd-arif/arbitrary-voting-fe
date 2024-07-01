@@ -13,12 +13,24 @@ export default function SimConfirmation() {
 
   const urlNextPage = "/simulation/category";
 
+  // const handleClick = async () => {
+
+  //   // if (agreement !== "iya") {
+  //   //   alert("Mohon setuju terlebih dahulu");
+  //   //   return;
+  //   // }
+  //   // router.push(urlNextPage);
+  // };
+
   const handleClick = async () => {
     if (agreement !== "iya") {
       alert("Mohon setuju terlebih dahulu");
       return;
     }
-    router.push(urlNextPage);
+    const confirmation = window.confirm("Apakah Anda setuju?");
+    if (confirmation) {
+      router.push(urlNextPage);
+    }
   };
 
   return (

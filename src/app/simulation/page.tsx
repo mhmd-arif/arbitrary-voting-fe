@@ -9,6 +9,7 @@ export default function Simulation() {
     localStorage.setItem("pageSlugEnterTime", "");
     localStorage.setItem("expiryTime", "");
   });
+
   return (
     <section className="wrapper">
       <h1 className="title">Simulasi Pemilihan</h1>

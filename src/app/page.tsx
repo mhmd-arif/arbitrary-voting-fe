@@ -1,7 +1,14 @@
 "use client";
 import NavButton from "@/components/NavButton";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    localStorage.setItem("pageInfoEnterTime", "");
+    localStorage.setItem("pageSlugEnterTime", "");
+    localStorage.setItem("expiryTime", "");
+  });
+
   return (
     <main>
       <div className="container h-screen ">

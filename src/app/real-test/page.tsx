@@ -9,6 +9,7 @@ export default function RealTest() {
     localStorage.setItem("pageSlugEnterTime", "");
     localStorage.setItem("expiryTime", "");
   });
+
   return (
     <section className="wrapper">
       <h1 className="title">Pemilihan Riil</h1>
