@@ -39,6 +39,7 @@ export default function NationalElection() {
     console.log("user", user, reqBody);
 
     try {
+      console.log("url", url);
       const response = await fetch(url, {
         method: "POST",
         body: reqBody,
