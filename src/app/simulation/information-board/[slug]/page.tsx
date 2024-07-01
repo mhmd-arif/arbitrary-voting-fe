@@ -16,36 +16,15 @@ export default function DetailHeading() {
   const urlBackPage = "/simulation/information-board";
 
   useEffect(() => {
-    const expiryTime = localStorage.getItem("expiryTime");
-    if (expiryTime) {
-      const currentTime = new Date().getTime();
-      const expiryDate = new Date(expiryTime).getTime();
-      const timeRemaining = expiryDate - currentTime;
-      if (timeRemaining <= 0) {
-        localStorage.setItem("expiryTime", "0"); // Mark as expired
-        router.push(urlNextPage);
-      } else {
-        setTimeLeft(timeRemaining);
-        const pageInfoEnterTime = localStorage.getItem("pageInfoEnterTime");
-        if (pageInfoEnterTime == null || pageInfoEnterTime == "") {
-          setTimeLeft(timeRemaining);
-        }
-      }
-    } else {
-      router.push(urlNextPage);
-    }
-  }, [router]);
-
-  useEffect(() => {
     if (timeLeft !== null) {
       const timer = setInterval(() => {
         setTimeLeft((prev) => {
           if (prev !== null) {
             const newTimeLeft = prev - 1000;
             if (newTimeLeft <= 0) {
-              localStorage.setItem("expiryTime", "0");
               clearInterval(timer);
-              handleToInformationBoard();
+              setTimeLeft(null);
+              // handleToInformationBoard();
             }
             return newTimeLeft;
           }
@@ -75,20 +54,14 @@ export default function DetailHeading() {
       const currentTime = new Date().getTime();
       const expiryDate = new Date(expiryTime).getTime();
       const timeRemaining = expiryDate - currentTime;
-      if (timeRemaining <= 0) {
-        localStorage.setItem("expiryTime", "0"); // Mark as expired
-        router.push(urlNextPage);
-      } else {
-        const enterTime = new Date();
-        localStorage.setItem("pageSlugEnterTime", enterTime.toISOString());
-      }
-    } else {
-      router.push(urlNextPage);
+      const enterTime = new Date();
+      localStorage.setItem("pageSlugEnterTime", enterTime.toISOString());
+      setTimeLeft(timeRemaining);
     }
   }, [router]);
 
   const handleToInformationBoard = async () => {
-    const pageSlugEnterTime = localStorage.getItem("pageSlugEnterTime") || "0";
+    const pageSlugEnterTime = localStorage.getItem("pageSlugEnterTime") || "";
     const enterTime = new Date(pageSlugEnterTime).getTime();
     const currentTime = new Date().getTime();
     const timeSpent = Math.round((currentTime - enterTime) / 1000);
@@ -133,6 +106,23 @@ export default function DetailHeading() {
     }
   };
 
+  const formatTime = (milliseconds: number) => {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const colorClass =
+      totalSeconds <= 10
+        ? "text-red-500 animate-pulse font-[500]"
+        : totalSeconds <= 15
+        ? "text-yellow-500 font-[500]"
+        : "";
+    return (
+      <p className={`${colorClass} text-center rounded-md  bg-cus-dark-gray`}>
+        {minutes}m {seconds}s
+      </p>
+    );
+  };
+
   if (!data) {
     return <div>Loading...</div>;
   }
@@ -163,7 +153,21 @@ export default function DetailHeading() {
           urna, pellentesque id velit ut, aliquam ultrices lorem.}`}
         </p>
       </div>
-      <ArrowButton text={"Selanjutnya"} onClick={handleToInformationBoard} />
+      <div className="flex w-full items-center">
+        {timeLeft !== null ? (
+          <p className="flex flex-col w-[10rem] py-2 px-4">
+            {formatTime(timeLeft)}
+          </p>
+        ) : (
+          <></>
+        )}
+        <div className="ml-auto">
+          <ArrowButton
+            text={"Selanjutnya"}
+            onClick={handleToInformationBoard}
+          />
+        </div>
+      </div>
     </section>
   );
 }
