@@ -68,7 +68,7 @@ export default function DetailHeading() {
     const pageSlugEnterTime = localStorage.getItem("pageSlugEnterTime") || "";
     const enterTime = new Date(pageSlugEnterTime).getTime();
     const currentTime = new Date().getTime();
-    const timeSpent = Math.round((currentTime - enterTime) / 100);
+    const timeSpent = Math.round((currentTime - enterTime) / 1000);
     let body;
     if (item) {
       body = {

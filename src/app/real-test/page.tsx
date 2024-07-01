@@ -26,10 +26,7 @@ export default function RealTest() {
         lorem sollicitudin, feugiat tortor. Mauris mauris urna, pellentesque id
         velit ut, aliquam ultrices lorem.
       </p>
-      <div className="w-full flex justify-between">
-        <BackButton />
-        <NavButton href={"/real-test/confirmation"} text={"Selanjutnya"} />
-      </div>
+      <NavButton href={"/real-test/confirmation"} text={"Selanjutnya"} />
     </section>
   );
 }
