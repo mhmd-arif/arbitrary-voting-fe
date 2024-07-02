@@ -5,21 +5,46 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import BackButton from "@/components/BackButton";
 
+interface PolParties {
+  id: number;
+  nama: string;
+}
+
 export default function NationalElection() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [polParties, setPolParties] = useState<string>("");
+  const [partaiData, setPartaiData] = useState<PolParties[]>([]);
+
   const { user, updateUser, setUser } = useGlobalContext();
 
   const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
   const urlNextPage = "/simulation/sim-confirmation";
 
   useEffect(() => {
-    if (user) {
-      // console.log("user", user);
-    }
-  }, [user]);
+    const fetchData = async () => {
+      try {
+        const url =
+          process.env.NEXT_PUBLIC_API_URL + `/candidate/national-political/`;
+
+        const response = await fetch(url, {
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        });
+        const data = await response.json();
+        console.log(data.data);
+        setPartaiData(data.data);
+      } catch (error) {
+        console.error(error);
+        // Handle error
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleClick = async () => {
     if (polParties === "") {
@@ -96,9 +121,11 @@ export default function NationalElection() {
           <option value="" className="text-cus-dark-gray">
             Kotak Jawaban
           </option>
-          <option value="PDIP">PDIP</option>
-          <option value="PAN">PAN</option>
-          <option value="Gerindra">Gerindra</option>
+          {partaiData.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.nama}
+            </option>
+          ))}
         </select>
       </div>
 
