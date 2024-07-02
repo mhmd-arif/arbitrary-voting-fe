@@ -179,9 +179,6 @@ export default function InformationPage() {
 
       // // console.log(resData);
       setLoading(false);
-      localStorage.setItem("pageInfoEnterTime", "");
-      localStorage.setItem("pageSlugEnterTime", "");
-      localStorage.setItem("expiryTime", "");
       router.push(urlNextPage);
 
       if (!data || !data.data) {

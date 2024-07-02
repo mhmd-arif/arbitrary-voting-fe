@@ -41,14 +41,16 @@ main {
 /* w-[40svw] h-[10svh] border rounded-3xl flex justify-center items-center bg-cus-dark-gray font-normal text-5xl  */
 .title {
   width: 40%;
-  height: 10%;
+  /* height: 10%; */
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid black;
   border-radius: 1rem;
   background-color: var(--cus-dark-gray);
-  font-size: 2.5rem;
+  font-size: 2rem;
   overflow-y: hidden;
 }
 
@@ -62,7 +64,8 @@ main {
   border: 2px solid black;
   border-radius: 1.5rem;
   padding: 2em;
-  font-size: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.4rem;
   margin-top: 2rem;
   /* font-size: clamp(0.75rem, calc(1rem + (1vw * 2)), 1.25rem); */
 }
@@ -94,6 +97,11 @@ p::-webkit-scrollbar {
   line-height: 2.8rem;
 }
 
+label {
+  font-size: 2.5rem;
+  max-width: 30ch;
+}
+
 /* border rounded w-[60%] mt-2 py-2 px-3 text-cus-black leading-tight focus:outline-none focus:shadow-outline text-4xl  */
 .input-style {
   border: 1px solid;
@@ -122,8 +130,8 @@ p::-webkit-scrollbar {
 .custom-btn {
   /* align-self: flex-end; */
   font-weight: normal;
-  font-size: 1.5rem;
-  max-width: 12rem;
+  font-size: 1.35rem;
+  max-width: 10rem;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
 }

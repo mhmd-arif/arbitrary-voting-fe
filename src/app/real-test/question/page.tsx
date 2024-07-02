@@ -40,14 +40,14 @@ export default function Question() {
           {options.map((option, index) => (
             <div
               key={option}
-              className={`py-2 border-4 rounded-md text-center cursor-pointer ${
+              className={`py-2 border-4 rounded-md text-center cursor-pointer  ${
                 selectedOption === option
                   ? "bg-cus-dark-gray border-black"
                   : "border-cus-dark-gray"
               }`}
               onClick={() => handleOptionChange(option)}
             >
-              <label htmlFor={option}>{option}</label>
+              <p className="text-[1.5rem]">{option}</p>
             </div>
           ))}
         </div>

@@ -150,10 +150,11 @@ export default function DetailHeading() {
         <p>Kategori : {item.kategori}</p>
         <p>Nama: {item.nama}</p>
         <p>Partai: {item.partai}</p>
-        <p>Detail: {item.detail}</p>
+        <p>Detail: </p>
 
         <p>
-          {`{Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula
+          {item.detail}
+          {` {Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula
           nisl in vehicula tincidunt. Donec vestibulum purus at vulputate
           faucibus. Vivamus malesuada justo aliquam libero tempus, id pharetra
           leo tristique. Quisque convallis tortor ac maximus placerat. Sed

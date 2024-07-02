@@ -70,7 +70,7 @@ export default function RealInformationCheck() {
       <div className="title">Information Check</div>
 
       <div className="content">
-        <label htmlFor="long-text">
+        <label htmlFor="long-text" className="label">
           Silakan Ceritakan Beberapa hal mengenai Pilihan yang Tersedia
         </label>
         <textarea

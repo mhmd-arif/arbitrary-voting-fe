@@ -56,6 +56,10 @@ export default function DetailHeading() {
       const timeRemaining = expiryDate - currentTime;
       const enterTime = new Date();
       localStorage.setItem("pageSlugEnterTime", enterTime.toISOString());
+      if (timeRemaining <= 0) {
+        setTimeLeft(null);
+        return;
+      }
       setTimeLeft(timeRemaining);
     }
   }, [router]);
@@ -138,10 +142,11 @@ export default function DetailHeading() {
       <div className="w-8/12 h-[70%] overflow-y-hidden flex flex-col justify-center border-2 border-cus-black rounded-3xl p-10 text-lg ">
         <p>Kategori : {item.kategori}</p>
         <p>Nama: {item.nama}</p>
-        <p>Detail: {item.detail}</p>
+        <p>Detail: </p>
 
         <p>
-          {`{Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula
+          {item.detail}
+          {` {Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula
           nisl in vehicula tincidunt. Donec vestibulum purus at vulputate
           faucibus. Vivamus malesuada justo aliquam libero tempus, id pharetra
           leo tristique. Quisque convallis tortor ac maximus placerat. Sed
