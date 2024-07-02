@@ -16,10 +16,34 @@ export default function RegionalElection() {
   const { user, updateUser } = useGlobalContext();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<PolParties[]>([]);
+  const [partaiData, setPartaiData] = useState<PolParties[]>([]);
 
   const router = useRouter();
   const urlNextPage = "/user-data/national-election";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const url =
+          process.env.NEXT_PUBLIC_API_URL + `/candidate/regional-political/`;
+
+        const response = await fetch(url, {
+          headers: {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        });
+        const data = await response.json();
+        console.log(data.data);
+        setPartaiData(data.data);
+      } catch (error) {
+        console.error(error);
+        // Handle error
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleInput = (newValue: string) => {
     setPolParties(newValue);
@@ -48,9 +72,11 @@ export default function RegionalElection() {
           <option value="" className="text-cus-dark-gray">
             Kotak Jawaban
           </option>
-          <option value="PDIP">PDIP</option>
-          <option value="PAN">PAN</option>
-          <option value="Gerindra">Gerindra</option>
+          {partaiData.map((item) => (
+            <option key={item.id} value={item.id}>
+              {item.nama}
+            </option>
+          ))}
         </select>
       </div>
 
