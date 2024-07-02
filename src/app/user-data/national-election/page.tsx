@@ -11,7 +11,7 @@ interface PolParties {
 }
 
 export default function NationalElection() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [polParties, setPolParties] = useState<string>("");
@@ -35,10 +35,11 @@ export default function NationalElection() {
           },
         });
         const data = await response.json();
-        console.log(data.data);
         setPartaiData(data.data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
         // Handle error
       }
     };
@@ -52,7 +53,6 @@ export default function NationalElection() {
       return;
     }
 
-    setLoading(true);
     if (!user) {
       // console.log("user undefined");
       setLoading(false);
@@ -121,6 +121,7 @@ export default function NationalElection() {
           <option value="" className="text-cus-dark-gray">
             Kotak Jawaban
           </option>
+          {loading && <option>Loading...</option>}
           {partaiData.map((item) => (
             <option key={item.id} value={item.id}>
               {item.nama}

@@ -36,8 +36,11 @@ export default function RegionalElection() {
         const data = await response.json();
         console.log(data.data);
         setPartaiData(data.data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
+        setLoading(false);
+
         // Handle error
       }
     };
@@ -72,6 +75,7 @@ export default function RegionalElection() {
           <option value="" className="text-cus-dark-gray">
             Kotak Jawaban
           </option>
+          {loading && <option>Loading...</option>}
           {partaiData.map((item) => (
             <option key={item.id} value={item.id}>
               {item.nama}
