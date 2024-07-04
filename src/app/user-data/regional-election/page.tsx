@@ -77,7 +77,7 @@ export default function RegionalElection() {
           </option>
           {loading && <option>Loading...</option>}
           {partaiData.map((item) => (
-            <option key={item.id} value={item.id}>
+            <option key={item.id} value={item.nama}>
               {item.nama}
             </option>
           ))}
