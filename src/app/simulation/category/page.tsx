@@ -68,6 +68,7 @@ export default function Category() {
   const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
 
   useEffect(() => {
+    setActiveCategory(localStorage.getItem("atvCategory") || "");
     const token = localStorage.getItem("access_token");
     fetchData(token, url)
       .then((fetchedData) => {
@@ -163,7 +164,7 @@ export default function Category() {
         durasi: timeDifference,
       };
 
-      // console.log(body);
+      console.log(body);
 
       try {
         const url = process.env.NEXT_PUBLIC_API_URL + "/record/duration/";

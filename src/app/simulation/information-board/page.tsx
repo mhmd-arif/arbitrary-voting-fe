@@ -1,13 +1,10 @@
 "use client";
 import TableCell from "@/components/TableCell";
 import Link from "next/link";
-// import { Item, generateData, Data, Header } from "./generateData";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
-import { useGlobalContext } from "@/context/GlobalContext";
-import { time } from "console";
-import BackButton from "@/components/BackButton";
+import Image from "next/image";
 
 export interface Kategori {
   id: number;
@@ -68,6 +65,7 @@ export default function InformationPage() {
 
   const router = useRouter();
   const urlNextPage = "/simulation/information-check";
+  const urlBackPage = "/simulation/category";
 
   const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
 
@@ -140,6 +138,10 @@ export default function InformationPage() {
     );
   };
 
+  const handleBack = () => {
+    router.push(urlBackPage);
+  };
+
   const handleClick = async () => {
     setLoading(true);
 
@@ -199,7 +201,6 @@ export default function InformationPage() {
     setActiveCategory(category);
 
     if (atvCategory && categoryStartTime && atvCategory !== category) {
-      console.log("hola");
       const currentTime = new Date().getTime();
 
       const timeDifference = Math.round(
@@ -318,7 +319,16 @@ export default function InformationPage() {
       )}
 
       <div className="w-full flex justify-center items-end">
-        <BackButton />
+        <button className="custom-btn self-start" onClick={handleBack}>
+          Kembali
+          <Image
+            src={"/arrow-back.svg"}
+            alt="arrow"
+            width={100}
+            height={100}
+            className="w-full flip-x"
+          />
+        </button>
         {timeLeft !== null ? (
           <div className="flex flex-col w-fit mx-auto">
             <p>
