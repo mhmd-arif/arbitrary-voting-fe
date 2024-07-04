@@ -5,13 +5,44 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import ArrowButton from "@/components/ArrowButton";
 import BackButton from "@/components/BackButton";
+import { time } from "console";
 
 export default function SimConfirmation() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [agreement, setAgreement] = useState<string>("");
+  const [timeLimit, setTimeLimit] = useState<number>(3);
 
   const urlNextPage = "/simulation/category";
+  useEffect(() => {
+    const fetchDataTime = async () => {
+      try {
+        const url =
+          process.env.NEXT_PUBLIC_API_URL +
+          `/information/time-limit?type=simulation`;
+        const token = localStorage.getItem("access_token");
+
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        });
+        const data = await response.json();
+        // console.log(data);
+        setTimeLimit(data.data.time);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+
+        // Handle error
+      }
+    };
+
+    fetchDataTime();
+  });
 
   const handleClick = async () => {
     if (agreement !== "iya") {
@@ -73,10 +104,10 @@ export default function SimConfirmation() {
 
     const expiryTime = localStorage.getItem("expiryTime");
 
-    if (expiryTime == null || expiryTime == "") {
+    if (expiryTime == null || expiryTime == "" || timeLimit) {
       const expiryDate = new Date();
 
-      expiryDate.setMinutes(expiryDate.getMinutes() + 2);
+      expiryDate.setMinutes(expiryDate.getMinutes() + timeLimit);
       expiryDate.setSeconds(expiryDate.getSeconds() + 1);
 
       localStorage.setItem("expiryTime", expiryDate.toISOString());
