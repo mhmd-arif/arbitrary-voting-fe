@@ -31,16 +31,6 @@ export default function SimConfirmation() {
         .toISOString()
         .replace("T", " ")
         .split(".")[0],
-      participant_question_answer: [
-        {
-          question: "Pertanyaan 1",
-          answer: 5,
-        },
-        {
-          question: "Pertanyaan 2",
-          answer: "Jawaban 2",
-        },
-      ],
     };
 
     // console.log("body", body);
