@@ -80,6 +80,9 @@ export default function SimConfirmation() {
       expiryDate.setSeconds(expiryDate.getSeconds() + 1);
 
       localStorage.setItem("expiryTime", expiryDate.toISOString());
+
+      const enterTime = new Date();
+      localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
       router.push(urlNextPage);
     }
 

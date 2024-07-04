@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
-import { useGlobalContext } from "@/context/GlobalContext";
 
 export interface Kategori {
   id: number;
@@ -61,8 +60,7 @@ export default function Category() {
 
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
-
-  const { activeCategory, updateActiveCategory } = useGlobalContext();
+  const [activeCategory, setActiveCategory] = useState<string>();
 
   const router = useRouter();
   const urlNextPage = "/simulation/information-board";
@@ -87,8 +85,59 @@ export default function Category() {
     // setLoading(false);
   }, [url]);
 
+  useEffect(() => {
+    const expiryTime = localStorage.getItem("expiryTime");
+    if (expiryTime) {
+      const currentTime = new Date().getTime();
+      const expiryDate = new Date(expiryTime).getTime();
+      const timeRemaining = expiryDate - currentTime;
+      if (timeRemaining > 0) {
+        setTimeLeft(timeRemaining);
+      } else {
+        setTimeLeft(null);
+      }
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (timeLeft !== null) {
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev !== null) {
+            const newTimeLeft = prev - 1000;
+            if (newTimeLeft <= 0) {
+              setTimeLeft(null);
+              clearInterval(timer);
+            }
+            return newTimeLeft;
+          }
+          return prev;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [timeLeft, router]);
+
+  const formatTime = (milliseconds: number) => {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const colorClass =
+      totalSeconds <= 30
+        ? "text-red-500 animate-pulse font-[500]"
+        : totalSeconds <= 60
+        ? "text-yellow-500 font-[500]"
+        : "";
+    return (
+      <p className={`${colorClass} text-center rounded-md  bg-cus-dark-gray`}>
+        {minutes}m {seconds}s
+      </p>
+    );
+  };
+
   const handleClick = async () => {
-    if (activeCategory.nama === "") {
+    if (activeCategory === "") {
       alert("Mohon pilih kategori");
       return;
     }
@@ -96,8 +145,64 @@ export default function Category() {
     router.push(urlNextPage);
   };
 
-  const handleActiveCategory = (category: string) => {
-    updateActiveCategory("nama", category);
+  const handleActiveCategory = async (category: string) => {
+    const atvCategory = localStorage.getItem("atvCategory");
+    const categoryStartTime = localStorage.getItem("categoryStartTime");
+    setActiveCategory(category);
+
+    if (atvCategory && categoryStartTime && atvCategory !== category) {
+      console.log("hola");
+      const currentTime = new Date().getTime();
+
+      const timeDifference = Math.round(
+        (currentTime - new Date(categoryStartTime).getTime()) / 1000
+      );
+
+      const body = {
+        kategori: atvCategory,
+        durasi: timeDifference,
+      };
+
+      console.log(body);
+
+      try {
+        const url = process.env.NEXT_PUBLIC_API_URL + "/record/duration/";
+        const token = localStorage.getItem("access_token");
+        const response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+        console.log(data.data);
+
+        if (!response.ok) {
+          // console.log("not ok");
+          const errorMessage = await response.text();
+          console.error("Server error:", errorMessage);
+          return;
+        }
+
+        // const data = await response.json();
+
+        if (!data || !data.data) {
+          throw new Error("Invalid data format");
+        }
+      } catch (error) {
+        console.error("Error :", error);
+      }
+
+      localStorage.setItem("categoryStartTime", new Date().toString());
+    }
+
+    localStorage.setItem("atvCategory", category);
+    if (!categoryStartTime) {
+      localStorage.setItem("categoryStartTime", new Date().toString());
+    }
   };
 
   return (
@@ -125,7 +230,7 @@ export default function Category() {
               <div
                 key={index}
                 className={` py-4 border border-cus-black cursor-pointer ${
-                  activeCategory.nama === item.nama ? "bg-cus-dark-gray" : ""
+                  activeCategory === item.nama ? "bg-cus-dark-gray" : ""
                 }`}
                 onClick={() => handleActiveCategory(item.nama)}
               >
@@ -135,8 +240,18 @@ export default function Category() {
           </nav>
         )}
       </div>
-
-      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      <div className="flex w-full items-center">
+        {timeLeft !== null ? (
+          <p className="flex flex-col w-[10rem] py-2 px-4">
+            {formatTime(timeLeft)}
+          </p>
+        ) : (
+          <></>
+        )}
+        <div className="ml-auto">
+          <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+        </div>
+      </div>
     </section>
   );
 }

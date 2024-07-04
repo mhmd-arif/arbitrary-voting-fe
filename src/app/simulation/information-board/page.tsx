@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
 import { useGlobalContext } from "@/context/GlobalContext";
 import { time } from "console";
+import BackButton from "@/components/BackButton";
 
 export interface Kategori {
   id: number;
@@ -95,12 +96,6 @@ export default function InformationPage() {
       const timeRemaining = expiryDate - currentTime;
       if (timeRemaining > 0) {
         setTimeLeft(timeRemaining);
-        const pageInfoEnterTime = localStorage.getItem("pageInfoEnterTime");
-        if (pageInfoEnterTime == null || pageInfoEnterTime == "") {
-          setTimeLeft(timeRemaining);
-          const enterTime = new Date();
-          localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
-        }
       } else {
         setTimeLeft(null);
       }
@@ -177,7 +172,7 @@ export default function InformationPage() {
         return;
       }
 
-      updateActiveCategory("nama", "");
+      // updateActiveCategory("nama", "");
 
       const data = await response.json();
       // console.log("Fetched data:", data);
@@ -196,22 +191,6 @@ export default function InformationPage() {
     }
     // router.push(urlNextPage);
   };
-
-  // const numberOfAdditionalCandidates = 20;
-
-  // const additionalCandidates = Array.from(
-  //   { length: numberOfAdditionalCandidates },
-  //   (v, i) => ({
-  //     id: i + 101,
-  //     kategori: `Cat ${(i + 1) % 6}`,
-  //     nama: `Kandidat p ${i + 101}`,
-  //     headline: `Headline ${i + 101}`,
-  //     detail: `Detail ${i + 101}`,
-  //     kandidat: i + 101,
-  //   })
-  // );
-
-  // const extendedKandidat = [...kandidat, ...additionalCandidates];
 
   const handleActiveCategory = (category: string) => {
     updateActiveCategory("nama", category);
@@ -236,69 +215,66 @@ export default function InformationPage() {
           ))}
         </nav>
       ) : (
-        <></>
-      )}
-
-      <div className="w-full h-[70%] flex flex-col items-center mb-4">
-        <nav className="w-[80%]  grid grid-flow-col  mb-6 text-center">
-          {kategori.map((item, index) => (
-            <div
-              key={index}
-              className={` py-4 border border-cus-black cursor-pointer ${
-                activeCategory.nama === item.nama ? "bg-cus-dark-gray" : ""
-              }`}
-              onClick={() => handleActiveCategory(item.nama)}
-            >
-              {item.nama}
+        <div className="w-full h-[70%] flex flex-col items-center mb-4">
+          <nav className="w-[80%]  grid grid-flow-col  mb-6 text-center">
+            {kategori.map((item, index) => (
+              <div
+                key={index}
+                className={` py-4 border border-cus-black cursor-pointer ${
+                  activeCategory.nama === item.nama ? "bg-cus-dark-gray" : ""
+                }`}
+                onClick={() => handleActiveCategory(item.nama)}
+              >
+                {item.nama}
+              </div>
+            ))}
+          </nav>
+          <div
+            className={`${
+              loading ? "animate-pulse bg-cus-dark-gray" : ""
+            } w-full h-full border border-cus-black `}
+          >
+            <div className=" w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
+              {kandidat
+                .filter((item) => item.kategori === activeCategory.nama)
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    className="w-full border border-cus-black cursor-pointer hover:bg-cus-dark-gray"
+                  >
+                    <TableCell
+                      data={{
+                        id: item.id,
+                        kategori: item.kategori,
+                        nama: item.nama,
+                        // partai: item.partai || "defaultValue",
+                        partai: "defaultValue",
+                        headline: item.headline,
+                        detail: item.detail,
+                        kandidat: item.kandidat,
+                      }}
+                      rootPath={"simulation/information-board"}
+                    />
+                  </div>
+                ))}
             </div>
-          ))}
-        </nav>
-        <div
-          className={`${
-            loading ? "animate-pulse bg-cus-dark-gray" : ""
-          } w-full h-full border border-cus-black `}
-        >
-          <div className=" w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
-            {kandidat
-              .filter((item) => item.kategori === activeCategory.nama)
-              .map((item) => (
-                <div
-                  key={item.id}
-                  className="w-full border border-cus-black cursor-pointer hover:bg-cus-dark-gray"
-                >
-                  <TableCell
-                    data={{
-                      id: item.id,
-                      kategori: item.kategori,
-                      nama: item.nama,
-                      // partai: item.partai || "defaultValue",
-                      partai: "defaultValue",
-                      headline: item.headline,
-                      detail: item.detail,
-                      kandidat: item.kandidat,
-                    }}
-                    rootPath={"simulation/information-board"}
-                  />
-                </div>
-              ))}
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="w-full flex justify-between">
+      <div className="w-full flex justify-center items-end">
+        <BackButton />
         {timeLeft !== null ? (
-          <div className="flex flex-col w-fit">
+          <div className="flex flex-col w-fit mx-auto">
             <p>
               lanjutkan membaca <br /> setidaknya selama
             </p>
             {formatTime(timeLeft)}
           </div>
         ) : (
-          <>
-            <div></div>
-            <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
-          </>
+          <div className="mx-auto"></div>
         )}
+        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
       </div>
     </section>
   );
