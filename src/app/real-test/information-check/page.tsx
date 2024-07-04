@@ -12,10 +12,15 @@ export default function RealInformationCheck() {
 
   const [text, setText] = useState("");
   const urlNextPage = "/real-test/final-answer";
+  const urlBackPage = "/simulation/category";
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
     // console.log(e.target.value);
+  };
+
+  const handleBack = () => {
+    router.push(urlBackPage);
   };
 
   const handleClick = async () => {
@@ -82,7 +87,16 @@ export default function RealInformationCheck() {
         />
       </div>
       <div className="w-full flex justify-between">
-        <BackButton />
+        <button className="custom-btn self-start" onClick={handleBack}>
+          Kembali
+          <Image
+            src={"/arrow-back.svg"}
+            alt="arrow"
+            width={100}
+            height={100}
+            className="w-full flip-x"
+          />
+        </button>
         <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
       </div>
     </section>
