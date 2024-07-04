@@ -64,7 +64,7 @@ export default function InformationPage() {
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
-  const { activeCategory, updateActiveCategory } = useGlobalContext();
+  const [activeCategory, setActiveCategory] = useState<string>();
 
   const router = useRouter();
   const urlNextPage = "/simulation/information-check";
@@ -72,6 +72,7 @@ export default function InformationPage() {
   const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
 
   useEffect(() => {
+    setActiveCategory(localStorage.getItem("atvCategory") || "");
     const token = localStorage.getItem("access_token");
     fetchData(token, url)
       .then((fetchedData) => {
@@ -192,8 +193,62 @@ export default function InformationPage() {
     // router.push(urlNextPage);
   };
 
-  const handleActiveCategory = (category: string) => {
-    updateActiveCategory("nama", category);
+  const handleActiveCategory = async (category: string) => {
+    const atvCategory = localStorage.getItem("atvCategory");
+    const categoryStartTime = localStorage.getItem("categoryStartTime");
+    setActiveCategory(category);
+
+    if (atvCategory && categoryStartTime && atvCategory !== category) {
+      console.log("hola");
+      const currentTime = new Date().getTime();
+
+      const timeDifference = Math.round(
+        (currentTime - new Date(categoryStartTime).getTime()) / 1000
+      );
+
+      const body = {
+        kategori: atvCategory,
+        durasi: timeDifference,
+      };
+
+      console.log(body);
+
+      try {
+        const url = process.env.NEXT_PUBLIC_API_URL + "/record/duration/";
+        const token = localStorage.getItem("access_token");
+        const response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+        console.log(data.data);
+
+        if (!response.ok) {
+          // console.log("not ok");
+          const errorMessage = await response.text();
+          console.error("Server error:", errorMessage);
+          return;
+        }
+
+        if (!data || !data.data) {
+          throw new Error("Invalid data format");
+        }
+      } catch (error) {
+        console.error("Error :", error);
+      }
+
+      localStorage.setItem("categoryStartTime", new Date().toString());
+    }
+
+    localStorage.setItem("atvCategory", category);
+    if (!categoryStartTime) {
+      localStorage.setItem("categoryStartTime", new Date().toString());
+    }
   };
 
   return (
@@ -221,7 +276,7 @@ export default function InformationPage() {
               <div
                 key={index}
                 className={` py-4 border border-cus-black cursor-pointer ${
-                  activeCategory.nama === item.nama ? "bg-cus-dark-gray" : ""
+                  activeCategory === item.nama ? "bg-cus-dark-gray" : ""
                 }`}
                 onClick={() => handleActiveCategory(item.nama)}
               >
@@ -236,7 +291,7 @@ export default function InformationPage() {
           >
             <div className=" w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
               {kandidat
-                .filter((item) => item.kategori === activeCategory.nama)
+                .filter((item) => item.kategori === activeCategory)
                 .map((item) => (
                   <div
                     key={item.id}

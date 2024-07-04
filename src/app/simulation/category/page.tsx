@@ -163,7 +163,7 @@ export default function Category() {
         durasi: timeDifference,
       };
 
-      console.log(body);
+      // console.log(body);
 
       try {
         const url = process.env.NEXT_PUBLIC_API_URL + "/record/duration/";
@@ -178,7 +178,7 @@ export default function Category() {
         });
 
         const data = await response.json();
-        console.log(data.data);
+        // console.log(data.data);
 
         if (!response.ok) {
           // console.log("not ok");
@@ -186,8 +186,6 @@ export default function Category() {
           console.error("Server error:", errorMessage);
           return;
         }
-
-        // const data = await response.json();
 
         if (!data || !data.data) {
           throw new Error("Invalid data format");
