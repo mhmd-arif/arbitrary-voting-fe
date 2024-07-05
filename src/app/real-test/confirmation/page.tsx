@@ -10,20 +10,38 @@ export default function Confirmation() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [agreement, setAgreement] = useState<string>("");
+  const [timeLimit, setTimeLimit] = useState<number>(15);
 
   const urlNextPage = "/real-test/category";
+  useEffect(() => {
+    const fetchDataTime = async () => {
+      try {
+        const url =
+          process.env.NEXT_PUBLIC_API_URL +
+          `/information/time-limit?type=simulation`;
+        const token = localStorage.getItem("access_token");
 
-  // const handleClick = async () => {
-  //   if (agreement !== "iya") {
-  //     alert("Mohon setuju terlebih dahulu");
-  //     return;
-  //   }
-  //   const confirmation = window.confirm("Apakah Anda setuju?");
-  //   if (confirmation) {
-  //     router.push(urlNextPage);
-  //   }
-  // };
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        });
+        const data = await response.json();
+        // console.log(data);
+        setTimeLimit(data.data.time);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
 
+        // Handle error
+      }
+    };
+
+    fetchDataTime();
+  });
   const handleClick = async () => {
     if (agreement !== "iya") {
       alert("Mohon setuju terlebih dahulu");
@@ -84,7 +102,7 @@ export default function Confirmation() {
     if (expiryTime == null || expiryTime == "") {
       const expiryDate = new Date();
 
-      expiryDate.setMinutes(expiryDate.getMinutes() + 2);
+      expiryDate.setMinutes(expiryDate.getMinutes() + timeLimit);
       expiryDate.setSeconds(expiryDate.getSeconds() + 1);
 
       localStorage.setItem("expiryTime", expiryDate.toISOString());

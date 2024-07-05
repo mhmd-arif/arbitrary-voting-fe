@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import ArrowButton from "@/components/ArrowButton";
 import BackButton from "@/components/BackButton";
-import { time } from "console";
 
 export default function SimConfirmation() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [agreement, setAgreement] = useState<string>("");
-  const [timeLimit, setTimeLimit] = useState<number>(3);
+  const [timeLimit, setTimeLimit] = useState<number>(5);
 
   const urlNextPage = "/simulation/category";
   useEffect(() => {
