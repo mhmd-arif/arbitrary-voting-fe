@@ -5,16 +5,25 @@ import { useEffect } from "react";
 
 export default function Simulation() {
   useEffect(() => {
-    localStorage.setItem("pageInfoEnterTime", "");
-    localStorage.setItem("pageSlugEnterTime", "");
-    localStorage.setItem("expiryTime", "");
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => {
+      if (
+        key === "type" ||
+        key === "access_token" ||
+        key === "ally-supports-cache"
+      ) {
+        return;
+      }
+      localStorage.setItem(key, "");
+    });
   });
 
   return (
     <section className="wrapper">
       <h1 className="title">Simulasi Pemilihan</h1>
       <p className="description">
-        Simulasi / percobaan pemilihan sebelum pemilihan yang sebenarnya <br />
+        Simulasi / percobaan pemilihan sebelum pemilihan yang sebenarnya
+        <br />
         DESKRIPSI SIMULASI <br />
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula
         nisl in vehicula tincidunt. Donec vestibulum purus at vulputate

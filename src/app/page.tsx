@@ -4,9 +4,17 @@ import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    localStorage.setItem("pageInfoEnterTime", "");
-    localStorage.setItem("pageSlugEnterTime", "");
-    localStorage.setItem("expiryTime", "");
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => {
+      if (
+        key === "type" ||
+        key === "access_token" ||
+        key === "ally-supports-cache"
+      ) {
+        return;
+      }
+      localStorage.setItem(key, "");
+    });
   });
 
   return (
