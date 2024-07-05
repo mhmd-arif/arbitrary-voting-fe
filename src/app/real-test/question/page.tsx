@@ -6,7 +6,7 @@ import Image from "next/image";
 import BackButton from "@/components/BackButton";
 import ArrowButton from "@/components/ArrowButton";
 
-const options = ["nilai 1", "nilai 2", "nilai 3", "nilai 4", "nilai 5"];
+const options = [" 1", " 2", " 3", " 4", " 5"];
 
 export default function Question() {
   const router = useRouter();
@@ -26,7 +26,57 @@ export default function Question() {
       return;
     }
 
-    router.push(urlNextPage);
+    const body = {
+      participant_question_answer: [
+        {
+          question: "Pertanyaan 1",
+          answer: parseInt(selectedOption),
+        },
+        {
+          question: "Pertanyaan 2",
+          answer: "Jawaban 2",
+        },
+      ],
+    };
+
+    console.log("body", body);
+
+    try {
+      if (typeof window !== "undefined") {
+        const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
+        const token =
+          typeof window !== "undefined"
+            ? localStorage.getItem("access_token")
+            : null;
+        const response = await fetch(url, {
+          method: "PUT",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+        console.log(data.data);
+
+        if (!response.ok) {
+          // console.log("not ok");
+          const errorMessage = await response.text();
+          console.error("Server error:", errorMessage);
+          setLoading(false);
+          return;
+        }
+
+        // router.push(urlNextPage);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error :", error);
+    }
+
+    // router.push(urlNextPage);
   };
 
   return (
@@ -34,9 +84,9 @@ export default function Question() {
       <h1 className="title">Kuesioner</h1>
 
       <div className="content">
-        <label>1.Pertanyaan pertama</label>
+        <label>1. Pertanyaan 1</label>
 
-        <div className="grid grid-cols-5 text-[1rem] mt-[1.5rem] gap-x-[3rem]">
+        <div className="w-[80%] ml-[1.8rem] grid grid-cols-5 text-[1rem] mt-[1.5rem] gap-x-[3rem] ">
           {options.map((option, index) => (
             <div
               key={option}
@@ -47,7 +97,7 @@ export default function Question() {
               }`}
               onClick={() => handleOptionChange(option)}
             >
-              <p className="text-[1.5rem]">{option}</p>
+              <p className="text-[1.3rem]">{option}</p>
             </div>
           ))}
         </div>
