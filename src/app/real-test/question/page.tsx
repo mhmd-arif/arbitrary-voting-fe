@@ -32,10 +32,10 @@ export default function Question() {
           question: "Pertanyaan 1",
           answer: parseInt(selectedOption),
         },
-        {
-          question: "Pertanyaan 2",
-          answer: "Jawaban 2",
-        },
+        // {
+        //   question: "Pertanyaan 2",
+        //   answer: "Jawaban 2",
+        // },
       ],
     };
 
@@ -58,7 +58,7 @@ export default function Question() {
         });
 
         const data = await response.json();
-        console.log(data.data);
+        // console.log(data.data);
 
         if (!response.ok) {
           // console.log("not ok");
@@ -68,7 +68,7 @@ export default function Question() {
           return;
         }
 
-        // router.push(urlNextPage);
+        router.push(urlNextPage);
       }
 
       setLoading(false);
@@ -76,7 +76,7 @@ export default function Question() {
       console.error("Error :", error);
     }
 
-    // router.push(urlNextPage);
+    router.push(urlNextPage);
   };
 
   return (
