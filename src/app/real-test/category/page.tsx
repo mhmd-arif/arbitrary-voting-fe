@@ -239,7 +239,18 @@ export default function RealCategory() {
         )}
       </div>
 
-      <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+      <div className="flex w-full items-center">
+        {timeLeft !== null ? (
+          <p className="flex flex-col w-[10rem] py-2 px-4">
+            {formatTime(timeLeft)}
+          </p>
+        ) : (
+          <></>
+        )}
+        <div className="ml-auto">
+          <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+        </div>
+      </div>
     </section>
   );
 }
