@@ -149,7 +149,6 @@ export default function Category() {
     setActiveCategory(category);
 
     if (atvCategory && categoryStartTime && atvCategory !== category) {
-      console.log("hola");
       const currentTime = new Date().getTime();
 
       const timeDifference = Math.round(

@@ -314,7 +314,7 @@ export default function InformationPage() {
       </div>
 
       <div className="w-full flex justify-center items-end">
-        <button className="custom-btn self-start" onClick={handleBack}>
+        <button className="custom-btn self-start " onClick={handleBack}>
           Kembali
           <Image
             src={"/arrow-back.svg"}
@@ -325,16 +325,21 @@ export default function InformationPage() {
           />
         </button>
         {timeLeft !== null ? (
-          <div className="flex flex-col w-fit mx-auto">
-            <p>
-              lanjutkan membaca <br /> setidaknya selama
-            </p>
-            {formatTime(timeLeft)}
-          </div>
+          <>
+            <div className="flex flex-col w-fit text-center mx-auto">
+              <p>
+                lanjutkan membaca <br /> setidaknya selama
+              </p>
+              {formatTime(timeLeft)}
+            </div>
+            <div className="w-[10rem]"></div>
+          </>
         ) : (
-          <div className="mx-auto"></div>
+          <>
+            <div className="mx-auto"></div>
+            <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+          </>
         )}
-        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
       </div>
     </section>
   );
