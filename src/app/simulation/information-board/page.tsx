@@ -1,6 +1,5 @@
 "use client";
 import TableCell from "@/components/TableCell";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";

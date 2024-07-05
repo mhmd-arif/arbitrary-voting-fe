@@ -1,11 +1,9 @@
 "use client";
 import TableCell from "@/components/TableCell";
-import Link from "next/link";
-// import { Item, generateData, Data, Header } from "./generateData";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
-import { useGlobalContext } from "@/context/GlobalContext";
+import Image from "next/image";
 
 export interface Kategori {
   id: number;
@@ -62,15 +60,18 @@ export default function InformationPage() {
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
-  const { activeCategory, updateActiveCategory } = useGlobalContext();
+  const [activeCategory, setActiveCategory] = useState<string>();
 
   const router = useRouter();
   const urlNextPage = "/real-test/information-check";
+  const urlBackPage = "/real-test/category";
 
   useEffect(() => {
+    setActiveCategory(localStorage.getItem("atvCategory") || "");
     const type = localStorage.getItem("type");
     const token = localStorage.getItem("access_token");
     const url = process.env.NEXT_PUBLIC_API_URL + `/information?type=${type}`;
+
     fetchData(token, url)
       .then((fetchedData) => {
         const { kategori, kandidat } = fetchedData;
@@ -94,12 +95,6 @@ export default function InformationPage() {
       const timeRemaining = expiryDate - currentTime;
       if (timeRemaining > 0) {
         setTimeLeft(timeRemaining);
-        const pageInfoEnterTime = localStorage.getItem("pageInfoEnterTime");
-        if (pageInfoEnterTime == null || pageInfoEnterTime == "") {
-          setTimeLeft(timeRemaining);
-          const enterTime = new Date();
-          localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
-        }
       } else {
         setTimeLeft(null);
       }
@@ -141,6 +136,10 @@ export default function InformationPage() {
         {minutes}m {seconds}s
       </p>
     );
+  };
+
+  const handleBack = () => {
+    router.push(urlBackPage);
   };
 
   const handleClick = async () => {
@@ -190,24 +189,61 @@ export default function InformationPage() {
     // router.push(urlNextPage);
   };
 
-  // const numberOfAdditionalCandidates = 20;
+  const handleActiveCategory = async (category: string) => {
+    const atvCategory = localStorage.getItem("atvCategory");
+    const categoryStartTime = localStorage.getItem("categoryStartTime");
+    setActiveCategory(category);
 
-  // const additionalCandidates = Array.from(
-  //   { length: numberOfAdditionalCandidates },
-  //   (v, i) => ({
-  //     id: i + 101,
-  //     kategori: `Cat ${(i + 1) % 6}`,
-  //     nama: `Kandidat p ${i + 101}`,
-  //     headline: `Headline ${i + 101}`,
-  //     detail: `Detail ${i + 101}`,
-  //     kandidat: i + 101,
-  //   })
-  // );
+    if (atvCategory && categoryStartTime && atvCategory !== category) {
+      const currentTime = new Date().getTime();
 
-  // const extendedKandidat = [...kandidat, ...additionalCandidates];
+      const timeDifference = Math.round(
+        (currentTime - new Date(categoryStartTime).getTime()) / 1000
+      );
 
-  const handleActiveCategory = (category: string) => {
-    updateActiveCategory("nama", category);
+      const body = {
+        kategori: atvCategory,
+        durasi: timeDifference,
+      };
+
+      console.log(body);
+
+      try {
+        const url = process.env.NEXT_PUBLIC_API_URL + "/record/duration/";
+        const token = localStorage.getItem("access_token");
+        const response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+        console.log(data.data);
+
+        if (!response.ok) {
+          // console.log("not ok");
+          const errorMessage = await response.text();
+          console.error("Server error:", errorMessage);
+          return;
+        }
+
+        if (!data || !data.data) {
+          throw new Error("Invalid data format");
+        }
+      } catch (error) {
+        console.error("Error :", error);
+      }
+
+      localStorage.setItem("categoryStartTime", new Date().toString());
+    }
+
+    localStorage.setItem("atvCategory", category);
+    if (!categoryStartTime) {
+      localStorage.setItem("categoryStartTime", new Date().toString());
+    }
   };
 
   return (
@@ -238,7 +274,7 @@ export default function InformationPage() {
             <div
               key={index}
               className={` py-4 border border-cus-black cursor-pointer ${
-                activeCategory.nama === item.nama ? "bg-cus-dark-gray" : ""
+                activeCategory === item.nama ? "bg-cus-dark-gray" : ""
               }`}
               onClick={() => handleActiveCategory(item.nama)}
             >
@@ -253,7 +289,7 @@ export default function InformationPage() {
         >
           <div className="w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
             {kandidat
-              .filter((item) => item.kategori === activeCategory.nama)
+              .filter((item) => item.kategori === activeCategory)
               .map((item) => (
                 <div
                   key={item.id}
@@ -277,20 +313,28 @@ export default function InformationPage() {
         </div>
       </div>
 
-      <div className="w-full flex justify-between">
+      <div className="w-full flex justify-center items-end">
+        <button className="custom-btn self-start" onClick={handleBack}>
+          Kembali
+          <Image
+            src={"/arrow-back.svg"}
+            alt="arrow"
+            width={100}
+            height={100}
+            className="w-full flip-x"
+          />
+        </button>
         {timeLeft !== null ? (
-          <div className="flex flex-col w-fit">
+          <div className="flex flex-col w-fit mx-auto">
             <p>
               lanjutkan membaca <br /> setidaknya selama
             </p>
             {formatTime(timeLeft)}
           </div>
         ) : (
-          <>
-            <div></div>
-            <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
-          </>
+          <div className="mx-auto"></div>
         )}
+        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
       </div>
     </section>
   );
