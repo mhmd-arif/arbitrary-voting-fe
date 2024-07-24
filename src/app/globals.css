@@ -56,19 +56,30 @@ main {
 
 /* description max-w-[60ch] border-2 border-cus-black rounded-3xl p-[2em] text-2xl */
 .description {
-  width: 65ch;
+  width: 60ch;
   max-width: 60%;
   min-height: 50svh;
   max-height: 60svh;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
   overflow-y: hidden;
   border: 2px solid black;
   border-radius: 1.5rem;
-  padding: 2em;
-  font-size: 1rem;
-  line-height: 1.4rem;
+  padding: 3em 2em 3em 2em;
   margin-top: 2rem;
   /* font-size: clamp(0.75rem, calc(1rem + (1vw * 2)), 1.25rem); */
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
 }
+
+/* .description p {
+  height: 80%;
+  width: 60ch;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+} */
 
 p::-webkit-scrollbar {
   /* background-color: #919191;

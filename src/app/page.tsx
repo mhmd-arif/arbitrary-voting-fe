@@ -20,20 +20,18 @@ export default function Home() {
   return (
     <main>
       <div className="container h-screen ">
-        <h1 className="title">Nama Penelitian</h1>
+        <h1 className="title">Deskripsi Penelitian</h1>
 
-        <p className="description ">
-          DESKRIPSI PENELITIAN <br /> Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. In vehicula nisl in vehicula tincidunt. Donec
-          vestibulum purus at vulputate faucibus. Vivamus malesuada justo
-          aliquam libero tempus, id pharetra leo tristique. Quisque convallis
-          tortor ac maximus placerat. Sed tincidunt sollicitudin augue rhoncus
-          aliquet. Nunc facilisis vitae eros eu venenatis. Cras lacinia ornare
-          arcu, nec convallis felis fermentum condimentum. Proin placerat vitae
-          turpis ut semper. Fusce nec nisl lectus. Donec efficitur iaculis
-          ligula. Donec in lectus finibus, iaculis lorem sollicitudin, feugiat
-          tortor. Mauris mauris urna, pellentesque id velit ut, aliquam ultrices
-          lorem.
+        <p className="description">
+          Penelitian ini dilakukan untuk melihat perilaku memilih dan pola
+          pemrosesan informasi dalam simulasi pemilu. Dalam penelitian ini Anda
+          akan diminta untuk menjadi pemilih dalam simulasi pemilu yang
+          dilaksanakan oleh peneliti. Penelitian akan dimulai dengan pelaksanaan
+          uji coba agar peserta terbiasa dengan tampilan dari platform
+          pemilihan. Setelah itu peserta akan masuk ke dalam pengambilan data
+          simulasi pemilu serta mengisi kuesioner yang dicantumkan. Penelitian
+          ini bermanfaat untuk mengetahui faktor apa saja yang mempengaruhi
+          kualitas pilihan seseorang terutama dalam konteks pemilu
         </p>
 
         <NavButton href={"/simulation"} text={"Selanjutnya"} />
