@@ -134,8 +134,7 @@ export default function FinalAnswer() {
     <section className="wrapper">
       <h1 className="title">Pilihan Akhir</h1>
       <h2 className="text-center text-md mt-2 mb-4">
-        SILAKAN MEMPELAJARI INFORMASI YANG DISEDIAKAN <br />
-        UNTUK MENENTUKAN PILIHAN ANDA
+        Silakan Tentukan Pilihan yang Anda Pilih
       </h2>
 
       <div className=" border w-[100%] h-[100%] mb-2 overflow-x-auto overflow-y-auto border-cus-black ">
