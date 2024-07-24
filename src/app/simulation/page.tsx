@@ -21,7 +21,7 @@ export default function Simulation() {
   return (
     <section className="wrapper">
       <h1 className="title">Simulasi Pemilihan</h1>
-      <p className="description">
+      <p className="description" id="short-desc">
         Tahap ini merupakan simulasi untuk pengenalan mengenai aplikasi
       </p>
       <div className="w-full flex justify-between">
