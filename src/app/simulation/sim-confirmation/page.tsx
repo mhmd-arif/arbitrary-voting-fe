@@ -123,9 +123,15 @@ export default function SimConfirmation() {
     <section className="wrapper">
       <div className="title">Simulasi Pemilihan</div>
       <div className="content">
-        <label>
-          Apakah Anda Bersedia untuk Mengikuti Penelitian Ini hingga Selesai?
-        </label>
+        <h3 className="confirmation">
+          Pernyataan Kesetujuan: Dengan ini, saya menyatakan bahwa saya bersedia
+          berpartisipasi pada penelitian ini dan menyatakan bahwa keikutsertaan
+          ini dilakukan secara sukarela tanpa ada paksaan dari pihak manapun.
+          Saya memahami secara jelas tujuan, prosedur, dan hak partisipasi saya
+          dalam penelitian. Saya mengizinkan peneliti menggunakan data-data yang
+          didapatkan pada rangkaian penelitian ini untuk kepentingan dan tujuan
+          penelitian (tidak untuk kepentingan lain).
+        </h3>
         <select
           id="dropdown"
           className="input-style"

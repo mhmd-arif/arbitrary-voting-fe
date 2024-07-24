@@ -68,18 +68,7 @@ main {
   padding: 3em 2em 3em 2em;
   margin-top: 2rem;
   /* font-size: clamp(0.75rem, calc(1rem + (1vw * 2)), 1.25rem); */
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; */
 }
-
-/* .description p {
-  height: 80%;
-  width: 60ch;
-  font-size: 1.2rem;
-  line-height: 1.4rem;
-} */
 
 p::-webkit-scrollbar {
   /* background-color: #919191;
@@ -106,6 +95,13 @@ p::-webkit-scrollbar {
   font-size: 3rem;
   font-weight: 600; /* equivalent to font-weight: bold; */
   line-height: 2.8rem;
+}
+
+.confirmation {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
 }
 
 label {
