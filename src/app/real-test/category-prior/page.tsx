@@ -4,15 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
 
-export interface Kategori {
+interface Kategori {
   id: number;
   nama: string;
 }
 
-const fetchData = async (
-  token: any,
-  url: any
-): Promise<{ kategori: Kategori[] }> => {
+const fetchData = async (token: any, url: any): Promise<Kategori[]> => {
   try {
     const response = await fetch(url, {
       headers: {
@@ -27,10 +24,8 @@ const fetchData = async (
     }
 
     const data = await response.json();
-    // console.log("Fetched data:", data);
-    // console.log(data.data);
 
-    if (!data || !data.data) {
+    if (!Array.isArray(data.data)) {
       throw new Error("Invalid data format");
     }
 
@@ -67,8 +62,30 @@ const fetchItems = async (): Promise<Item[]> => {
 };
 
 export default function Ctegoryprior() {
-  const [items, setItems] = useState<Item[]>([]);
-  const [selectedItems, setSelectedItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<Kategori[]>([]);
+  const [selectedItems, setSelectedItems] = useState<Kategori[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const type = localStorage.getItem("type");
+    const token = localStorage.getItem("access_token");
+    const url =
+      process.env.NEXT_PUBLIC_API_URL + `/information/category?type=${type}`;
+
+    console.log("test1", type, token, url);
+
+    fetchData(token, url)
+      .then((fetchedData) => {
+        setItems(fetchedData);
+        // setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+    // setLoading(false);
+  }, []);
 
   // useEffect(() => {
   //   const loadItems = async () => {
@@ -79,12 +96,12 @@ export default function Ctegoryprior() {
   //   loadItems();
   // }, []);
 
-  useEffect(() => {
-    // Using dummy data instead of fetching
-    setItems(dummyItems);
-  }, []);
+  // useEffect(() => {
+  //   // Using dummy data instead of fetching
+  //   setItems(dummyItems);
+  // }, []);
 
-  const handleItemClick = (item: Item) => {
+  const handleItemClick = (item: Kategori) => {
     const isSelected = selectedItems.includes(item);
     if (isSelected) {
       setSelectedItems(selectedItems.filter((i) => i !== item));
@@ -165,7 +182,7 @@ export default function Ctegoryprior() {
                 className="button-prio"
                 onClick={() => handleItemClick(item)}
               >
-                {item.name}
+                {item.nama}
                 {priority > 0 && (
                   <div className="priorityIndicator">{priority}</div>
                 )}
