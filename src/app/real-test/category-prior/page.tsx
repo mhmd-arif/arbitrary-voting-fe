@@ -39,19 +39,48 @@ const fetchData = async (token: any, url: any): Promise<Kategori[]> => {
 export default function Ctegoryprior() {
   const [items, setItems] = useState<Kategori[]>([]);
   const [selectedItems, setSelectedItems] = useState<Kategori[]>([]);
+  const [timeLimit, setTimeLimit] = useState<number>(15);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
-  const urlNextPage = "/real-test/information-board";
+  const urlNextPage = "/real-test/category";
+
+  useEffect(() => {
+    const fetchDataTime = async () => {
+      try {
+        const url =
+          process.env.NEXT_PUBLIC_API_URL +
+          `/information/time-limit?type=simulation`;
+        const token = localStorage.getItem("access_token");
+
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        });
+        const data = await response.json();
+        // console.log(data);
+        setTimeLimit(data.data.time);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+
+        // Handle error
+      }
+    };
+
+    fetchDataTime();
+  });
 
   useEffect(() => {
     const type = localStorage.getItem("type");
     const token = localStorage.getItem("access_token");
     const url =
       process.env.NEXT_PUBLIC_API_URL + `/information/category?type=${type}`;
-
-    console.log("test1", type, token, url);
 
     fetchData(token, url)
       .then((fetchedData) => {
@@ -74,36 +103,6 @@ export default function Ctegoryprior() {
     }
   };
 
-  // const handleClick = async () => {
-  //   console.log(
-  //     "handleSubmit",
-  //     selectedItems,
-  //     "asdad",
-  //     JSON.stringify({ selectedItems })
-  //   );
-  //   return;
-  //   // const apiUrl = "https://api.example.com/submit";
-
-  //   // try {
-  //   //   const response = await fetch(apiUrl, {
-  //   //     method: "POST",
-  //   //     headers: {
-  //   //       "Content-Type": "application/json",
-  //   //     },
-  //   //     body: JSON.stringify({ selectedItems }),
-  //   //   });
-
-  //   //   if (!response.ok) {
-  //   //     throw new Error("Failed to submit");
-  //   //   }
-
-  //   //   alert("Submitted successfully");
-  //   // } catch (error) {
-  //   //   console.error("Error submitting:", error);
-  //   //   alert("Error submitting");
-  //   // }
-  // };
-
   const clearSelection = () => {
     setSelectedItems([]);
   };
@@ -114,14 +113,6 @@ export default function Ctegoryprior() {
       return;
     }
 
-    // const body = selectedItems.reduce(
-    //   (result: { [key: string]: number }, item, index) => {
-    //     result[item.nama] = index + 1;
-    //     return result;
-    //   },
-    //   {}
-    // );
-
     const body = {
       prioritas_kategori: selectedItems.reduce(
         (result: { [key: string]: number }, item, index) => {
@@ -130,9 +121,10 @@ export default function Ctegoryprior() {
         },
         {}
       ),
+      start_date: new Date().toISOString().replace("T", " ").split(".")[0],
     };
 
-    console.log("body", body);
+    // console.log("body", body);
 
     try {
       if (typeof window !== "undefined") {
@@ -160,8 +152,6 @@ export default function Ctegoryprior() {
           setLoading(false);
           return;
         }
-
-        // router.push(urlNextPage);
       }
 
       setLoading(false);
@@ -169,26 +159,25 @@ export default function Ctegoryprior() {
       console.error("Error :", error);
     }
 
-    // router.push(urlNextPage);
+    const expiryTime = localStorage.getItem("expiryTime");
+
+    if (expiryTime == null || expiryTime == "") {
+      const expiryDate = new Date();
+
+      expiryDate.setMinutes(expiryDate.getMinutes() + timeLimit);
+      expiryDate.setSeconds(expiryDate.getSeconds() + 1);
+
+      localStorage.setItem("expiryTime", expiryDate.toISOString());
+      router.push(urlNextPage);
+    }
+
+    router.push(urlNextPage);
   };
 
   return (
     <section className="wrapper">
       <h1 className="title">Prioritas Isu</h1>
       {/* */}
-
-      {/* <div className="content">
-        <label htmlFor="long-text" className="label">
-          Silakan Ceritakan Beberapa hal mengenai Pilihan yang Tersedia
-        </label>
-        <textarea
-          id="long-text"
-          className="input-style"
-          style={{ fontSize: "1.25rem", width: "80%", height: "80%" }}
-          value={text}
-          onChange={handleInputChange}
-        />
-      </div> */}
 
       <div className="content">
         <p className="label-long-text">

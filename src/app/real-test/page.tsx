@@ -25,7 +25,7 @@ export default function RealTest() {
         Anda telah menyelesaikan tahap pengenalan aplikasi, berikutnya adalah
         tahap inti penelitian
       </p>
-      <NavButton href={"/real-test/confirmation"} text={"Selanjutnya"} />
+      <NavButton href={"/real-test/category-prior"} text={"Selanjutnya"} />
     </section>
   );
 }
