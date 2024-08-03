@@ -10,7 +10,7 @@ export default function End() {
   return (
     <section className="wrapper">
       <div className="title ">Test Selesai</div>
-      <div className="description text-center">
+      <div className="description text-center flex justify-center items-center">
         <p>Selesai</p>
       </div>
       <div className="custom-btn"></div>
