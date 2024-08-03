@@ -113,6 +113,8 @@ export default function Ctegoryprior() {
       return;
     }
 
+    setLoading(true);
+
     const body = {
       prioritas_kategori: selectedItems.reduce(
         (result: { [key: string]: number }, item, index) => {
@@ -187,21 +189,33 @@ export default function Ctegoryprior() {
         </p>
         <p></p>
         <div className="grid grid-cols-5 mt-[3rem]">
-          {items.map((item) => {
-            const priority = selectedItems.indexOf(item) + 1;
-            return (
-              <div
-                key={item.id}
-                className="button-prio"
-                onClick={() => handleItemClick(item)}
-              >
-                {item.nama}
-                {priority > 0 && (
-                  <div className="priorityIndicator">{priority}</div>
-                )}
-              </div>
-            );
-          })}
+          {loading ? (
+            <>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <div key={index} className="button-prio ">
+                  loading..
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {items.map((item) => {
+                const priority = selectedItems.indexOf(item) + 1;
+                return (
+                  <div
+                    key={item.id}
+                    className="button-prio"
+                    onClick={() => handleItemClick(item)}
+                  >
+                    {item.nama}
+                    {priority > 0 && (
+                      <div className="priorityIndicator">{priority}</div>
+                    )}
+                  </div>
+                );
+              })}
+            </>
+          )}
         </div>
       </div>
 
