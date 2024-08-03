@@ -36,36 +36,14 @@ const fetchData = async (token: any, url: any): Promise<Kategori[]> => {
   }
 };
 
-interface Item {
-  id: number;
-  name: string;
-}
-
-const dummyItems: Item[] = [
-  { id: 1, name: "Isu 1" },
-  { id: 2, name: "Isu 2" },
-  { id: 3, name: "Isu 3" },
-  { id: 4, name: "Isu 4" },
-  { id: 5, name: "Isu 5" },
-  { id: 6, name: "Isu 6" },
-  { id: 7, name: "Isu 7" },
-  { id: 8, name: "Isu 8" },
-  { id: 9, name: "Isu 9" },
-  { id: 10, name: "Isu 10" },
-];
-
-const fetchItems = async (): Promise<Item[]> => {
-  // Replace with your actual API endpoint
-  const response = await fetch("https://api.example.com/items");
-  const data = await response.json();
-  return data;
-};
-
 export default function Ctegoryprior() {
   const [items, setItems] = useState<Kategori[]>([]);
   const [selectedItems, setSelectedItems] = useState<Kategori[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
+  const urlNextPage = "/real-test/information-board";
 
   useEffect(() => {
     const type = localStorage.getItem("type");
@@ -87,20 +65,6 @@ export default function Ctegoryprior() {
     // setLoading(false);
   }, []);
 
-  // useEffect(() => {
-  //   const loadItems = async () => {
-  //     const fetchedItems = await fetchItems();
-  //     setItems(fetchedItems);
-  //   };
-
-  //   loadItems();
-  // }, []);
-
-  // useEffect(() => {
-  //   // Using dummy data instead of fetching
-  //   setItems(dummyItems);
-  // }, []);
-
   const handleItemClick = (item: Kategori) => {
     const isSelected = selectedItems.includes(item);
     if (isSelected) {
@@ -110,42 +74,102 @@ export default function Ctegoryprior() {
     }
   };
 
-  const handleSubmit = async () => {
-    console.log(
-      "handleSubmit",
-      selectedItems,
-      "asdad",
-      JSON.stringify({ selectedItems })
-    );
-    return;
-    // const apiUrl = "https://api.example.com/submit";
+  // const handleClick = async () => {
+  //   console.log(
+  //     "handleSubmit",
+  //     selectedItems,
+  //     "asdad",
+  //     JSON.stringify({ selectedItems })
+  //   );
+  //   return;
+  //   // const apiUrl = "https://api.example.com/submit";
 
-    // try {
-    //   const response = await fetch(apiUrl, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ selectedItems }),
-    //   });
+  //   // try {
+  //   //   const response = await fetch(apiUrl, {
+  //   //     method: "POST",
+  //   //     headers: {
+  //   //       "Content-Type": "application/json",
+  //   //     },
+  //   //     body: JSON.stringify({ selectedItems }),
+  //   //   });
 
-    //   if (!response.ok) {
-    //     throw new Error("Failed to submit");
-    //   }
+  //   //   if (!response.ok) {
+  //   //     throw new Error("Failed to submit");
+  //   //   }
 
-    //   alert("Submitted successfully");
-    // } catch (error) {
-    //   console.error("Error submitting:", error);
-    //   alert("Error submitting");
-    // }
-  };
+  //   //   alert("Submitted successfully");
+  //   // } catch (error) {
+  //   //   console.error("Error submitting:", error);
+  //   //   alert("Error submitting");
+  //   // }
+  // };
 
   const clearSelection = () => {
     setSelectedItems([]);
   };
 
   const handleClick = async () => {
-    console.log("handleClick");
+    if (selectedItems.length < 5) {
+      alert("Mohon urutkan minimal 5 pilihan");
+      return;
+    }
+
+    // const body = selectedItems.reduce(
+    //   (result: { [key: string]: number }, item, index) => {
+    //     result[item.nama] = index + 1;
+    //     return result;
+    //   },
+    //   {}
+    // );
+
+    const body = {
+      prioritas_kategori: selectedItems.reduce(
+        (result: { [key: string]: number }, item, index) => {
+          result[item.nama] = index + 1;
+          return result;
+        },
+        {}
+      ),
+    };
+
+    console.log("body", body);
+
+    try {
+      if (typeof window !== "undefined") {
+        const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
+        const token =
+          typeof window !== "undefined"
+            ? localStorage.getItem("access_token")
+            : null;
+        const response = await fetch(url, {
+          method: "PUT",
+          body: JSON.stringify(body),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await response.json();
+        // console.log(data.data);
+
+        if (!response.ok) {
+          // console.log("not ok");
+          const errorMessage = await response.text();
+          console.error("Server error:", errorMessage);
+          setLoading(false);
+          return;
+        }
+
+        // router.push(urlNextPage);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error :", error);
+    }
+
+    // router.push(urlNextPage);
   };
 
   return (
