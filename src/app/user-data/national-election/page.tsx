@@ -130,6 +130,15 @@ export default function NationalElection() {
         </select>
       </div>
 
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+
       <div className="w-full flex justify-between">
         {loading ? (
           <p className="self-end">Loading...</p>

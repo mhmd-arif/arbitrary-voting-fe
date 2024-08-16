@@ -188,7 +188,7 @@ export default function Ctegoryprior() {
           rendah
         </p>
         <p></p>
-        <div className="grid grid-cols-5 mt-[3rem]">
+        <div className="grid grid-cols-5 mt-[3rem] gap-3">
           {loading ? (
             <>
               {Array.from({ length: 5 }).map((_, index) => (
@@ -221,7 +221,7 @@ export default function Ctegoryprior() {
 
       <button
         onClick={clearSelection}
-        className="py-2 px-4 bg-cus-dark-gray rounded-lg"
+        className="py-2 px-4 bg-cus-dark-gray rounded-lg mt-8"
       >
         Kosongkan Jawaban
       </button>

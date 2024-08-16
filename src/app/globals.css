@@ -16,7 +16,7 @@ body {
 /* w-screen h-screen flex flex-col justify-between items-center py-[2rem] px-[4rem] text-cus-black */
 /* w-[100vw] h-[100svh] flex flex-col justify-center items-center py-20 px-16 */
 main {
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -41,7 +41,7 @@ main {
 /* w-[40svw] h-[10svh] border rounded-3xl flex justify-center items-center bg-cus-dark-gray font-normal text-5xl  */
 .title {
   width: 40%;
-  /* height: 10%; */
+  min-height: 10%;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   display: flex;
@@ -52,6 +52,7 @@ main {
   background-color: var(--cus-dark-gray);
   font-size: 2rem;
   overflow-y: hidden;
+  margin-bottom: 2rem;
 }
 
 /* description max-w-[60ch] border-2 border-cus-black rounded-3xl p-[2em] text-2xl */
@@ -95,7 +96,8 @@ p::-webkit-scrollbar {
 
 .content {
   width: 80%;
-  height: 65%;
+  /* height: 65%; */
+
   display: flex;
   flex-direction: column;
   font-size: 3rem;
@@ -164,12 +166,13 @@ option {
 .button-prio {
   position: relative;
   padding: 10px;
-  margin: 5px;
+  /* margin: 5px; */
   border: 1px solid #ccc;
   cursor: pointer;
   background-color: var(--cus-dark-gray);
   border-radius: 0.8rem;
-  font-size: 1.7rem;
+  font-size: 1.35rem;
+  line-height: 1.85rem;
   text-align: center;
 }
 

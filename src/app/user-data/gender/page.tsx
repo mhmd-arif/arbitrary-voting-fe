@@ -51,7 +51,8 @@ export default function Gender() {
           <option value="P">Perempuan</option>
         </select>
       </div>
-
+      <div className="spacer"></div>
+      <div className="spacer"></div>
       <div className="w-full flex justify-between">
         <BackButton />
         <ArrowButton text="Selanjutnya" onClick={navigateToNextPage} />

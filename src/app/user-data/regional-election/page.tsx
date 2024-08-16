@@ -88,6 +88,15 @@ export default function RegionalElection() {
         </div>
       </div>
 
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+
       <div className="w-full flex justify-between">
         <BackButton />
         <ArrowButton text={"Selanjutnya"} onClick={handleClick} />

@@ -33,6 +33,8 @@ export default function Initial() {
           onChange={(e) => setInitial(e.target.value)}
         />
       </div>
+      <div className="spacer"></div>
+      <div className="spacer"></div>
       <div className="w-full flex justify-between">
         <BackButton />
         <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
