@@ -11,6 +11,7 @@ export default function DetailHeading() {
   const data = searchParams.get("data");
   const [item, setItem] = useState<Kandidat | null>(null);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const urlNextPage = "/simulation/information-check";
   const urlBackPage = "/simulation/information-board";
@@ -24,6 +25,9 @@ export default function DetailHeading() {
             if (newTimeLeft <= 0) {
               clearInterval(timer);
               setTimeLeft(null);
+              if (autoNext) {
+                router.push("/simulation/information-check");
+              }
               // handleToInformationBoard();
             }
             return newTimeLeft;
@@ -49,6 +53,7 @@ export default function DetailHeading() {
   }, [data]);
 
   useEffect(() => {
+    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
     const expiryTime = localStorage.getItem("expiryTime");
     if (expiryTime) {
       const currentTime = new Date().getTime();

@@ -61,6 +61,7 @@ export default function InformationPage() {
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
   const [activeCategory, setActiveCategory] = useState<string>();
+  const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const router = useRouter();
   const urlNextPage = "/simulation/information-check";
@@ -69,6 +70,7 @@ export default function InformationPage() {
   const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
 
   useEffect(() => {
+    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
     setActiveCategory(localStorage.getItem("atvCategory") || "");
     const token = localStorage.getItem("access_token");
     fetchData(token, url)
@@ -109,6 +111,9 @@ export default function InformationPage() {
             if (newTimeLeft <= 0) {
               setTimeLeft(null);
               clearInterval(timer);
+              if (autoNext) {
+                router.push("/simulation/information-check");
+              }
             }
             return newTimeLeft;
           }

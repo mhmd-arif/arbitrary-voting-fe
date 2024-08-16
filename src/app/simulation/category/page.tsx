@@ -58,6 +58,7 @@ export default function Category() {
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>();
+  const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const router = useRouter();
   const urlNextPage = "/simulation/information-board";
@@ -66,6 +67,7 @@ export default function Category() {
 
   useEffect(() => {
     setActiveCategory(localStorage.getItem("atvCategory") || "");
+    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
     const token = localStorage.getItem("access_token");
     fetchData(token, url)
       .then((fetchedData) => {
@@ -106,6 +108,9 @@ export default function Category() {
             if (newTimeLeft <= 0) {
               setTimeLeft(null);
               clearInterval(timer);
+              if (autoNext) {
+                router.push("/simulation/information-check");
+              }
             }
             return newTimeLeft;
           }
