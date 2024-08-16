@@ -65,23 +65,27 @@ export default function RegionalElection() {
     <section className="wrapper">
       <div className="spacer"></div>
       <div className="content">
-        <label>Partai Yang Anda Pilih Pada Pemilu Daerah Sebelumnya</label>
-        <select
-          id="dropdown"
-          className="input-style"
-          value={polParties}
-          onChange={(e) => handleInput(e.target.value)}
-        >
-          <option value="" className="text-cus-dark-gray">
-            Kotak Jawaban
-          </option>
-          {loading && <option>Loading...</option>}
-          {partaiData.map((item) => (
-            <option key={item.id} value={item.nama}>
-              {item.nama}
+        <label htmlFor="dropdown">
+          Partai Yang Anda Pilih Pada Pemilu Daerah Sebelumnya
+        </label>
+        <div className="dropdown-wrapper">
+          <select
+            id="dropdown"
+            className="input-style"
+            value={polParties}
+            onChange={(e) => handleInput(e.target.value)}
+          >
+            <option value="" className="text-cus-dark-gray">
+              Kotak Jawaban
             </option>
-          ))}
-        </select>
+            {loading && <option>Loading...</option>}
+            {partaiData.map((item) => (
+              <option key={item.id} value={item.nama}>
+                {item.nama}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div className="w-full flex justify-between">

@@ -93,14 +93,13 @@ p::-webkit-scrollbar {
   align-items: center;
 }
 
-/* w-[80%] h-[50%] flex flex-col  text-5xl font-semibold */
 .content {
   width: 80%;
-  height: 50%;
+  height: 65%;
   display: flex;
   flex-direction: column;
   font-size: 3rem;
-  font-weight: 600; /* equivalent to font-weight: bold; */
+  font-weight: 600;
   line-height: 2.8rem;
 }
 
@@ -116,20 +115,37 @@ label {
   max-width: 30ch;
 }
 
-/* border rounded w-[60%] mt-2 py-2 px-3 text-cus-black leading-tight focus:outline-none focus:shadow-outline text-4xl  */
+.dropdown-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .input-style {
   border: 1px solid;
   border-radius: 1rem;
-  width: 60%;
+  width: 90%;
   margin-top: 0.5rem;
   padding: 0.75rem 0.75rem;
   font-size: 2rem;
   color: var(--cus-black);
   outline: none;
+  appearance: none; /* Hides the default dropdown arrow */
+  background-color: white;
+  position: relative;
+  z-index: 1;
 }
 
 .input-style:focus {
   box-shadow: 0 0 0 3px var(--cus-dark-gray);
+}
+
+select {
+  position: relative;
+  z-index: 2;
+}
+
+option {
+  font-size: 2rem;
 }
 
 .grid-container {
