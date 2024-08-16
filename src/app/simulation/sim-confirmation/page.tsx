@@ -12,6 +12,42 @@ export default function SimConfirmation() {
   const [agreement, setAgreement] = useState<string>("");
   const [timeLimit, setTimeLimit] = useState<number>(5);
 
+  // const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
+
+  // const urlNextPage = "/simulation/sim-confirmation";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log("helo1");
+
+        const url =
+          process.env.NEXT_PUBLIC_API_URL +
+          `/information/auto-next?type=simulation`;
+        const token = localStorage.getItem("access_token");
+        console.log("helo");
+
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        });
+        const data = await response.json();
+        console.log(data.data);
+        localStorage.setItem("autoNext", data.data.auto);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+        // Handle error
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const urlNextPage = "/simulation/category";
   useEffect(() => {
     const fetchDataTime = async () => {
