@@ -203,8 +203,8 @@ export default function Category() {
   return (
     <section className="wrapper">
       <h1 className="title">Papan Informasi</h1>
-      <div className="w-full h-[80%] flex flex-col items-center">
-        <h2 className="text-center text-md mt-4 mb-6">
+      <div className="w-full h-[80%] flex flex-col items-center pb-[10%]">
+        <h2 className="text-center text-md mt-4">
           Silakan Pilih Kategori yang Anda Minati
         </h2>
 
@@ -237,9 +237,9 @@ export default function Category() {
       </div>
       <div className="flex w-full items-center">
         {timeLeft !== null ? (
-          <p className="flex flex-col w-[10rem] py-2 px-4">
+          <div className="flex flex-col w-[10rem] py-2 px-4">
             {formatTime(timeLeft)}
-          </p>
+          </div>
         ) : (
           <></>
         )}
