@@ -81,7 +81,6 @@ export default function RealInformationCheck() {
         <textarea
           id="long-text"
           className="input-style"
-          style={{ fontSize: "1.25rem", width: "80%", height: "80%" }}
           value={text}
           onChange={handleInputChange}
         />

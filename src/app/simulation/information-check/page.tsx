@@ -81,7 +81,7 @@ export default function InformationCheck() {
         <textarea
           id="long-text"
           className="input-style"
-          style={{ fontSize: "1.25rem", width: "80%", height: "80%" }}
+          // style={{ fontSize: "1.25rem", width: "80%", height: "10rem" }}
           value={text}
           onChange={handleInputChange}
         />

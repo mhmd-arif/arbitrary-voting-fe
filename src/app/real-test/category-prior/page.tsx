@@ -227,7 +227,7 @@ export default function Ctegoryprior() {
       </button>
       {/*  */}
 
-      <div className="flex w-full items-center">
+      <div className="flex w-full items-center pb-[2rem]">
         <div className="ml-auto">
           <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
         </div>

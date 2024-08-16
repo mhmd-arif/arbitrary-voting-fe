@@ -96,7 +96,6 @@ p::-webkit-scrollbar {
 
 .content {
   width: 80%;
-  /* height: 65%; */
 
   display: flex;
   flex-direction: column;
@@ -137,6 +136,22 @@ label {
   z-index: 1;
 }
 
+/* .longtext {
+  border: 1px solid;
+  border-radius: 1rem;
+  width: 90%;
+  height: 60rem;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.75rem;
+  font-size: 2rem;
+  color: var(--cus-black);
+  outline: none;
+  appearance: none; 
+  background-color: white;
+  position: relative;
+  z-index: 1;
+}  */
+
 .input-style:focus {
   box-shadow: 0 0 0 3px var(--cus-dark-gray);
 }
@@ -156,11 +171,16 @@ option {
   grid-auto-rows: minmax(18rem, auto);
 }
 
+#long-text {
+  height: 16rem;
+}
+
 /* Priority list */
 
 .label-long-text {
   font-size: 2rem;
   width: 90%;
+  /* height: 40%; */
 }
 
 .button-prio {
