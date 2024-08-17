@@ -156,7 +156,7 @@ export default function FinalAnswer() {
           {data.map((item, index) => (
             <div key={item.partai} className="border border-black text-center">
               <h2 className="font-bold text-[0.875rem] py-1 bg-cus-dark-gray/40 ">
-                {item.partai ? item.partai : `Partai ${index + 1}`}
+                {item.partai ? item.partai : `Pilihan ${index + 1}`}
               </h2>
               {item.kandidat.map((cdt) => (
                 <div
