@@ -261,7 +261,7 @@ export default function InformationPage() {
         UNTUK MENENTUKAN PILIHAN ANDA
       </h2>
       {loading ? (
-        <nav className="w-[80%] grid grid-cols-5 my-auto text-center ">
+        <nav className="w-[95%] grid grid-cols-5 my-auto text-center ">
           {Array.from({ length: 5 }).map((_, index) => (
             <div
               key={index}
@@ -275,8 +275,8 @@ export default function InformationPage() {
         <></>
       )}
 
-      <div className="w-full h-[70%] flex flex-col items-center mb-4">
-        <nav className="w-[80%]  grid grid-flow-col  mb-6 text-center">
+      <div className="w-full  flex flex-col items-center mb-4">
+        <nav className="w-[95%]  grid grid-flow-col  mb-6 text-center">
           {kategori.map((item, index) => (
             <div
               key={index}
@@ -294,7 +294,7 @@ export default function InformationPage() {
             loading ? "animate-pulse bg-cus-dark-gray" : ""
           } w-full h-full border border-cus-black `}
         >
-          <div className="w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
+          <div className="w-[100%] grid grid-cols-5 text-center  overflow-y-auto ">
             {kandidat
               .filter((item) => item.kategori === activeCategory)
               .map((item) => (
@@ -320,7 +320,7 @@ export default function InformationPage() {
         </div>
       </div>
 
-      <div className="w-full flex justify-center items-end">
+      <div className="w-full flex justify-center items-end pb-[2rem]">
         <button className="custom-btn self-start " onClick={handleBack}>
           Kembali
           <Image

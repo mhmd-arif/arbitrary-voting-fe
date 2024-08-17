@@ -275,8 +275,8 @@ export default function InformationPage() {
           ))}
         </nav>
       ) : (
-        <div className="w-full h-[70%] flex flex-col items-center mb-4">
-          <nav className="w-[80%]  grid grid-flow-col  mb-6 text-center">
+        <div className="w-full flex flex-col items-center mb-4">
+          <nav className="w-[80%] grid grid-flow-col  mb-6 text-center">
             {kategori.map((item, index) => (
               <div
                 key={index}
@@ -292,9 +292,9 @@ export default function InformationPage() {
           <div
             className={`${
               loading ? "animate-pulse bg-cus-dark-gray" : ""
-            } w-full h-full border border-cus-black `}
+            } w-full border border-cus-black `}
           >
-            <div className=" w-[100%] max-h-[80%] grid grid-cols-5 text-center  overflow-y-auto ">
+            <div className=" w-[100%] grid grid-cols-5 text-center  overflow-y-auto ">
               {kandidat
                 .filter((item) => item.kategori === activeCategory)
                 .map((item) => (
