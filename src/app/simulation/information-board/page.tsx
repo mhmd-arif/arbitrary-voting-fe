@@ -324,6 +324,9 @@ export default function InformationPage() {
         </div>
       </div>
 
+      <div className="spacer"></div>
+      <div className="spacer"></div>
+
       <div className="w-full flex justify-center items-end">
         <button className="custom-btn self-start " onClick={handleBack}>
           Kembali

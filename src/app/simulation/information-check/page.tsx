@@ -18,8 +18,7 @@ export default function InformationCheck() {
   const urlBackPage = "/simulation/category";
 
   useEffect(() => {
-    let autoNextPage = Boolean(localStorage.getItem("autoNext") || "true");
-    setAutoNext(autoNextPage);
+    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
     // setHiddenBack()
   }, []);
 

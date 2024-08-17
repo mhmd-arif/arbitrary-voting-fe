@@ -16,7 +16,7 @@ export default function RealInformationCheck() {
   const urlBackPage = "/simulation/category";
 
   useEffect(() => {
-    setAutoNext(Boolean(localStorage.getItem("autoNext") || "false"));
+    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
