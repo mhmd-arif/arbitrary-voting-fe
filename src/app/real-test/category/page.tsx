@@ -60,6 +60,7 @@ export default function RealCategory() {
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
   const [activeCategory, setActiveCategory] = useState<string>();
+  const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const router = useRouter();
   const urlNextPage = "/real-test/information-board";
@@ -86,6 +87,8 @@ export default function RealCategory() {
   }, []);
 
   useEffect(() => {
+    setAutoNext(Boolean(localStorage.getItem("autoNext") || "false"));
+
     const expiryTime = localStorage.getItem("expiryTime");
     if (expiryTime) {
       const currentTime = new Date().getTime();
@@ -108,6 +111,9 @@ export default function RealCategory() {
             if (newTimeLeft <= 0) {
               setTimeLeft(null);
               clearInterval(timer);
+              if (autoNext) {
+                router.push("/real-test/information-check");
+              }
             }
             return newTimeLeft;
           }

@@ -67,7 +67,7 @@ export default function Category() {
 
   useEffect(() => {
     setActiveCategory(localStorage.getItem("atvCategory") || "");
-    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
+    setAutoNext(Boolean(localStorage.getItem("autoNext") || "false"));
     const token = localStorage.getItem("access_token");
     fetchData(token, url)
       .then((fetchedData) => {
