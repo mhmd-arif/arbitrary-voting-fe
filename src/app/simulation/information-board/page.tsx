@@ -70,7 +70,7 @@ export default function InformationPage() {
   const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
 
   useEffect(() => {
-    setAutoNext(Boolean(localStorage.getItem("autoNext") || "false"));
+    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
     setActiveCategory(localStorage.getItem("atvCategory") || "");
     const token = localStorage.getItem("access_token");
     fetchData(token, url)

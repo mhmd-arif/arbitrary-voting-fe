@@ -53,7 +53,7 @@ export default function DetailHeading() {
   }, [data]);
 
   useEffect(() => {
-    setAutoNext(Boolean(localStorage.getItem("autoNext") || "false"));
+    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
     const expiryTime = localStorage.getItem("expiryTime");
     if (expiryTime) {
       const currentTime = new Date().getTime();

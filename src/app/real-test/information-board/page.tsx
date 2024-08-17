@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
 import Image from "next/image";
+import { json } from "stream/consumers";
 
 export interface Kategori {
   id: number;
@@ -89,7 +90,7 @@ export default function InformationPage() {
   }, []);
 
   useEffect(() => {
-    setAutoNext(Boolean(localStorage.getItem("autoNext") || "false"));
+    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
 
     const expiryTime = localStorage.getItem("expiryTime");
     if (expiryTime) {

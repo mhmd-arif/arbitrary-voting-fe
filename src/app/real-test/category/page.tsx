@@ -87,7 +87,7 @@ export default function RealCategory() {
   }, []);
 
   useEffect(() => {
-    setAutoNext(Boolean(localStorage.getItem("autoNext") || "false"));
+    setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
 
     const expiryTime = localStorage.getItem("expiryTime");
     if (expiryTime) {
