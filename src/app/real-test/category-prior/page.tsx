@@ -98,7 +98,7 @@ export default function Ctegoryprior() {
     const isSelected = selectedItems.includes(item);
     if (isSelected) {
       setSelectedItems(selectedItems.filter((i) => i !== item));
-    } else if (selectedItems.length < 5) {
+    } else if (selectedItems.length < 8) {
       setSelectedItems([...selectedItems, item]);
     }
   };
@@ -108,8 +108,8 @@ export default function Ctegoryprior() {
   };
 
   const handleClick = async () => {
-    if (selectedItems.length < 5) {
-      alert("Mohon urutkan minimal 5 pilihan");
+    if (selectedItems.length < 8) {
+      alert("Mohon urutkan minimal 8 pilihan");
       return;
     }
 
@@ -184,14 +184,14 @@ export default function Ctegoryprior() {
       <div className="content">
         <p className="label-long-text">
           Silakan Urutkan Isu Sesuai Prioritas Anda. <br /> Nomor 1 menunjukan
-          prioritas paling tinggi dan nomor 5 menunjukkan prioritas paling
+          prioritas paling tinggi dan nomor 8 menunjukkan prioritas paling
           rendah
         </p>
         <p></p>
         <div className="grid grid-cols-5 mt-[3rem] gap-3">
           {loading ? (
             <>
-              {Array.from({ length: 5 }).map((_, index) => (
+              {Array.from({ length: 8 }).map((_, index) => (
                 <div key={index} className="button-prio ">
                   loading..
                 </div>
