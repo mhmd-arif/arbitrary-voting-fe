@@ -275,52 +275,54 @@ export default function InformationPage() {
           ))}
         </nav>
       ) : (
-        <div className="w-full flex flex-col items-center mb-4">
-          <nav className="w-[80%] grid grid-flow-col  mb-6 text-center">
-            {kategori.map((item, index) => (
-              <div
-                key={index}
-                className={` py-4 border border-cus-black cursor-pointer ${
-                  activeCategory === item.nama ? "bg-cus-dark-gray" : ""
-                }`}
-                onClick={() => handleActiveCategory(item.nama)}
-              >
-                {item.nama}
-              </div>
-            ))}
-          </nav>
-          <div
-            className={`${
-              loading ? "animate-pulse bg-cus-dark-gray" : ""
-            } w-full border border-cus-black `}
-          >
-            <div className=" w-[100%] grid grid-cols-5 text-center  overflow-y-auto ">
-              {kandidat
-                .filter((item) => item.kategori === activeCategory)
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    className="w-full border border-cus-black cursor-pointer hover:bg-cus-dark-gray"
-                  >
-                    <TableCell
-                      data={{
-                        id: item.id,
-                        kategori: item.kategori,
-                        nama: item.nama,
-                        // partai: item.partai || "defaultValue",
-                        partai: "defaultValue",
-                        headline: item.headline,
-                        detail: item.detail,
-                        kandidat: item.kandidat,
-                      }}
-                      rootPath={"simulation/information-board"}
-                    />
-                  </div>
-                ))}
+        <></>
+      )}
+
+      <div className="w-full flex flex-col items-center mb-4">
+        <nav className="w-[80%] grid grid-flow-col  mb-6 text-center">
+          {kategori.map((item, index) => (
+            <div
+              key={index}
+              className={` py-4 border border-cus-black cursor-pointer ${
+                activeCategory === item.nama ? "bg-cus-dark-gray" : ""
+              }`}
+              onClick={() => handleActiveCategory(item.nama)}
+            >
+              {item.nama}
             </div>
+          ))}
+        </nav>
+        <div
+          className={`${
+            loading ? "animate-pulse bg-cus-dark-gray h-[15rem]" : ""
+          } w-full border border-cus-black `}
+        >
+          <div className=" w-[100%] grid grid-cols-5 text-center  overflow-y-auto ">
+            {kandidat
+              .filter((item) => item.kategori === activeCategory)
+              .map((item) => (
+                <div
+                  key={item.id}
+                  className="w-full border border-cus-black cursor-pointer hover:bg-cus-dark-gray"
+                >
+                  <TableCell
+                    data={{
+                      id: item.id,
+                      kategori: item.kategori,
+                      nama: item.nama,
+                      // partai: item.partai || "defaultValue",
+                      partai: "defaultValue",
+                      headline: item.headline,
+                      detail: item.detail,
+                      kandidat: item.kandidat,
+                    }}
+                    rootPath={"simulation/information-board"}
+                  />
+                </div>
+              ))}
           </div>
         </div>
-      )}
+      </div>
 
       <div className="w-full flex justify-center items-end">
         <button className="custom-btn self-start " onClick={handleBack}>

@@ -232,7 +232,7 @@ option {
 
 ::-webkit-scrollbar {
   width: 0.5rem;
-  z-index: 999;
+  /* z-index: 999; */
 }
 
 ::-webkit-scrollbar-track {

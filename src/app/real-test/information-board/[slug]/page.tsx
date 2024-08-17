@@ -152,25 +152,15 @@ export default function DetailHeading() {
     <section className="wrapper">
       <h1 className="title">Papan Informasi</h1>
       <h2 className="text-center text-md mt-2 mb-6 ">{item.headline}</h2>
-      <div className="w-8/12 h-[70%] overflow-y-hidden flex flex-col justify-center border-2 border-cus-black rounded-3xl p-10 text-lg ">
+
+      <div className="w-8/12  flex flex-col justify-center border-2 border-cus-black rounded-[0.8rem] px-10 py-6 text-lg ">
         <p>Kategori : {item.kategori}</p>
-        <p>Nama: {item.nama}</p>
+        <p>kandidat: {item.nama}</p>
         <p>Partai: {item.partai}</p>
+        <br />
         <p>Detail: </p>
 
-        <p>
-          {item.detail}
-          {` {Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vehicula
-          nisl in vehicula tincidunt. Donec vestibulum purus at vulputate
-          faucibus. Vivamus malesuada justo aliquam libero tempus, id pharetra
-          leo tristique. Quisque convallis tortor ac maximus placerat. Sed
-          tincidunt sollicitudin augue rhoncus aliquet. Nunc facilisis vitae
-          eros eu venenatis. Cras lacinia ornare arcu, nec convallis felis
-          fermentum condimentum. Proin placerat vitae turpis ut semper. Fusce
-          nec nisl lectus. Donec efficitur iaculis ligula. Donec in lectus
-          finibus, iaculis lorem sollicitudin, feugiat tortor. Mauris mauris
-          urna, pellentesque id velit ut, aliquam ultrices lorem.}`}
-        </p>
+        <p>{item.detail}</p>
       </div>
       <div className="flex w-full items-center">
         {timeLeft !== null ? (
