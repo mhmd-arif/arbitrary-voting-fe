@@ -30,6 +30,11 @@ export default function Age() {
       return;
     }
 
+    if (Number(userAge) < 18 || Number(userAge) > 100) {
+      alert("Usia minimal 18 tahun - 100 tahun");
+      return;
+    }
+
     router.push(nextPageUrl);
   };
 
@@ -43,7 +48,7 @@ export default function Age() {
           type="text"
           id="user-age"
           className="input-style"
-          placeholder="contoh: 22 "
+          placeholder="contoh: 22"
           onChange={handleAgeInput}
         />
       </div>

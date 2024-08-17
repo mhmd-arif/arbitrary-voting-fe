@@ -23,12 +23,12 @@ export default function Initial() {
     <section className="wrapper">
       <div className="spacer"></div>
       <div className="content">
-        <label>Inisial</label>
+        <label>Kode Peserta</label>
         <input
           type="text"
           id="input-initial"
           className="input-style "
-          placeholder="contoh: AB"
+          placeholder="contoh: KODEPESERTA"
           value={initial}
           onChange={(e) => setInitial(e.target.value)}
         />
