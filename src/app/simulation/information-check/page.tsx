@@ -1,18 +1,27 @@
 "use client";
 import NavButton from "@/components/NavButton";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDebugValue, useEffect, useState } from "react";
 import Image from "next/image";
 import ArrowButton from "@/components/ArrowButton";
 import BackButton from "@/components/BackButton";
+import { Festive } from "next/font/google";
 
 export default function InformationCheck() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const [autoNext, setAutoNext] = useState<boolean>(false);
+  const [hiddenBack, setHiddenBack] = useState<boolean>(true);
 
   const [text, setText] = useState("");
   const urlNextPage = "/simulation/final-answer";
   const urlBackPage = "/simulation/category";
+
+  useEffect(() => {
+    let autoNextPage = Boolean(localStorage.getItem("autoNext") || "true");
+    setAutoNext(autoNextPage);
+    // setHiddenBack()
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
@@ -87,16 +96,18 @@ export default function InformationCheck() {
         />
       </div>
       <div className="w-full flex justify-between">
-        <button className="custom-btn self-start" onClick={handleBack}>
-          Kembali
-          <Image
-            src={"/arrow-back.svg"}
-            alt="arrow"
-            width={100}
-            height={100}
-            className="w-full flip-x"
-          />
-        </button>
+        {!autoNext && (
+          <button className="custom-btn self-start" onClick={handleBack}>
+            Kembali
+            <Image
+              src={"/arrow-back.svg"}
+              alt="arrow"
+              width={100}
+              height={100}
+              className="w-full flip-x"
+            />
+          </button>
+        )}
         <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
       </div>
     </section>

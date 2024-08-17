@@ -9,10 +9,15 @@ import BackButton from "@/components/BackButton";
 export default function RealInformationCheck() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
+  const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const [text, setText] = useState("");
   const urlNextPage = "/real-test/final-answer";
   const urlBackPage = "/simulation/category";
+
+  useEffect(() => {
+    setAutoNext(Boolean(localStorage.getItem("autoNext") || "false"));
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
@@ -86,16 +91,18 @@ export default function RealInformationCheck() {
         />
       </div>
       <div className="w-full flex justify-between">
-        <button className="custom-btn self-start" onClick={handleBack}>
-          Kembali
-          <Image
-            src={"/arrow-back.svg"}
-            alt="arrow"
-            width={100}
-            height={100}
-            className="w-full flip-x"
-          />
-        </button>
+        {!autoNext && (
+          <button className="custom-btn self-start" onClick={handleBack}>
+            Kembali
+            <Image
+              src={"/arrow-back.svg"}
+              alt="arrow"
+              width={100}
+              height={100}
+              className="w-full flip-x"
+            />
+          </button>
+        )}
         <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
       </div>
     </section>
