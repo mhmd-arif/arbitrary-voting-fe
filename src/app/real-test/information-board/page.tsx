@@ -280,7 +280,7 @@ export default function InformationPage() {
           {kategori.map((item, index) => (
             <div
               key={index}
-              className={` py-4 border border-cus-black cursor-pointer ${
+              className={` py-4 px-[0.2rem] border border-cus-black cursor-pointer ${
                 activeCategory === item.nama ? "bg-cus-dark-gray" : ""
               }`}
               onClick={() => handleActiveCategory(item.nama)}
