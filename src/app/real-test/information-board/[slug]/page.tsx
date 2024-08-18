@@ -160,9 +160,10 @@ export default function DetailHeading() {
         <br />
         <p>Detail: </p>
 
-        <p>{item.detail}</p>
+        <p>{item.detail} </p>
       </div>
-      <div className="flex w-full items-center">
+      {/* <div className="h-[20rem]">a</div> */}
+      <div className="flex w-full items-center pb-[2rem] py-[1rem]">
         {timeLeft !== null ? (
           <p className="flex flex-col w-[10rem] py-2 px-4">
             {formatTime(timeLeft)}

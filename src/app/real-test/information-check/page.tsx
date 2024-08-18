@@ -13,7 +13,7 @@ export default function RealInformationCheck() {
 
   const [text, setText] = useState("");
   const urlNextPage = "/real-test/final-answer";
-  const urlBackPage = "/simulation/category";
+  const urlBackPage = "/real-test/category";
 
   useEffect(() => {
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));

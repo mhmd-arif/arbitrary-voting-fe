@@ -127,7 +127,7 @@ label {
   width: 90%;
   margin-top: 0.5rem;
   padding: 0.75rem 0.75rem;
-  font-size: 2rem;
+  font-size: 1.6rem;
   color: var(--cus-black);
   outline: none;
   appearance: none; /* Hides the default dropdown arrow */

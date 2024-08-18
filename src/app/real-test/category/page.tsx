@@ -83,6 +83,12 @@ export default function RealCategory() {
         setError(err.message);
         setLoading(false);
       });
+
+    let tempAtvCategory = localStorage.getItem("atvCategory") || "";
+    if (tempAtvCategory == "") {
+      tempAtvCategory = kategori[0].nama;
+    }
+    setActiveCategory(tempAtvCategory);
     // setLoading(false);
   }, []);
 
@@ -168,7 +174,7 @@ export default function RealCategory() {
         durasi: timeDifference,
       };
 
-      console.log(body);
+      // console.log(body);
 
       try {
         const url = process.env.NEXT_PUBLIC_API_URL + "/record/duration/";
@@ -183,7 +189,7 @@ export default function RealCategory() {
         });
 
         const data = await response.json();
-        console.log(data.data);
+        // console.log(data.data);
 
         if (!response.ok) {
           // console.log("not ok");

@@ -61,7 +61,7 @@ export default function InformationPage() {
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
-  const [activeCategory, setActiveCategory] = useState<string>();
+  const [activeCategory, setActiveCategory] = useState<string>("");
   const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const router = useRouter();
@@ -69,7 +69,6 @@ export default function InformationPage() {
   const urlBackPage = "/real-test/category";
 
   useEffect(() => {
-    setActiveCategory(localStorage.getItem("atvCategory") || "");
     const type = localStorage.getItem("type");
     const token = localStorage.getItem("access_token");
     const url = process.env.NEXT_PUBLIC_API_URL + `/information?type=${type}`;
@@ -87,7 +86,13 @@ export default function InformationPage() {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+
+    let tempAtvCategory = localStorage.getItem("atvCategory") || "";
+    if (tempAtvCategory == "") {
+      tempAtvCategory = kategori[0].nama;
+    }
+    setActiveCategory(tempAtvCategory);
+  }, [kategori]);
 
   useEffect(() => {
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
