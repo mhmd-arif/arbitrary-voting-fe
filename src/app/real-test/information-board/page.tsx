@@ -92,7 +92,7 @@ export default function InformationPage() {
       tempAtvCategory = kategori[0].nama;
     }
     setActiveCategory(tempAtvCategory);
-  }, [kategori]);
+  }, []);
 
   useEffect(() => {
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));

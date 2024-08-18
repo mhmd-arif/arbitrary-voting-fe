@@ -91,7 +91,7 @@ export default function Category() {
     setActiveCategory(tempAtvCategory);
 
     // setLoading(false);
-  }, [kategori, url]);
+  }, []);
 
   useEffect(() => {}, [kategori]);
 

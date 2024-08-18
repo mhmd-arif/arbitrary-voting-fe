@@ -91,7 +91,7 @@ export default function InformationPage() {
       tempAtvCategory = kategori[0].nama;
     }
     setActiveCategory(tempAtvCategory);
-  }, [kategori, url]);
+  }, []);
 
   useEffect(() => {
     const expiryTime = localStorage.getItem("expiryTime");

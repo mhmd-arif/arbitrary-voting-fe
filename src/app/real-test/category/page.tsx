@@ -91,7 +91,7 @@ export default function RealCategory() {
     setActiveCategory(tempAtvCategory);
 
     // setLoading(false);
-  }, [kategori]);
+  }, []);
 
   useEffect(() => {
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
