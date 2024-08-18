@@ -66,23 +66,41 @@ export default function RealCategory() {
   const urlNextPage = "/real-test/information-board";
 
   useEffect(() => {
-    const type = localStorage.getItem("type");
-    const token = localStorage.getItem("access_token");
-    const url = process.env.NEXT_PUBLIC_API_URL + `/information?type=${type}`;
+    const fetchData = async () => {
+      try {
+        const type = localStorage.getItem("type");
+        const token = localStorage.getItem("access_token");
+        const url =
+          process.env.NEXT_PUBLIC_API_URL +
+          `/information/category?type=${type}`;
 
-    fetchData(token, url)
-      .then((fetchedData) => {
-        const { kategori, kandidat } = fetchedData;
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        });
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
 
-        setKategori(kategori);
-        setKandidat(kandidat);
+        const data = await response.json();
+        // console.log("Fetched data:", data);
+        // console.log(data.data);
 
+        setKategori(data.data);
         setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
+
+        if (!data || !data.data) {
+          throw new Error("Invalid data format");
+        }
+      } catch (error) {
+        console.error(error);
         setLoading(false);
-      });
+        // Handle error
+      }
+    };
 
     let tempAtvCategory = localStorage.getItem("atvCategory") || "";
     if (tempAtvCategory == "" && kategori.length > 0) {
@@ -90,7 +108,7 @@ export default function RealCategory() {
     }
     setActiveCategory(tempAtvCategory);
 
-    // setLoading(false);
+    fetchData();
   }, []);
 
   useEffect(() => {
