@@ -71,7 +71,6 @@ export default function InformationPage() {
 
   useEffect(() => {
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
-    setActiveCategory(localStorage.getItem("atvCategory") || "");
     const token = localStorage.getItem("access_token");
     fetchData(token, url)
       .then((fetchedData) => {
@@ -86,6 +85,12 @@ export default function InformationPage() {
         setError(err.message);
         setLoading(false);
       });
+
+    let tempAtvCategory = localStorage.getItem("atvCategory") || "";
+    if (tempAtvCategory == "") {
+      tempAtvCategory = kategori[0].nama;
+    }
+    setActiveCategory(tempAtvCategory);
   }, [url]);
 
   useEffect(() => {

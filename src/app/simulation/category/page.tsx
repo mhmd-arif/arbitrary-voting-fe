@@ -66,7 +66,6 @@ export default function Category() {
   const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
 
   useEffect(() => {
-    setActiveCategory(localStorage.getItem("atvCategory") || "");
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
     const token = localStorage.getItem("access_token");
     fetchData(token, url)
@@ -82,6 +81,12 @@ export default function Category() {
         setError(err.message);
         setLoading(false);
       });
+
+    let tempAtvCategory = localStorage.getItem("atvCategory") || "";
+    if (tempAtvCategory == "") {
+      tempAtvCategory = kategori[0].nama;
+    }
+    setActiveCategory(tempAtvCategory);
     // setLoading(false);
   }, [url]);
 
