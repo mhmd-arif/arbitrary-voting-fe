@@ -16,12 +16,11 @@ export default function NationalElection() {
   const router = useRouter();
   const [polParties, setPolParties] = useState<string>("");
   const [partaiData, setPartaiData] = useState<PolParties[]>([]);
-  const [agreement, setAgreement] = useState<string>("");
 
   const { user, updateUser, setUser } = useGlobalContext();
 
   const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
-  const urlNextPage = "/simulation/category";
+  const urlNextPage = "/simulation";
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,125 +88,13 @@ export default function NationalElection() {
 
       if (!data || !data.data) {
         throw new Error("Invalid data format");
-      }
-    } catch (error) {
-      console.error("Error :", error);
-    }
-
-    // for autoNext
-    const fetchData = async () => {
-      try {
-        const url =
-          process.env.NEXT_PUBLIC_API_URL +
-          `/information/auto-next?type=simulation`;
-        const token = localStorage.getItem("access_token");
-
-        const response = await fetch(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Cache-Control": "no-cache",
-          },
-        });
-        const data = await response.json();
-
-        localStorage.setItem("autoNext", data.data.auto);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-
-    let tempTimeLimit = 2;
-
-    // for timeLimit
-    const fetchDataTime = async () => {
-      try {
-        const url =
-          process.env.NEXT_PUBLIC_API_URL +
-          `/information/time-limit?type=simulation`;
-        const token = localStorage.getItem("access_token");
-
-        const response = await fetch(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Cache-Control": "no-cache",
-          },
-        });
-        const data = await response.json();
-        console.log(data.data);
-        tempTimeLimit = data.data.time;
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchDataTime();
-
-    // for agreement
-    const body = {
-      start_date_simulation: new Date()
-        .toISOString()
-        .replace("T", " ")
-        .split(".")[0],
-    };
-
-    // console.log("body", body);
-
-    try {
-      const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
-      const token = localStorage.getItem("access_token");
-
-      const response = await fetch(url, {
-        method: "PUT",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      // console.log("response", response);
-
-      if (!response.ok) {
-        console.log("not ok");
-        const errorMessage = await response.text();
-        console.error("Server error:", errorMessage);
-        setLoading(false);
         return;
       }
-
-      const data = await response.json();
-      // console.log("Fetched data:", data);
-      const resData = data.data;
-      setLoading(false);
-      router.push(urlNextPage);
-
-      if (!data || !data.data) {
-        throw new Error("Invalid data format");
-      }
     } catch (error) {
       console.error("Error :", error);
     }
 
-    const expiryTime = localStorage.getItem("expiryTime");
-
-    if (expiryTime == null || expiryTime == "" || tempTimeLimit) {
-      const expiryDate = new Date();
-
-      expiryDate.setMinutes(expiryDate.getMinutes() + tempTimeLimit);
-      expiryDate.setSeconds(expiryDate.getSeconds() + 1);
-
-      localStorage.setItem("expiryTime", expiryDate.toISOString());
-
-      const enterTime = new Date();
-      localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
-      router.push(urlNextPage);
-    }
-
-    router.push(urlNextPage);
+    // router.push(urlNextPage);
   };
 
   const handleInput = (newValue: string) => {

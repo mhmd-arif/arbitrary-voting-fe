@@ -49,9 +49,10 @@ export default function Ctegoryprior() {
   useEffect(() => {
     const fetchDataTime = async () => {
       try {
+        const type = localStorage.getItem("type");
         const url =
           process.env.NEXT_PUBLIC_API_URL +
-          `/information/time-limit?type=simulation`;
+          `/information/time-limit?type=${type}`;
         const token = localStorage.getItem("access_token");
 
         const response = await fetch(url, {

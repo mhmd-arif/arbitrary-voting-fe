@@ -1,22 +1,113 @@
 "use client";
-import BackButton from "@/components/BackButton";
 import NavButton from "@/components/NavButton";
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import ArrowButton from "@/components/ArrowButton";
+import BackButton from "@/components/BackButton";
 
 export default function Simulation() {
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [agreement, setAgreement] = useState<string>("");
+  const [timeLimit, setTimeLimit] = useState<number>(3);
+
+  const urlNextPage = "/simulation/category";
+
   useEffect(() => {
-    const keys = Object.keys(localStorage);
-    keys.forEach((key) => {
-      if (
-        key === "type" ||
-        key === "access_token" ||
-        key === "ally-supports-cache"
-      ) {
+    const fetchDataTime = async () => {
+      try {
+        const url =
+          process.env.NEXT_PUBLIC_API_URL +
+          `/information/time-limit?type=simulation`;
+        const token = localStorage.getItem("access_token");
+
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        });
+        const data = await response.json();
+        // console.log(data);
+        setTimeLimit(data.data.time);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+
+        // Handle error
+      }
+    };
+
+    fetchDataTime();
+  });
+
+  const handleClick = async () => {
+    setLoading(true);
+
+    const body = {
+      start_date_simulation: new Date()
+        .toISOString()
+        .replace("T", " ")
+        .split(".")[0],
+    };
+
+    // console.log("body", body);
+
+    try {
+      const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
+      const token = localStorage.getItem("access_token");
+
+      const response = await fetch(url, {
+        method: "PUT",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // console.log("response", response);
+
+      if (!response.ok) {
+        console.log("not ok");
+        const errorMessage = await response.text();
+        console.error("Server error:", errorMessage);
+        setLoading(false);
         return;
       }
-      localStorage.setItem(key, "");
-    });
-  });
+
+      const data = await response.json();
+      // console.log("Fetched data:", data);
+      const resData = data.data;
+      setLoading(false);
+      router.push(urlNextPage);
+
+      if (!data || !data.data) {
+        throw new Error("Invalid data format");
+      }
+    } catch (error) {
+      console.error("Error :", error);
+    }
+
+    const expiryTime = localStorage.getItem("expiryTime");
+
+    if (expiryTime == null || expiryTime == "" || timeLimit) {
+      const expiryDate = new Date();
+
+      expiryDate.setMinutes(expiryDate.getMinutes() + timeLimit);
+      expiryDate.setSeconds(expiryDate.getSeconds() + 1);
+
+      localStorage.setItem("expiryTime", expiryDate.toISOString());
+
+      const enterTime = new Date();
+      localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
+      router.push(urlNextPage);
+    }
+
+    router.push(urlNextPage);
+  };
 
   return (
     <section className="wrapper">
@@ -26,7 +117,7 @@ export default function Simulation() {
       </p>
       <div className="w-full flex justify-between">
         <BackButton />
-        <NavButton href={"/user-data/initial"} text={"Selanjutnya"} />
+        <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
       </div>
     </section>
   );

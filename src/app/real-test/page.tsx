@@ -27,7 +27,7 @@ export default function RealTest() {
           `/information/auto-next?type=${type}`;
 
         const token = localStorage.getItem("access_token");
-        console.log("autonext type realtest", type);
+        // console.log("autonext type realtest", type);
 
         const response = await fetch(url, {
           headers: {

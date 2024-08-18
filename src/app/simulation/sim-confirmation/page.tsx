@@ -9,7 +9,21 @@ export default function SimConfirmation() {
   const [loading, setLoading] = useState<boolean>(false);
   const [agreement, setAgreement] = useState<string>("");
 
-  const urlNextPage = "/simulation";
+  const urlNextPage = "/user-data/initial";
+
+  useEffect(() => {
+    const keys = Object.keys(localStorage);
+    keys.forEach((key) => {
+      if (
+        key === "type" ||
+        key === "access_token" ||
+        key === "ally-supports-cache"
+      ) {
+        return;
+      }
+      localStorage.setItem(key, "");
+    });
+  });
 
   const handleClick = async () => {
     if (agreement !== "iya") {
