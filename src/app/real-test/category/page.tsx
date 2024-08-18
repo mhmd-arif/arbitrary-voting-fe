@@ -81,6 +81,7 @@ export default function RealCategory() {
             "Cache-Control": "no-cache",
           },
         });
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

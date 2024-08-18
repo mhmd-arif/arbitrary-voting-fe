@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useDebugValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ArrowBackButton from "@/components/ArrowBackButton";
 import ArrowButton from "@/components/ArrowButton";
 
@@ -24,13 +24,11 @@ export default function Question() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [answers, setAnswers] = useState<Answer[]>([]); // Store question and answer
-  const [error, setError] = useState<string>("");
 
   const urlNextPage = "/real-test/end";
-
-  // useEffect(() => {
-  //   console.log("answers", answers);
-  // }, [answers]);
+  useEffect(() => {
+    console.log("answers", answers);
+  }, [answers]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,12 +73,6 @@ export default function Question() {
   }, []);
 
   const handleNext = () => {
-    if (!answers[currentQuestionIndex].selectedOption) {
-      setError("Harap jawab pertanyaan sebelum melanjutkan.");
-      return;
-    }
-    setError(""); // Clear any previous error
-
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
@@ -99,50 +91,66 @@ export default function Question() {
       selectedOption: option,
     }; // Store selected option along with question
     setAnswers(updatedAnswers);
-    setError(""); // Clear error when an option is selected
   };
 
-  const handleClick = async () => {
-    const body = {
-      participant_question_answer: answers,
-    };
+  // const handleClick = async () => {
+  //   if (answers === "") {
+  //     alert("Mohon pilih jawaban");
+  //     return;
+  //   }
 
-    console.log("body", body);
+  //   const body = {
+  //     participant_question_answer: [
+  //       {
+  //         question: "Pertanyaan 1",
+  //         answer: parseInt(selectedOption),
+  //       },
+  //       // {
+  //       //   question: "Pertanyaan 2",
+  //       //   answer: "Jawaban 2",
+  //       // },
+  //     ],
+  //   };
 
-    try {
-      if (typeof window !== "undefined") {
-        const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
-        const token =
-          typeof window !== "undefined"
-            ? localStorage.getItem("access_token")
-            : null;
-        const response = await fetch(url, {
-          method: "PUT",
-          body: JSON.stringify(body),
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  //   console.log("body", body);
 
-        if (!response.ok) {
-          // console.log("not ok");
-          const errorMessage = await response.text();
-          console.error("Server error:", errorMessage);
-          setLoading(false);
-          return;
-        }
+  //   try {
+  //     if (typeof window !== "undefined") {
+  //       const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
+  //       const token =
+  //         typeof window !== "undefined"
+  //           ? localStorage.getItem("access_token")
+  //           : null;
+  //       const response = await fetch(url, {
+  //         method: "PUT",
+  //         body: JSON.stringify(body),
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
 
-        router.push(urlNextPage);
-      }
+  //       const data = await response.json();
+  //       // console.log(data.data);
 
-      setLoading(false);
-    } catch (error) {
-      console.error("Error :", error);
-    }
+  //       if (!response.ok) {
+  //         // console.log("not ok");
+  //         const errorMessage = await response.text();
+  //         console.error("Server error:", errorMessage);
+  //         setLoading(false);
+  //         return;
+  //       }
 
-    router.push(urlNextPage);
-  };
+  //       router.push(urlNextPage);
+  //     }
+
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error("Error :", error);
+  //   }
+
+  //   router.push(urlNextPage);
+  // };
 
   return (
     <section className="wrapper">
@@ -159,7 +167,7 @@ export default function Question() {
               </label>
             </div>
 
-            <div className="w-[80%] ml-[1.8rem] grid grid-cols-7 text-[1rem] mt-[1.5rem] gap-x-[3rem] pt-6 ">
+            <div className="w-[80%] ml-[1.8rem] grid grid-cols-7 text-[1rem] mt-[1.5rem] gap-x-[3rem] pt-6 pb-20">
               {options.map((option) => (
                 <div
                   key={option}
@@ -174,9 +182,6 @@ export default function Question() {
                 </div>
               ))}
             </div>
-            {error && (
-              <p className="text-red-500 text-[1.5rem] pt-8">{error}</p>
-            )}
           </>
         )}
       </div>
@@ -189,7 +194,7 @@ export default function Question() {
         {currentQuestionIndex < questions.length - 1 ? (
           <ArrowButton text={"Selanjutnya"} onClick={handleNext} />
         ) : (
-          <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+          <ArrowButton text={"Selanjutnya"} onClick={handleNext} />
         )}
       </div>
     </section>
