@@ -14,11 +14,10 @@ export interface Kategori {
 export interface Kandidat {
   id: number;
   kategori: string;
-  nama: string;
   partai: string;
   headline: string;
   detail: string;
-  kandidat: number;
+  kandidat: string;
 }
 
 const fetchData = async (
@@ -79,6 +78,7 @@ export default function InformationPage() {
 
         setKategori(kategori);
         setKandidat(kandidat);
+        console.log(kandidat);
 
         setLoading(false);
       })
@@ -313,7 +313,7 @@ export default function InformationPage() {
                       data={{
                         id: item.id,
                         kategori: item.kategori,
-                        nama: item.nama,
+                        // nama: item.nama,
                         partai: item.partai,
                         headline: item.headline,
                         detail: item.detail,

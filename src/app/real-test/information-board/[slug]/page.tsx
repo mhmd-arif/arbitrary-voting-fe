@@ -78,7 +78,7 @@ export default function DetailHeading() {
     let body;
     if (item) {
       body = {
-        kandidat: item.nama,
+        kandidat: item.kandidat,
         kategori: item.kategori,
         partai: item.partai,
         durasi: timeSpent,
@@ -154,8 +154,9 @@ export default function DetailHeading() {
       <h2 className="text-center text-md mt-2 mb-6 ">{item.headline}</h2>
 
       <div className="w-8/12  flex flex-col justify-center border-2 border-cus-black rounded-[0.8rem] px-10 py-6 text-lg ">
+        <p>kandidat: {item.kandidat}</p>
+
         <p>Kategori : {item.kategori}</p>
-        <p>kandidat: {item.nama}</p>
         <p>Partai: {item.partai}</p>
         <br />
         <p>Detail: </p>
