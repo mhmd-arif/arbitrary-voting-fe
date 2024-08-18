@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
+import { TemplateContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export interface Kategori {
   id: number;
@@ -36,8 +37,8 @@ const fetchData = async (
     }
 
     const data = await response.json();
-    // console.log("Fetched data:", data);
-    // console.log(data.data);
+    console.log("Fetched data:", data);
+    console.log(data.data);
 
     if (!data || !data.data) {
       throw new Error("Invalid data format");
@@ -64,6 +65,7 @@ export default function Category() {
   const urlNextPage = "/simulation/information-board";
 
   const url = process.env.NEXT_PUBLIC_API_URL + "/information?type=simulation";
+  let tempKategori;
 
   useEffect(() => {
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
@@ -83,12 +85,15 @@ export default function Category() {
       });
 
     let tempAtvCategory = localStorage.getItem("atvCategory") || "";
-    if (tempAtvCategory == "") {
+    if (tempAtvCategory == "" && kategori.length > 0) {
       tempAtvCategory = kategori[0].nama;
     }
     setActiveCategory(tempAtvCategory);
+
     // setLoading(false);
   }, [kategori, url]);
+
+  useEffect(() => {}, [kategori]);
 
   useEffect(() => {
     const expiryTime = localStorage.getItem("expiryTime");

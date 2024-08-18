@@ -88,7 +88,7 @@ export default function InformationPage() {
       });
 
     let tempAtvCategory = localStorage.getItem("atvCategory") || "";
-    if (tempAtvCategory == "") {
+    if (tempAtvCategory == "" && kategori.length > 0) {
       tempAtvCategory = kategori[0].nama;
     }
     setActiveCategory(tempAtvCategory);
