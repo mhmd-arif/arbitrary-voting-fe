@@ -91,7 +91,7 @@ export default function InformationPage() {
       tempAtvCategory = kategori[0].nama;
     }
     setActiveCategory(tempAtvCategory);
-  }, [url]);
+  }, [kategori, url]);
 
   useEffect(() => {
     const expiryTime = localStorage.getItem("expiryTime");
@@ -128,7 +128,7 @@ export default function InformationPage() {
 
       return () => clearInterval(timer);
     }
-  }, [timeLeft, router]);
+  }, [timeLeft, router, autoNext]);
 
   const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);

@@ -92,7 +92,7 @@ export default function InformationPage() {
       tempAtvCategory = kategori[0].nama;
     }
     setActiveCategory(tempAtvCategory);
-  }, []);
+  }, [kategori]);
 
   useEffect(() => {
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
@@ -131,7 +131,7 @@ export default function InformationPage() {
 
       return () => clearInterval(timer);
     }
-  }, [timeLeft, router]);
+  }, [timeLeft, router, autoNext]);
 
   const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
@@ -282,17 +282,18 @@ export default function InformationPage() {
 
       <div className="w-full  flex flex-col items-center mb-4">
         <nav className="w-[95%]  grid grid-flow-col  mb-6 text-center">
-          {kategori.map((item, index) => (
-            <div
-              key={index}
-              className={` py-4 px-[0.2rem] border border-cus-black cursor-pointer ${
-                activeCategory === item.nama ? "bg-cus-dark-gray" : ""
-              }`}
-              onClick={() => handleActiveCategory(item.nama)}
-            >
-              {item.nama}
-            </div>
-          ))}
+          {!loading &&
+            kategori.map((item, index) => (
+              <div
+                key={index}
+                className={` py-4 px-[0.2rem] border border-cus-black cursor-pointer ${
+                  activeCategory === item.nama ? "bg-cus-dark-gray" : ""
+                }`}
+                onClick={() => handleActiveCategory(item.nama)}
+              >
+                {item.nama}
+              </div>
+            ))}
         </nav>
         <div
           className={`${
@@ -300,27 +301,28 @@ export default function InformationPage() {
           } w-full border border-cus-black`}
         >
           <div className="w-[100%] grid grid-cols-5 text-center  overflow-y-auto ">
-            {kandidat
-              .filter((item) => item.kategori === activeCategory)
-              .map((item) => (
-                <div
-                  key={item.id}
-                  className="w-full border border-cus-black cursor-pointer hover:bg-cus-dark-gray"
-                >
-                  <TableCell
-                    data={{
-                      id: item.id,
-                      kategori: item.kategori,
-                      nama: item.nama,
-                      partai: item.partai,
-                      headline: item.headline,
-                      detail: item.detail,
-                      kandidat: item.kandidat,
-                    }}
-                    rootPath={"real-test/information-board"}
-                  />
-                </div>
-              ))}
+            {!loading &&
+              kandidat
+                .filter((item) => item.kategori === activeCategory)
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    className="w-full border border-cus-black cursor-pointer hover:bg-cus-dark-gray"
+                  >
+                    <TableCell
+                      data={{
+                        id: item.id,
+                        kategori: item.kategori,
+                        nama: item.nama,
+                        partai: item.partai,
+                        headline: item.headline,
+                        detail: item.detail,
+                        kandidat: item.kandidat,
+                      }}
+                      rootPath={"real-test/information-board"}
+                    />
+                  </div>
+                ))}
           </div>
         </div>
       </div>

@@ -90,7 +90,7 @@ export default function RealCategory() {
     }
     setActiveCategory(tempAtvCategory);
     // setLoading(false);
-  }, []);
+  }, [kategori]);
 
   useEffect(() => {
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
@@ -129,7 +129,7 @@ export default function RealCategory() {
 
       return () => clearInterval(timer);
     }
-  }, [timeLeft, router]);
+  }, [timeLeft, router, autoNext]);
 
   const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);

@@ -88,7 +88,7 @@ export default function Category() {
     }
     setActiveCategory(tempAtvCategory);
     // setLoading(false);
-  }, [url]);
+  }, [kategori, url]);
 
   useEffect(() => {
     const expiryTime = localStorage.getItem("expiryTime");
@@ -125,7 +125,7 @@ export default function Category() {
 
       return () => clearInterval(timer);
     }
-  }, [timeLeft, router]);
+  }, [timeLeft, router, autoNext]);
 
   const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
