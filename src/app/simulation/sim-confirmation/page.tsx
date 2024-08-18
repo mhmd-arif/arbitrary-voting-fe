@@ -1,8 +1,6 @@
 "use client";
-import NavButton from "@/components/NavButton";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import ArrowButton from "@/components/ArrowButton";
 import BackButton from "@/components/BackButton";
 
@@ -10,74 +8,8 @@ export default function SimConfirmation() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [agreement, setAgreement] = useState<string>("");
-  const [timeLimit, setTimeLimit] = useState<number>(5);
 
-  // const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
-
-  // const urlNextPage = "/simulation/sim-confirmation";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log("helo1");
-
-        const url =
-          process.env.NEXT_PUBLIC_API_URL +
-          `/information/auto-next?type=simulation`;
-        const token = localStorage.getItem("access_token");
-        console.log("helo");
-
-        const response = await fetch(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Cache-Control": "no-cache",
-          },
-        });
-        const data = await response.json();
-        console.log(data.data);
-        localStorage.setItem("autoNext", data.data.auto);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-        // Handle error
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const urlNextPage = "/simulation/category";
-  useEffect(() => {
-    const fetchDataTime = async () => {
-      try {
-        const url =
-          process.env.NEXT_PUBLIC_API_URL +
-          `/information/time-limit?type=simulation`;
-        const token = localStorage.getItem("access_token");
-
-        const response = await fetch(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Cache-Control": "no-cache",
-          },
-        });
-        const data = await response.json();
-        // console.log(data);
-        setTimeLimit(data.data.time);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-
-        // Handle error
-      }
-    };
-
-    fetchDataTime();
-  });
+  const urlNextPage = "/simulation";
 
   const handleClick = async () => {
     if (agreement !== "iya") {
@@ -85,72 +17,72 @@ export default function SimConfirmation() {
       return;
     }
 
-    const confirmation = window.confirm("Apakah Anda setuju?");
-    if (!confirmation) {
-      return;
-    }
+    // const confirmation = window.confirm("Apakah Anda setuju?");
+    // if (!confirmation) {
+    //   return;
+    // }
 
-    setLoading(true);
+    // setLoading(true);
 
-    const body = {
-      start_date_simulation: new Date()
-        .toISOString()
-        .replace("T", " ")
-        .split(".")[0],
-    };
+    // const body = {
+    //   start_date_simulation: new Date()
+    //     .toISOString()
+    //     .replace("T", " ")
+    //     .split(".")[0],
+    // };
 
-    // console.log("body", body);
+    // // console.log("body", body);
 
-    try {
-      const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
-      const token = localStorage.getItem("access_token");
+    // try {
+    //   const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
+    //   const token = localStorage.getItem("access_token");
 
-      const response = await fetch(url, {
-        method: "PUT",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    //   const response = await fetch(url, {
+    //     method: "PUT",
+    //     body: JSON.stringify(body),
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   });
 
-      // console.log("response", response);
+    //   // console.log("response", response);
 
-      if (!response.ok) {
-        console.log("not ok");
-        const errorMessage = await response.text();
-        console.error("Server error:", errorMessage);
-        setLoading(false);
-        return;
-      }
+    //   if (!response.ok) {
+    //     console.log("not ok");
+    //     const errorMessage = await response.text();
+    //     console.error("Server error:", errorMessage);
+    //     setLoading(false);
+    //     return;
+    //   }
 
-      const data = await response.json();
-      // console.log("Fetched data:", data);
-      const resData = data.data;
-      setLoading(false);
-      router.push(urlNextPage);
+    //   const data = await response.json();
+    //   // console.log("Fetched data:", data);
+    //   const resData = data.data;
+    //   setLoading(false);
+    //   router.push(urlNextPage);
 
-      if (!data || !data.data) {
-        throw new Error("Invalid data format");
-      }
-    } catch (error) {
-      console.error("Error :", error);
-    }
+    //   if (!data || !data.data) {
+    //     throw new Error("Invalid data format");
+    //   }
+    // } catch (error) {
+    //   console.error("Error :", error);
+    // }
 
-    const expiryTime = localStorage.getItem("expiryTime");
+    // const expiryTime = localStorage.getItem("expiryTime");
 
-    if (expiryTime == null || expiryTime == "" || timeLimit) {
-      const expiryDate = new Date();
+    // if (expiryTime == null || expiryTime == "" || timeLimit) {
+    //   const expiryDate = new Date();
 
-      expiryDate.setMinutes(expiryDate.getMinutes() + timeLimit);
-      expiryDate.setSeconds(expiryDate.getSeconds() + 1);
+    //   expiryDate.setMinutes(expiryDate.getMinutes() + timeLimit);
+    //   expiryDate.setSeconds(expiryDate.getSeconds() + 1);
 
-      localStorage.setItem("expiryTime", expiryDate.toISOString());
+    //   localStorage.setItem("expiryTime", expiryDate.toISOString());
 
-      const enterTime = new Date();
-      localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
-      router.push(urlNextPage);
-    }
+    //   const enterTime = new Date();
+    //   localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
+    //   router.push(urlNextPage);
+    // }
 
     router.push(urlNextPage);
   };

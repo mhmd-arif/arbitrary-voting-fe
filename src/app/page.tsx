@@ -34,7 +34,7 @@ export default function Home() {
           kualitas pilihan seseorang terutama dalam konteks pemilu
         </p>
 
-        <NavButton href={"/simulation"} text={"Selanjutnya"} />
+        <NavButton href={"/simulation/sim-confirmation"} text={"Selanjutnya"} />
       </div>
     </main>
   );

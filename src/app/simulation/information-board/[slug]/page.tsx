@@ -147,6 +147,7 @@ export default function DetailHeading() {
       <div className="w-8/12  flex flex-col justify-center border-2 border-cus-black rounded-[0.8rem] px-10 py-6 text-lg">
         <p>Kategori : {item.kategori}</p>
         <p>Nama: {item.nama}</p>
+        <br />
         <p>Detail: </p>
 
         <p>{item.detail}</p>
