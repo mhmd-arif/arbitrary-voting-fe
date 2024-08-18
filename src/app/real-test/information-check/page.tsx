@@ -81,7 +81,7 @@ export default function RealInformationCheck() {
 
       <div className="content">
         <label htmlFor="long-text" className="label">
-          Silakan Ceritakan Beberapa hal mengenai Pilihan yang Tersedia
+          Apa isu yang didukung oleh kandidat yang Anda pilih?
         </label>
         <textarea
           id="long-text"
