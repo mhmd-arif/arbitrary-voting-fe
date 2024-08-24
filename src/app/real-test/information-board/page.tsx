@@ -216,6 +216,7 @@ export default function InformationPage() {
       const body = {
         kategori: atvCategory,
         durasi: timeDifference,
+        urutan_test: "tes pertama",
       };
 
       console.log(body);
