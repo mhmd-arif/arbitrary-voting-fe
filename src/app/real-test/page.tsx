@@ -10,7 +10,9 @@ export default function RealTest() {
       if (
         key === "type" ||
         key === "access_token" ||
-        key === "ally-supports-cache"
+        key === "ally-supports-cache" ||
+        key === "is_double_test" ||
+        key === "second_type"
       ) {
         return;
       }
