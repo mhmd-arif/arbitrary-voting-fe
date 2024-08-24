@@ -82,6 +82,7 @@ export default function NationalElection() {
       }
 
       const resData = data.data;
+      console.log("resData", resData);
       localStorage.setItem("access_token", resData.access_token);
       localStorage.setItem("type", resData.type);
       localStorage.setItem("is_double_test", resData.is_double_test);
