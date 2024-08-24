@@ -192,6 +192,7 @@ export default function RealCategory() {
       const body = {
         kategori: atvCategory,
         durasi: timeDifference,
+        urutan_test: "tes pertama",
       };
 
       // console.log(body);

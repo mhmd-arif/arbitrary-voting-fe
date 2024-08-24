@@ -51,7 +51,7 @@ const fetchData = async (
   }
 };
 
-export default function RealCategory() {
+export default function RealCategoryTwo() {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -63,16 +63,16 @@ export default function RealCategory() {
   const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const router = useRouter();
-  const urlNextPage = "/real-test/information-board";
+  const urlNextPage = "/real-test-2/information-board";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const type = localStorage.getItem("type");
+        const second_type = localStorage.getItem("second_type");
         const token = localStorage.getItem("access_token");
         const url =
           process.env.NEXT_PUBLIC_API_URL +
-          `/information/category?type=${type}`;
+          `/information/category?type=${second_type}`;
 
         const response = await fetch(url, {
           headers: {
@@ -192,6 +192,7 @@ export default function RealCategory() {
       const body = {
         kategori: atvCategory,
         durasi: timeDifference,
+        urutan_test: "tes kedua",
       };
 
       // console.log(body);
