@@ -40,7 +40,7 @@ const fetchData = async (token: any, url: any) => {
   }
 };
 
-export default function FinalAnswer() {
+export default function FinalAnswerTwo() {
   const [isloading, setIsloading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,9 +53,10 @@ export default function FinalAnswer() {
   const urlNextPage = "/real-test/question";
 
   useEffect(() => {
-    const type = localStorage.getItem("type");
+    const second_type = localStorage.getItem("second_type");
     const token = localStorage.getItem("access_token");
-    const url = process.env.NEXT_PUBLIC_API_URL + `/candidate?type=${type}`;
+    const url =
+      process.env.NEXT_PUBLIC_API_URL + `/candidate?type=${second_type}`;
 
     // console.log(url, token, type);
 
@@ -85,13 +86,13 @@ export default function FinalAnswer() {
     }
 
     const body = JSON.stringify({
-      final_answer: selectedOption + " (" + polParty + ")",
+      final_answer_second: selectedOption + " (" + polParty + ")",
     });
 
     // console.log("body", body);
 
     try {
-      const type = localStorage.getItem("type");
+      // const second_type = localStorage.getItem("second_type");
       const token = localStorage.getItem("access_token");
       const url = process.env.NEXT_PUBLIC_API_URL + `/participant/`;
 
