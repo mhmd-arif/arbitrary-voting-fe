@@ -6,7 +6,7 @@ import Image from "next/image";
 import ArrowButton from "@/components/ArrowButton";
 import BackButton from "@/components/BackButton";
 
-export default function Confirmation() {
+export default function ConfirmationTwo() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [agreement, setAgreement] = useState<string>("");
@@ -56,7 +56,10 @@ export default function Confirmation() {
     setLoading(true);
 
     const body = {
-      start_date: new Date().toISOString().replace("T", " ").split(".")[0],
+      start_date_second: new Date()
+        .toISOString()
+        .replace("T", " ")
+        .split(".")[0],
     };
 
     // console.log("body", body);
