@@ -6,14 +6,14 @@ import Image from "next/image";
 import ArrowButton from "@/components/ArrowButton";
 import BackButton from "@/components/BackButton";
 
-export default function RealInformationCheck() {
+export default function RealInformationCheckTwo() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const [text, setText] = useState("");
-  const urlNextPage = "/real-test/final-answer";
-  const urlBackPage = "/real-test/category";
+  const urlNextPage = "/real-test-2/final-answer";
+  const urlBackPage = "/real-test-2/category";
 
   useEffect(() => {
     setAutoNext(JSON.parse(localStorage.getItem("autoNext") || "false"));
@@ -35,7 +35,7 @@ export default function RealInformationCheck() {
     }
 
     const body = {
-      information_check: text,
+      information_check_second: text,
     };
 
     // console.log("body", body);
