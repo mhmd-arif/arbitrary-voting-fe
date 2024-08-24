@@ -3,7 +3,7 @@ import BackButton from "@/components/BackButton";
 import NavButton from "@/components/NavButton";
 import { useEffect } from "react";
 
-export default function RealTest() {
+export default function RealTestTwo() {
   useEffect(() => {
     const keys = Object.keys(localStorage);
     keys.forEach((key) => {

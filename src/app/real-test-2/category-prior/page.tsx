@@ -36,7 +36,7 @@ const fetchData = async (token: any, url: any): Promise<Kategori[]> => {
   }
 };
 
-export default function Ctegoryprior() {
+export default function CtegorypriorTwo() {
   const [items, setItems] = useState<Kategori[]>([]);
   const [selectedItems, setSelectedItems] = useState<Kategori[]>([]);
   const [timeLimit, setTimeLimit] = useState<number>(15);
@@ -44,15 +44,15 @@ export default function Ctegoryprior() {
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
-  const urlNextPage = "/real-test/category";
+  const urlNextPage = "/real-test-2/category";
 
   useEffect(() => {
     const fetchDataTime = async () => {
       try {
-        const type = localStorage.getItem("type");
+        const second_type = localStorage.getItem("second_type");
         const url =
           process.env.NEXT_PUBLIC_API_URL +
-          `/information/time-limit?type=${type}`;
+          `/information/time-limit?type=${second_type}`;
         const token = localStorage.getItem("access_token");
 
         const response = await fetch(url, {
@@ -78,10 +78,11 @@ export default function Ctegoryprior() {
   });
 
   useEffect(() => {
-    const type = localStorage.getItem("type");
+    const second_type = localStorage.getItem("second_type");
     const token = localStorage.getItem("access_token");
     const url =
-      process.env.NEXT_PUBLIC_API_URL + `/information/category?type=${type}`;
+      process.env.NEXT_PUBLIC_API_URL +
+      `/information/category?type=${second_type}`;
 
     fetchData(token, url)
       .then((fetchedData) => {
@@ -117,7 +118,7 @@ export default function Ctegoryprior() {
     setLoading(true);
 
     const body = {
-      prioritas_kategori: selectedItems.reduce(
+      prioritas_kategori_second: selectedItems.reduce(
         (result: { [key: string]: number }, item, index) => {
           result[item.nama] = index + 1;
           return result;

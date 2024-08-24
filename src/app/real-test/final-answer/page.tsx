@@ -49,13 +49,19 @@ export default function FinalAnswer() {
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState("");
   const [polParty, setPolParty] = useState("");
-
-  const urlNextPage = "/real-test/question";
+  const [urlNextPage, setUrlNextPage] = useState<string>("/real-test/question");
 
   useEffect(() => {
     const type = localStorage.getItem("type");
     const token = localStorage.getItem("access_token");
     const url = process.env.NEXT_PUBLIC_API_URL + `/candidate?type=${type}`;
+    const is_double_test = localStorage.getItem("is_double_test");
+
+    if (is_double_test) {
+      setUrlNextPage("/real-test-2");
+    } else {
+      setUrlNextPage("/real-test/question");
+    }
 
     // console.log(url, token, type);
 
