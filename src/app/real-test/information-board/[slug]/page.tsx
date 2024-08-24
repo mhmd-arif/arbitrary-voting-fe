@@ -82,6 +82,7 @@ export default function DetailHeading() {
         kategori: item.kategori,
         partai: item.partai,
         durasi: timeSpent,
+        urutan_test: "tes pertama",
       };
     }
 
