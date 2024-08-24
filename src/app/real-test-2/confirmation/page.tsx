@@ -2,33 +2,17 @@
 import NavButton from "@/components/NavButton";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import ArrowButton from "@/components/ArrowButton";
 import BackButton from "@/components/BackButton";
 
-export default function Simulation() {
+export default function ConfirmationTwo() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [agreement, setAgreement] = useState<string>("");
-  const [timeLimit, setTimeLimit] = useState<number>(3);
+  const [timeLimit, setTimeLimit] = useState<number>(15);
 
-  const urlNextPage = "/simulation/category";
-
-  useEffect(() => {
-    const keys = Object.keys(localStorage);
-    keys.forEach((key) => {
-      if (
-        key === "type" ||
-        key === "access_token" ||
-        key === "ally-supports-cache" ||
-        key === "is_double_test" ||
-        key === "second_type"
-      ) {
-        return;
-      }
-      localStorage.setItem(key, "");
-    });
-  });
-
+  const urlNextPage = "/real-test/category";
   useEffect(() => {
     const fetchDataTime = async () => {
       try {
@@ -58,44 +42,21 @@ export default function Simulation() {
 
     fetchDataTime();
   });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // const type = localStorage.getItem("type");
-        const url =
-          process.env.NEXT_PUBLIC_API_URL +
-          `/information/auto-next?type=simulation}`;
-
-        const token = localStorage.getItem("access_token");
-        // console.log("autonext type realtest", type);
-
-        const response = await fetch(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "Cache-Control": "no-cache",
-          },
-        });
-        const data = await response.json();
-        // console.log(data.data);
-        localStorage.setItem("autoNext", data.data.auto);
-        // setLoading(false);
-      } catch (error) {
-        console.error(error);
-        // setLoading(false);
-        // Handle error
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const handleClick = async () => {
+    if (agreement !== "iya") {
+      alert("Mohon setuju terlebih dahulu");
+      return;
+    }
+
+    const confirmation = window.confirm("Apakah Anda setuju?");
+    if (!confirmation) {
+      return;
+    }
+
     setLoading(true);
 
     const body = {
-      start_date_simulation: new Date()
+      start_date_second: new Date()
         .toISOString()
         .replace("T", " ")
         .split(".")[0],
@@ -141,16 +102,13 @@ export default function Simulation() {
 
     const expiryTime = localStorage.getItem("expiryTime");
 
-    if (expiryTime == null || expiryTime == "" || timeLimit) {
+    if (expiryTime == null || expiryTime == "") {
       const expiryDate = new Date();
 
       expiryDate.setMinutes(expiryDate.getMinutes() + timeLimit);
       expiryDate.setSeconds(expiryDate.getSeconds() + 1);
 
       localStorage.setItem("expiryTime", expiryDate.toISOString());
-
-      const enterTime = new Date();
-      localStorage.setItem("pageInfoEnterTime", enterTime.toISOString());
       router.push(urlNextPage);
     }
 
@@ -159,10 +117,23 @@ export default function Simulation() {
 
   return (
     <section className="wrapper">
-      <h1 className="title">Simulasi Pemilihan</h1>
-      <p className="description" id="short-desc">
-        Tahap ini merupakan simulasi untuk pengenalan mengenai aplikasi
-      </p>
+      <div className="title">Pemilihan Riil</div>
+      <div className="content">
+        <label>
+          Apakah Anda Bersedia untuk Mengikuti Penelitian Ini hingga Selesai?
+        </label>
+        <select
+          id="dropdown"
+          className="input-style"
+          value={agreement}
+          onChange={(e) => setAgreement(e.target.value)}
+        >
+          <option value="">Pilih Jawaban</option>
+          <option value="tidak">Tidak</option>
+          <option value="iya">Iya</option>
+        </select>
+      </div>
+
       <div className="w-full flex justify-between">
         <BackButton />
         <ArrowButton text={"Selanjutnya"} onClick={handleClick} />

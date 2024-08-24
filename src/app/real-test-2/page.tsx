@@ -3,7 +3,7 @@ import BackButton from "@/components/BackButton";
 import NavButton from "@/components/NavButton";
 import { useEffect } from "react";
 
-export default function RealTest() {
+export default function RealTestTwo() {
   useEffect(() => {
     const keys = Object.keys(localStorage);
     keys.forEach((key) => {
@@ -23,13 +23,12 @@ export default function RealTest() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const type = localStorage.getItem("type");
+        const second_type = localStorage.getItem("second_type");
         const url =
           process.env.NEXT_PUBLIC_API_URL +
-          `/information/auto-next?type=${type}`;
+          `/information/auto-next?type=${second_type}`;
 
         const token = localStorage.getItem("access_token");
-        // console.log("autonext type realtest", type);
 
         const response = await fetch(url, {
           headers: {
@@ -56,10 +55,10 @@ export default function RealTest() {
     <section className="wrapper">
       <h1 className="title">Simulasi Pemilihan</h1>
       <p className="description" id="short-desc">
-        Anda telah menyelesaikan tahap pengenalan aplikasi, berikutnya adalah
-        tahap inti penelitian
+        Anda telah menyelesaikan tahap tes pertama, berikutnya adalah tahap tes
+        kedua
       </p>
-      <NavButton href={"/real-test/category-prior"} text={"Selanjutnya"} />
+      <NavButton href={"/real-test-2/category-prior"} text={"Selanjutnya"} />
     </section>
   );
 }

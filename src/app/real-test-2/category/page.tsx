@@ -1,10 +1,8 @@
 "use client";
-import TableCell from "@/components/TableCell";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ArrowButton from "@/components/ArrowButton";
-import Image from "next/image";
-import { json } from "stream/consumers";
 
 export interface Kategori {
   id: number;
@@ -14,10 +12,11 @@ export interface Kategori {
 export interface Kandidat {
   id: number;
   kategori: string;
+  nama: string;
   partai: string;
   headline: string;
   detail: string;
-  kandidat: string;
+  kandidat: number;
 }
 
 const fetchData = async (
@@ -52,7 +51,7 @@ const fetchData = async (
   }
 };
 
-export default function InformationPage() {
+export default function RealCategoryTwo() {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -60,38 +59,57 @@ export default function InformationPage() {
   const [kategori, setKategori] = useState<Kategori[]>([]);
   const [kandidat, setKandidat] = useState<Kandidat[]>([]);
 
-  const [activeCategory, setActiveCategory] = useState<string>("");
+  const [activeCategory, setActiveCategory] = useState<string>();
   const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const router = useRouter();
-  const urlNextPage = "/real-test/information-check";
-  const urlBackPage = "/real-test/category";
+  const urlNextPage = "/real-test-2/information-board";
 
   useEffect(() => {
-    const type = localStorage.getItem("type");
-    const token = localStorage.getItem("access_token");
-    const url = process.env.NEXT_PUBLIC_API_URL + `/information?type=${type}`;
+    const fetchData = async () => {
+      try {
+        const second_type = localStorage.getItem("second_type");
+        const token = localStorage.getItem("access_token");
+        const url =
+          process.env.NEXT_PUBLIC_API_URL +
+          `/information/category?type=${second_type}`;
 
-    fetchData(token, url)
-      .then((fetchedData) => {
-        const { kategori, kandidat } = fetchedData;
+        const response = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Cache-Control": "no-cache",
+          },
+        });
 
-        setKategori(kategori);
-        setKandidat(kandidat);
-        console.log(kandidat);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
 
+        const data = await response.json();
+        // console.log("Fetched data:", data);
+        // console.log(data.data);
+
+        setKategori(data.data);
         setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
+
+        if (!data || !data.data) {
+          throw new Error("Invalid data format");
+        }
+      } catch (error) {
+        console.error(error);
         setLoading(false);
-      });
+        // Handle error
+      }
+    };
 
     let tempAtvCategory = localStorage.getItem("atvCategory") || "";
     if (tempAtvCategory == "" && kategori.length > 0) {
       tempAtvCategory = kategori[0].nama;
     }
     setActiveCategory(tempAtvCategory);
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -150,55 +168,13 @@ export default function InformationPage() {
     );
   };
 
-  const handleBack = () => {
-    router.push(urlBackPage);
-  };
-
   const handleClick = async () => {
-    setLoading(true);
-
-    const body = {
-      end_date: new Date().toISOString().replace("T", " ").split(".")[0],
-    };
-
-    // console.log("body", body);
-
-    try {
-      const url = process.env.NEXT_PUBLIC_API_URL + "/participant/";
-      const token = localStorage.getItem("access_token");
-
-      const response = await fetch(url, {
-        method: "PUT",
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        // console.log("not ok");
-        const errorMessage = await response.text();
-        console.error("Server error:", errorMessage);
-        setLoading(false);
-        return;
-      }
-
-      const data = await response.json();
-      // console.log("Fetched data:", data);
-      const resData = data.data;
-
-      // // console.log(resData);
-      setLoading(false);
-      router.push(urlNextPage);
-
-      if (!data || !data.data) {
-        throw new Error("Invalid data format");
-      }
-    } catch (error) {
-      console.error("Error :", error);
+    if (activeCategory === "") {
+      alert("Mohon pilih kategori");
+      return;
     }
-    // router.push(urlNextPage);
+
+    router.push(urlNextPage);
   };
 
   const handleActiveCategory = async (category: string) => {
@@ -216,10 +192,10 @@ export default function InformationPage() {
       const body = {
         kategori: atvCategory,
         durasi: timeDifference,
-        urutan_test: "tes pertama",
+        urutan_test: "tes kedua",
       };
 
-      console.log(body);
+      // console.log(body);
 
       try {
         const url = process.env.NEXT_PUBLIC_API_URL + "/record/duration/";
@@ -234,7 +210,7 @@ export default function InformationPage() {
         });
 
         const data = await response.json();
-        console.log(data.data);
+        // console.log(data.data);
 
         if (!response.ok) {
           // console.log("not ok");
@@ -262,32 +238,28 @@ export default function InformationPage() {
   return (
     <section className="wrapper">
       <h1 className="title">Papan Informasi</h1>
-      <h2 className="text-center text-md mt-2 mb-6">
-        SILAKAN MEMPELAJARI INFORMASI YANG DISEDIAKAN <br />
-        UNTUK MENENTUKAN PILIHAN ANDA
-      </h2>
-      {loading ? (
-        <nav className="w-[95%] grid grid-cols-5 my-auto text-center ">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <div
-              key={index}
-              className="py-4 border border-cus-black bg-cus-dark-gray animate-pulse "
-            >
-              loading.. kategori
-            </div>
-          ))}
-        </nav>
-      ) : (
-        <></>
-      )}
+      <div className="w-full h-[80%] flex flex-col items-center pb-[10%]">
+        <h2 className="text-center text-md mt-4 mb-6">
+          Silakan Pilih Kategori yang Anda Minati
+        </h2>
 
-      <div className="w-full  flex flex-col items-center mb-4">
-        <nav className="w-[95%]  grid grid-flow-col  mb-6 text-center">
-          {!loading &&
-            kategori.map((item, index) => (
+        {loading ? (
+          <nav className="w-[80%] grid grid-cols-5 my-auto text-center ">
+            {Array.from({ length: 5 }).map((_, index) => (
               <div
                 key={index}
-                className={` py-4 px-[0.2rem] border border-cus-black cursor-pointer ${
+                className="py-4 border border-cus-black bg-cus-dark-gray animate-pulse "
+              >
+                loading.. kategori
+              </div>
+            ))}
+          </nav>
+        ) : (
+          <nav className="w-[80%]  grid grid-cols-5 my-auto text-center">
+            {kategori.map((item, index) => (
+              <div
+                key={index}
+                className={` py-4 border border-cus-black cursor-pointer ${
                   activeCategory === item.nama ? "bg-cus-dark-gray" : ""
                 }`}
                 onClick={() => handleActiveCategory(item.nama)}
@@ -295,66 +267,21 @@ export default function InformationPage() {
                 {item.nama}
               </div>
             ))}
-        </nav>
-        <div
-          className={`${
-            loading ? "animate-pulse bg-cus-dark-gray h-[15rem]" : ""
-          } w-full border border-cus-black`}
-        >
-          <div className="w-[100%] grid grid-cols-5 text-center  overflow-y-auto ">
-            {!loading &&
-              kandidat
-                .filter((item) => item.kategori === activeCategory)
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    className="w-full border border-cus-black cursor-pointer hover:bg-cus-dark-gray"
-                  >
-                    <TableCell
-                      data={{
-                        id: item.id,
-                        kategori: item.kategori,
-                        // nama: item.nama,
-                        partai: item.partai,
-                        headline: item.headline,
-                        detail: item.detail,
-                        kandidat: item.kandidat,
-                      }}
-                      rootPath={"real-test/information-board"}
-                    />
-                  </div>
-                ))}
-          </div>
-        </div>
+          </nav>
+        )}
       </div>
 
-      <div className="w-full flex justify-center items-end pb-[2rem]">
-        <button className="custom-btn self-start " onClick={handleBack}>
-          Kembali
-          <Image
-            src={"/arrow-back.svg"}
-            alt="arrow"
-            width={100}
-            height={100}
-            className="w-full flip-x"
-          />
-        </button>
+      <div className="flex w-full items-center">
         {timeLeft !== null ? (
-          <>
-            <div className="flex flex-col w-fit text-center mx-auto">
-              <p>
-                lanjutkan membaca <br /> setidaknya selama
-              </p>
-              {formatTime(timeLeft)}
-            </div>
-            <div className="w-[10rem]"></div>
-          </>
+          <div className="flex flex-col w-[10rem] py-2 px-4">
+            {formatTime(timeLeft)}
+          </div>
         ) : (
-          <>
-            <div className="mx-auto"></div>
-            <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
-          </>
+          <></>
         )}
+        <div className="ml-auto">
+          <ArrowButton text={"Selanjutnya"} onClick={handleClick} />
+        </div>
       </div>
     </section>
   );

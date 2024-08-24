@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import type { Kandidat } from "../page";
 import ArrowButton from "@/components/ArrowButton";
 
-export default function DetailHeading() {
+export default function DetailHeadingTwo() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const data = searchParams.get("data");
@@ -14,7 +14,7 @@ export default function DetailHeading() {
   const [autoNext, setAutoNext] = useState<boolean>(false);
 
   // const urlNextPage = "/real-test/information-check";
-  const urlBackPage = "/real-test/information-board";
+  const urlBackPage = "/real-test-2/information-board";
 
   useEffect(() => {
     if (timeLeft !== null) {
@@ -82,16 +82,17 @@ export default function DetailHeading() {
         kategori: item.kategori,
         partai: item.partai,
         durasi: timeSpent,
-        urutan_test: "tes pertama",
+        urutan_test: "tes kedua",
       };
     }
 
     // console.log("body", body);
 
     try {
-      const type = localStorage.getItem("type");
+      const second_type = localStorage.getItem("second_type");
       const token = localStorage.getItem("access_token");
-      const url = process.env.NEXT_PUBLIC_API_URL + `/record/?type=${type}`;
+      const url =
+        process.env.NEXT_PUBLIC_API_URL + `/record/?type=${second_type}`;
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify(body),

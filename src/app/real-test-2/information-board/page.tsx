@@ -52,7 +52,7 @@ const fetchData = async (
   }
 };
 
-export default function InformationPage() {
+export default function InformationPageTwo() {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -64,13 +64,14 @@ export default function InformationPage() {
   const [autoNext, setAutoNext] = useState<boolean>(false);
 
   const router = useRouter();
-  const urlNextPage = "/real-test/information-check";
-  const urlBackPage = "/real-test/category";
+  const urlNextPage = "/real-test-2/information-check";
+  const urlBackPage = "/real-test-2/category";
 
   useEffect(() => {
-    const type = localStorage.getItem("type");
+    const second_type = localStorage.getItem("second_type");
     const token = localStorage.getItem("access_token");
-    const url = process.env.NEXT_PUBLIC_API_URL + `/information?type=${type}`;
+    const url =
+      process.env.NEXT_PUBLIC_API_URL + `/information?type=${second_type}`;
 
     fetchData(token, url)
       .then((fetchedData) => {
@@ -158,7 +159,7 @@ export default function InformationPage() {
     setLoading(true);
 
     const body = {
-      end_date: new Date().toISOString().replace("T", " ").split(".")[0],
+      end_date_second: new Date().toISOString().replace("T", " ").split(".")[0],
     };
 
     // console.log("body", body);
@@ -216,7 +217,7 @@ export default function InformationPage() {
       const body = {
         kategori: atvCategory,
         durasi: timeDifference,
-        urutan_test: "tes pertama",
+        urutan_test: "tes kedua",
       };
 
       console.log(body);
