@@ -103,11 +103,17 @@ export default function Question() {
   };
 
   const handleClick = async () => {
+    if (!answers[currentQuestionIndex].selectedOption) {
+      setError("Harap jawab pertanyaan sebelum melanjutkan.");
+      return;
+    }
+    setError(""); // Clear any previous error
+
     const body = {
       participant_question_answer: answers,
     };
 
-    console.log("body", body);
+    // console.log("body", body);
 
     try {
       if (typeof window !== "undefined") {
