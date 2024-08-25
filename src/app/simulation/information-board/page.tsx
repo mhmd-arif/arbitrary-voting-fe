@@ -220,6 +220,7 @@ export default function InformationPage() {
       const body = {
         kategori: atvCategory,
         durasi: timeDifference,
+        urutan_test: "simulasi",
       };
 
       console.log(body);
