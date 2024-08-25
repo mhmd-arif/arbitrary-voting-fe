@@ -57,7 +57,7 @@ export default function FinalAnswer() {
     const url = process.env.NEXT_PUBLIC_API_URL + `/candidate?type=${type}`;
     const is_double_test = localStorage.getItem("is_double_test");
 
-    if (is_double_test) {
+    if (is_double_test === "true") {
       setUrlNextPage("/real-test-2");
     } else {
       setUrlNextPage("/real-test/question");

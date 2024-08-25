@@ -138,7 +138,7 @@ export default function RealCategoryTwo() {
               setTimeLeft(null);
               clearInterval(timer);
               if (autoNext) {
-                router.push("/real-test/information-check");
+                router.push("/real-test-2/information-check");
               }
             }
             return newTimeLeft;

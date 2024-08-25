@@ -26,7 +26,7 @@ export default function DetailHeadingTwo() {
               clearInterval(timer);
               setTimeLeft(null);
               if (autoNext) {
-                router.push("/real-test/information-check");
+                router.push("/real-test-2/information-check");
               }
               // handleToInformationBoard();
             }

@@ -173,6 +173,7 @@ export default function Category() {
       const body = {
         kategori: atvCategory,
         durasi: timeDifference,
+        urutan_test: "simulasi",
       };
 
       console.log(body);

@@ -80,6 +80,7 @@ export default function DetailHeading() {
         kandidat: item.kandidat,
         kategori: item.kategori,
         durasi: timeSpent,
+        urutan_test: "simulasi",
       };
     }
 

@@ -14,22 +14,6 @@ export default function Simulation() {
   const urlNextPage = "/simulation/category";
 
   useEffect(() => {
-    const keys = Object.keys(localStorage);
-    keys.forEach((key) => {
-      if (
-        key === "type" ||
-        key === "access_token" ||
-        key === "ally-supports-cache" ||
-        key === "is_double_test" ||
-        key === "second_type"
-      ) {
-        return;
-      }
-      localStorage.setItem(key, "");
-    });
-  });
-
-  useEffect(() => {
     const fetchDataTime = async () => {
       try {
         const url =

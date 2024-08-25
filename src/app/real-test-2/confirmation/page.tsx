@@ -12,7 +12,7 @@ export default function ConfirmationTwo() {
   const [agreement, setAgreement] = useState<string>("");
   const [timeLimit, setTimeLimit] = useState<number>(15);
 
-  const urlNextPage = "/real-test/category";
+  const urlNextPage = "/real-test-2/category";
   useEffect(() => {
     const fetchDataTime = async () => {
       try {

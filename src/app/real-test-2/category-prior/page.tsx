@@ -125,7 +125,10 @@ export default function CtegorypriorTwo() {
         },
         {}
       ),
-      start_date: new Date().toISOString().replace("T", " ").split(".")[0],
+      start_date_second: new Date()
+        .toISOString()
+        .replace("T", " ")
+        .split(".")[0],
     };
 
     // console.log("body", body);

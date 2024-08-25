@@ -121,7 +121,7 @@ export default function InformationPageTwo() {
               setTimeLeft(null);
               clearInterval(timer);
               if (autoNext) {
-                router.push("/real-test/information-check");
+                router.push("/real-test-2/information-check");
               }
             }
             return newTimeLeft;
@@ -321,7 +321,7 @@ export default function InformationPageTwo() {
                         detail: item.detail,
                         kandidat: item.kandidat,
                       }}
-                      rootPath={"real-test/information-board"}
+                      rootPath={"real-test-2/information-board"}
                     />
                   </div>
                 ))}
